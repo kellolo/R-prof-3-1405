@@ -1,0 +1,46 @@
+.dialog {
+  margin: 0;
+  width: 70%;
+  height: calc(100% - 80px);
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+}
+
+.message_field {
+  padding: 20px;
+  box-sizing: border-box;
+  min-height: calc(100% - 50px);
+  display: flex;
+  flex-direction: column; 
+  background: linear-gradient(180deg, rgba(90, 129, 158, 0.37) 0%, rgba(90, 129, 158, 0.37) 22.11%, rgba(255, 229, 196, 0.37) 100%);
+}
+
+.answer_group {
+  display: flex;
+  width: 100%;
+  background-color: #fff;
+  box-shadow: 0px -4px 0px rgba(255, 229, 196, 0.4);
+  overflow-y: auto;
+}
+
+.answer_group_input {
+  padding: 0 20px;
+  width: calc(100% - 40px);
+  border: none;
+  color: #666666;
+}
+
+.answer_group_input:focus {
+  outline: none;
+  box-shadow: 0px -4px 0px rgba(255, 229, 196, 0.7);
+}
+
+.btn_send {
+  color: #6CC2BD;
+}
+
+.icon_btn:focus {
+  outline: none !important;
+  background-color: rgba(0, 0, 0, 0.04);
+}

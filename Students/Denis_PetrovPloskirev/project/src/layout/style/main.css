@@ -6,6 +6,10 @@
   box-sizing: border-box;
 }
 
+a, a:hover {
+  text-decoration: none;
+}
+
 html {
   min-height: 100vh;
 }
@@ -20,10 +24,10 @@ body {
 
 #app {
   width: 100%;
+  min-width: 1200px;
   max-width: 1600px;
   height: calc(100% - 30px);
   margin: 0 auto;
   padding: 15px;
-  border: 1px solid #ccc;
   border-radius: 5px;
 }

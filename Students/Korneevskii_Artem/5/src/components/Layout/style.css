@@ -1,0 +1,10 @@
+.messenger-layout {
+    min-height: 487px;
+}
+
+.messenger-wrapper {
+    background-color: #03A9F4;
+    border: 1px solid #03A9F4;
+    border-radius: 7px;
+    overflow: hidden;
+}

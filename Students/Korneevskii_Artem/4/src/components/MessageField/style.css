@@ -1,0 +1,32 @@
+/*.controls input, .controls .btn {
+    margin: 10px; 
+    border-radius: 10px;
+    outline: 0;
+    box-shadow: none;
+}*/
+
+.messenger-wrapper {
+    background-color: #ffffff;
+}
+
+.messages {
+    max-height: 330px;
+    overflow-y: scroll;
+}
+
+.messages::-webkit-scrollbar-track {
+    border-radius: 4px;
+}
+
+.messages::-webkit-scrollbar {
+    width: 4px;
+}
+
+.messages::-webkit-scrollbar-thumb {
+    border-radius: 4px;
+    background: #EAEAEA;
+}
+
+.messages:hover::-webkit-scrollbar-thumb {
+    background: lightblue;
+}

@@ -1,87 +1,95 @@
-import React, { Component } from 'react';
-import ReactDom from 'react-dom';
+import React, { Component } from "react";
+import ReactDom from "react-dom";
+import "./MessageField.css";
 
-import Message from '../Message/Message.jsx';
+import Message from "../Message/Message.jsx";
+import IconButton from "@material-ui/core/IconButton";
+import TextField from "@material-ui/core/TextField";
+import SendIcon from "@material-ui/icons/Send";
 
-import { sendMessage } from '../../store/actions/messages_actions.js';
-import { bindActionCreators } from 'redux';
-import connect from 'react-redux/es/connect/connect';
+import { sendMessage } from "../../store/actions/messages_actions.js";
+import { bindActionCreators } from "redux";
+import connect from "react-redux/es/connect/connect";
 
 class MessagesField extends Component {
   constructor(props) {
-    super(props)
+    super(props);
+    this.textInput = React.createRef();
     this.state = {
       isUserAnswer: false,
-      text: ''
-    }
+      text: "",
+    };
   }
 
   handleSend = (text, sender) => {
-    this.setState({text: ''});
-    if (sender == 'Me') {
+    this.setState({ text: "" });
+    if (sender == "Me") {
       this.sendMessage(text, sender);
       this.setState.isUserAnswer = true;
     }
-  }
+  };
 
   sendMessage = (text, sender) => {
     let { messages } = this.props;
     let messageId = Object.keys(messages).length + 1;
     this.props.sendMessage(messageId, sender, text);
-  }
+  };
 
   handleChange = (evt) => {
-    if (evt.keyCode !== 13) this.setState({ text: evt.target.value })
-    // evt.keyCode !== 13 ? 
-    // this.setState({ text: evt.target.value }) :
-    // this.handleSend(evt)
-  }
+    evt.keyCode !== 13
+      ? this.setState({ text: evt.target.value })
+      : this.handleSend(evt.target.value, "Me");
+  };
 
-  componentDidUpdate() {
-    let { messages } = this.props;
-    let messageId = Object.keys(messages).length + 1;
-    if (this.state.isUserAnswer) {
-      setTimeout(() => {
-        this.props.sendMessage(messageId, null, 'cyber answer...');
-        this.setState.isUserAnswer = false;
-      }, 1000);
-    }    
+  componentDidMount() {
+    this.textInput.current.focus();
   }
-
+ 
   render() {
     let { messages } = this.props;
 
     let msgArr = [];
 
-    Object.keys(messages).forEach(key => {
-      msgArr.push (<Message 
-        text={ messages[key].text } 
-        sender={ messages[key].user } 
-        key={ key }/>);
+    Object.keys(messages).forEach((key) => {
+      msgArr.push(
+        <Message
+          text={messages[key].text}
+          sender={messages[key].user}
+          key={key}
+        />
+      );
     });
 
-    return (<div className="d-flex flex-column w-50">
-              <div>
-                { msgArr }
-              </div>
-              <hr/>
-              <div className="controls d-flex w-100">
-                <input 
-                  type="text" 
-                  className="w-75"
-                  onChange={ this.handleChange }
-                  onKeyUp = { this.handleChange }
-                  value={ this.state.text }
-                />
-                <button type="button" onClick={ () => this.handleSend(this.state.text, 'Me') }>Send</button>
-              </div>
-            </div>)
+    return (
+      <div className="dialog">
+        <div className="message_field">{msgArr}</div>
+        <div className="answer_group">
+          <input
+            type="text"
+            ref={ this.textInput }
+            className="answer_group_input"
+            placeholder="Написать сообщение..."
+            onChange={this.handleChange}
+            onKeyUp={this.handleChange}
+            value={this.state.text}
+          />
+          <IconButton
+            aria-label="send message"
+            className="icon_btn"
+            onClick={() => this.handleSend(this.state.text, "Me")}
+          >
+            <SendIcon className="btn_send" />
+          </IconButton>
+        </div>
+      </div>
+    );
   }
 }
 const mapStateToProps = ({ msgReducer }) => ({
-  messages: msgReducer.messages
+  messages: msgReducer.messages,
 });
 
-const mapDispatchToProps = dispatch => bindActionCreators({ sendMessage }, dispatch);
+const mapDispatchToProps = (dispatch) =>
+  bindActionCreators({ sendMessage }, dispatch);
 
 export default connect(mapStateToProps, mapDispatchToProps)(MessagesField);

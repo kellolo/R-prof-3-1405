@@ -1,0 +1,15 @@
+.profileWrapper {
+    height: 90%;
+  }
+  
+  .profileForm {
+    margin: 0 auto;
+    padding: 10px 0;
+    width: 50%;
+    height: calc(100% - 30px);
+    text-align: center;
+  }
+  
+  .profileForm .nameInput {
+    margin-top: 10px;
+  }

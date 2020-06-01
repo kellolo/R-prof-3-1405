@@ -1,9 +1,29 @@
-.rooms{
+.rooms {
     display: flex;
     flex-direction: column;
-    width: 20%
+    align-items: center;
+    width: 20%;
+    background-color: #051e2c;
+    padding: 60px 20px;
+    text-align: center;
 }
 
-.opened-chat{
-    width: 80%
+.chat-rooms {
+    color: white;
+}
+
+.opened-chat {
+    width: 80%;
+    background-color: #0c3246;
+    border-right: 1px solid darkslategray;
+}
+
+.wrapper {
+    min-height: 100vh;
+}
+
+.rooms>div {
+    position: fixed;
+    width: inherit;
+    padding: 0;
 }

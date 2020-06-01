@@ -11,7 +11,7 @@ export default (props) => {
             { !sender && <strong>Bot</strong> }
             <p>{ props.sender || (!props.sender && text) ? text : 'cyber answer...' }</p>
             <span className="metadata">
-                    <span className="time">01:05 PM</span>
+                <span className="time">01:05 PM</span>
             </span>
         </div>
     )

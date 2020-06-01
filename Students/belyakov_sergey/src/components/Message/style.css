@@ -1,0 +1,32 @@
+.message-field {
+  box-sizing: border-box;
+}
+
+.message-field h5 {
+  margin: 0;
+}
+
+.message-field_user {
+  text-align: right;
+}
+
+.message-field_user__bg-color,
+.message-field_bot__bg-color {
+  display: inline-block;
+  padding: 10px;
+  min-width: 100px;
+  max-width: 75%;
+  margin: 2px;
+  border-radius: 10px;
+  text-align: left;
+  box-shadow: 1px 1px 2px 0 rgba(0, 0, 0, 0.25);
+  word-wrap: break-word;
+}
+
+.message-field_user__bg-color {
+  background-color: rgb(221, 229, 251);
+}
+
+.message-field_bot__bg-color {
+  background-color: rgb(255, 255, 255);
+}

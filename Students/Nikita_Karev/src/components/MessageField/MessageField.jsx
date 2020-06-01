@@ -4,9 +4,9 @@ import ReactDom from 'react-dom';
 import './style.css';
 
 //material-ui
-import { TextField, FloatingActionButton } from 'material-ui';
-import SendIcon from 'material-ui/svg-icons/content/send';
-import Button from '@material-ui/core/Button';
+import { TextField } from 'material-ui';
+import { IconButton } from '@material-ui/core';
+import { Send } from '@material-ui/icons';
 import Grid from '@material-ui/core/Grid';
 import AccountCircle from '@material-ui/icons/AccountCircle';
 
@@ -26,41 +26,47 @@ class MessagesField extends Component {
 
     handleSend = (text, sender) => {
         this.setState({ text: ''});
-        if (sender == 'John Carmack') {
+        if (sender == this.props.user && text !== '') {
             this.sendMessage(text, sender);
         }
     }
 
-    sendMessage = (text, sender) => {
+    sendMessage(text, user) {
         let { messages } = this.props;
         let messageId = Object.keys(messages).length + 1;
+        if (user === this.props.user) {
+            this.props.sendMessage(messageId, user, text);
+            this.setState({text: ''});
+            document.getElementById('message-input').value = '';
+        } else {
+            this.props.sendMessage(messageId, user, text);
+        }
         //вызов Action
-        this.props.sendMessage(messageId, sender, text);
+        // this.props.sendMessage(messageId, sender, text);
     }
 
     handleChange = (evt) => {
-        // if (evt.keyCode !== 13) this.setState({ text: evt.target.value })
-        evt.keyCode !== 13 ?
-            this.setState({ text: evt.target.value }) :
-            this.handleSend(evt);
+        // this.setState({ text: value });
+        if (evt.keyCode !== 13) {
+            this.setState({ text: evt.target.value });
+        } else {
+            this.handleSend(evt.target.value, this.props.user);
+        }
     }
 
-    // componentDidUpdate() {
-    //     let messages_ = this.state.messages
-    //     if (messages_.length % 2 === 1) {
-    //         setTimeout (() => {
-    //             this.setState ({
-    //                 messages: [...this.state.messages, {
-    //                     user: 'Bot',
-    //                     text: 'Auto-answer'}]
-    //             });
-    //         }, 1000)
-    //     }
-    // }
+    componentDidUpdate(prevProps, prevState) {
+        let { messages } = this.props;
+        if (this.props.messages[Object.keys(messages).length].user != null &&
+            Object.keys(prevProps.messages).length !== Object.keys(messages).length) {      // на каждое сообщение - ответ бота
+            setTimeout(() => {
+                this.sendMessage('Auto-answer from Bot', null);
+            }, 1000);
+        };
+        window.scrollTo({ top: 999999, behavior: "smooth"});
+    }   
 
     render() {
-        //let { user } = this.props;
-        let { messages } = this.props;
+        let { messages, users } = this.props;
 
         let msgArr = []
         
@@ -72,44 +78,13 @@ class MessagesField extends Component {
         });
 
         return (
-            <div className="d-flex w-100 wrapper">
-                
-                <div>
-                    <div className="dialog-list">
-                        <div className="dialog-list-item">Mick Gordon</div>
-                        <div className="dialog-list-item dialog-list-item-active">John Carmack</div>
-                        <div className="dialog-list-item">David Falkner</div>
-                        <div className="dialog-list-item">Cliff Bleszinski</div>
-                        <div className="dialog-list-item">John Romero</div>
-                        <div className="dialog-list-item">John Romero</div>
-                        <div className="dialog-list-item">John Romero</div>
-                        <div className="dialog-list-item">John Romero</div>
-                        <div className="dialog-list-item">John Romero</div>
-                        <div className="dialog-list-item">John Romero</div>
-                        <div className="dialog-list-item">John Romero</div>
-                        <div className="dialog-list-item">John Romero</div>
-                    </div>
-                </div>
-                
-                <div className="d-flex flex-column dialog-window">
-                    <span className="dialog-name mb-1">John Carmack | Last seen - 24/05/2020</span>
+            <div className="wrapper">
+                <div className="dialog-window">
+                    <span className="dialog-name mb-1"> John Carmack | Last seen - 24/05/2020</span>
                     <div className="message-field">
                         { msgArr }
                     </div>
-                    <div className="d-flex justify-content-center controls w-100 mt-2">
-                        {/* <TextField
-                            name="input"
-                            fullWidth={ true }
-                            hintText="Введите сообщение"
-                            style={ { fontSize: '22px' } }
-                            onChange={ this.handleChange }
-                            onKeyUp={ this.handleChange }
-                            value={ this.state.text }
-                        /> 
-                        <FloatingActionButton 
-                            onClick={ () => this.handleSend(this.state.text, 'John Snow') }>
-                            <SendIcon />
-                        </FloatingActionButton> */}
+                    <div className="d-flex justify-content-center controls w-100 mt-1 message-text">
                         <Grid container spacing={1} alignItems="center">
                             <Grid item>
                                 <AccountCircle />
@@ -117,23 +92,20 @@ class MessagesField extends Component {
                             <Grid item>
                                 <TextField
                                     name="input" 
-                                    id="input-with-icon-grid" 
+                                    id="message-input" 
                                     label="With a grid"
-                                    hintText="Введите сообщение"
-                                    style={ { fontSize: '22px', width: '777px' } }
-                                    onChange={ this.handleChange }
-                                    onKeyUp={ this.handleChange }
-                                    value={ this.state.text } />
+                                    hintText="Write your message"
+                                    style={ { fontSize: '22px', width: '1120px' } }
+                                    onChange = { this.handleChange }
+                                    onKeyUp = { this.handleChange }
+                                    value = { this.state.text } />
                             </Grid>
                         </Grid>
-                        <Button
-                            onClick={ () => this.handleSend(this.state.text, 'John Carmack') }
-                            style= {{ outline: 'none', backgroundColor: '#00bcd4', borderRadius: '20px' }}
-                            variant="contained"
-                            color="primary"
-                            >
-                            <SendIcon />
-                        </Button>
+                        <IconButton
+                            disabled={ !this.state.text }
+                            onClick={ () => this.handleSend(this.state.text, this.props.user) }>
+                            <Send style= { { color: '#00bcd4', cursor: 'pointer' } }/>
+                        </IconButton>
                     </div>
                 </div>
             </div>
@@ -141,8 +113,9 @@ class MessagesField extends Component {
     } 
 }
 
-const mapStateToProps = ({ msgReducer }) => ({
-    messages: msgReducer.messages
+const mapStateToProps = ({ msgReducer, profileReducer }) => ({
+    messages: msgReducer.messages,
+    user: profileReducer.user
 });
 
 const mapDispatchToProps = dispatch => bindActionCreators({ sendMessage }, dispatch);

@@ -1,3 +1,46 @@
 .header
     border: 2px solid lightblue
     border-radius: 10px 10px 0 0
+    height: 10%
+    background-color: #f8f5f5
+
+.header_title
+    margin: 0 auto
+    text-align: center
+
+.header_menu__wrapper
+    display: flex
+    justify-content: flex-end
+    position: relative
+
+.header_menu__btn
+    margin-right: 10px
+    border: none
+    cursor: pointer
+    background: transparent
+    &:hover
+        opacity: 0.7
+
+.header_menu
+    border: 2px solid lightblue
+    border-radius: 5px
+    position: absolute
+    right: 100px
+    background-color: #f8f5f5
+    padding: 10px
+    z-index: 1
+
+// animation menu
+.option-enter
+    opacity: 0
+
+.option-enter.option-enter-active
+    opacity: 1
+    transition: opacity .5s ease
+
+.option-exit
+    opacity: 1
+
+.option-exit.option-exit-active
+    opacity: 0
+    transition: opacity .5s ease

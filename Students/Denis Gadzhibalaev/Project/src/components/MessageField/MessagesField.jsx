@@ -12,7 +12,6 @@ import { sendMessage } from '../../store/actions/messages_actions.js';
 import { bindActionCreators } from 'redux';
 import connect from 'react-redux/es/connect/connect';
 
-
 class MessagesField extends React.Component {
     constructor(props) {
         super(props);
@@ -20,11 +19,12 @@ class MessagesField extends React.Component {
         this.focusTextInput = React.createRef();
         this.state = {
             inputText: '',
-    }
+        }
     }
 
     changeInputText = (text, sender) => {
-        if (event.keyCode !== 13) {this.setState({ inputText: event.target.value }) 
+        if (event.keyCode !== 13) {
+            this.setState({ inputText: event.target.value }) 
             } else {
                 this.setState ({inputText: ''});
                 this.sendMessage(text, sender)
@@ -41,30 +41,35 @@ class MessagesField extends React.Component {
     }
 
     handleSend = (text, sender) => {
-        debugger
         if (this.state.inputText) {
              this.setState ({inputText: ''});
             if (sender == this.props.user) {
                 this.sendMessage(text, sender)
             }
-    }
+        }
     }
      
+    focusMessageInput = () => {
+        this.focusTextInput.current.focus();
+    }
+
+    scrollChat = (msgLenght) => {
+        if (msgLenght) {
+            this.messagesFieldContainer.current.scrollTop = this.messagesFieldContainer.current.scrollHeight;
+            }   
+    }
 
     componentDidUpdate(prevProps, prevState) {
         let { messages } = this.props;
         let messageId = Object.keys(messages).length + 1;
-        const userSendMessage = messages[Object.keys(messages).length].user;
+        const userSendLastMessage = messages[Object.keys(messages).length].user;
         const messagesLenghtIncreased = Object.keys(messages).length > Object.keys(prevProps.messages).length;
-
-        this.focusTextInput.current.focus();
-        if (messagesLenghtIncreased) {
-            this.messagesFieldContainer.current.scrollTop = this.messagesFieldContainer.current.scrollHeight;
-        }   
-        if ( userSendMessage && messagesLenghtIncreased) {
+        this.focusMessageInput();
+        this.scrollChat(messagesLenghtIncreased);
+        if ( userSendLastMessage && messagesLenghtIncreased) {
                 setTimeout(() => {
                     this.props.sendMessage(messageId, null, '');
-           }, 2000);
+                }, 2000);
             }
         
     }
@@ -72,7 +77,7 @@ class MessagesField extends React.Component {
     render() {
         let { messages } = this.props;
         const messagesArr = [];
-        Object.keys(messages).forEach(key => {
+        Object.keys(messages).map(key => {
             messagesArr.push(<Message key={ shortid.generate() } 
                                       sender={ messages[key].user } 
                                       text={ messages[key].text } />)
@@ -91,13 +96,13 @@ class MessagesField extends React.Component {
                    ref={ this.focusTextInput }
                    disabled = { (messages[Object.keys(messages).length].user ) ? true : false}
                    fullWidth={ true }
-                   hintText="Введите сообщение"
+                   hintText="Enter Message"
                    style={ { fontSize: '22px' } }
                    onChange= {this.changeInputText}
                    value={ this.state.inputText }
                    onKeyUp={ () => this.changeInputText(this.state.inputText, this.props.user) }
                />
-               <FloatingActionButton onClick={ () => this.handleSend(this.state.inputText, this.props.user) }>
+               <FloatingActionButton onClick={ () => this.handleSend(this.state.inputText, this.props.userName) }>
                    <SendIcon />
                </FloatingActionButton>
             </div> 
@@ -106,8 +111,9 @@ class MessagesField extends React.Component {
     }
 }
 
-const mapStateToProps = ({ msgReducer }) => ({
-    messages: msgReducer.messages
+const mapStateToProps = ({ msgReducer, prfReducer }) => ({
+    messages: msgReducer.messages,
+    user: prfReducer.userName
 });
 
 const mapDispathToProps = dispatch => bindActionCreators({ sendMessage }, dispatch);

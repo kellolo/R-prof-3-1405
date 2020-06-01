@@ -1,0 +1,14 @@
+input {
+    border-radius: 20px;
+}
+
+.msg-field {
+    padding: 10px;
+    flex-grow: 3;
+    overflow-y: scroll;
+    max-width: 70%;
+}
+
+.messages {
+    margin-top: auto;
+}

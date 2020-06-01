@@ -28,13 +28,18 @@
     "webpack-dev-server": "^3.11.0"
   },
   "dependencies": {
+    "@material-ui/core": "^4.10.0",
+    "@material-ui/icons": "^4.9.1",
     "bootstrap": "^4.5.0",
     "jquery": "^3.5.1",
     "material-ui": "^0.20.2",
     "popper.js": "^1.16.1",
+    "prop-types": "^15.7.2",
     "react": "^16.13.1",
     "react-dom": "^16.13.1",
     "react-redux": "^7.2.0",
+    "react-router-dom": "^5.2.0",
+    "react-transition-group": "^4.4.1",
     "redux": "^4.0.5",
     "shortid": "^2.2.15"
   }

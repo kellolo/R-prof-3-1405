@@ -1,0 +1,14 @@
+.chatlist {
+  width: 30%;
+}
+
+.chatlist a {
+  text-decoration: none;
+}
+.chatlist a:hover {
+  background-color: rgba(255, 229, 196, 0.19) !important;
+}
+
+.avatar {
+  background-color: #FFC1A7 !important;
+}

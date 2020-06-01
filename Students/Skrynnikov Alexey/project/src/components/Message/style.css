@@ -4,6 +4,10 @@
     border-radius: 20px;
     font-size: 18px;
     margin: 5px;
+    margin-bottom: 15px;
+    width: 75%;
+    align-self: flex-end;
+    text-align: right;
 }
 
 .msgbot {
@@ -12,4 +16,14 @@
     border-radius: 20px;
     font-size: 18px;
     margin: 5px;
+    margin-bottom: 15px;
+    width: 75%;
+}
+
+.msg p {
+    word-break: break-all;
+}
+
+.msgbot p {
+    word-break: break-all;
 }

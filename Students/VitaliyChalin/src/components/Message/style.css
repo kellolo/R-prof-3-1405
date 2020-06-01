@@ -1,8 +1,10 @@
 .message__wrapper {
     width: 70%;
+    margin-left: auto !important;
     background-color: rgba(37, 41, 50, .08) !important;
 }
 
 .message__wrapper.message__wrapper--Bot {
+    margin-left: 0 !important;
     background-color: #fff !important;
 }

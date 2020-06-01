@@ -1,30 +1,9 @@
+.globalWrapper {
+  height: calc(100% - 30px);
+}
+
 .wrapper {
   height: 100%;
-}
-
-.chatList {
-  border-right: 1px solid darkgoldenrod;
-  width: 20%;
-  padding: 20px;
-  overflow-y: scroll;
-}
-
-.chatListItem {
-  background-color: dimgray;
-  width: 100%;
-  color: antiquewhite;
-  height: 50px;
-  border-radius: 10px;
-  line-height: 50px;
-  padding: 0 20px;
-  margin-bottom: 5px;
-  overflow: hidden;
-  cursor: pointer;
-  font-size: 14px;
-}
-
-.chatListItemActive {
-  background-color: darkgoldenrod;
 }
 
 .chatWindow {
@@ -33,17 +12,13 @@
   padding: 5px 20px 20px 20px;
 }
 
-.chatName {
-  height: 30px;
-  text-align: center;
-  font-size: 14px;
-  font-weight: 200;
-}
-
 .msgList {
-  overflow-y: scroll;
+  overflow-y: auto;
   flex: 1 0 auto;
-  max-height: calc(100vh - 250px)
+  max-height: calc(100vh - 250px);
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
 }
 
 .inputBlock {

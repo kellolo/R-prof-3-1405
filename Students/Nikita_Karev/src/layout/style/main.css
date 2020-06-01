@@ -4,8 +4,12 @@ body {
     background-color: #191c21;
 }
 
+#app {
+    height: 100%;
+}
+
 h1 {
-    padding: 5px 15px;
+    padding: 15px 15px 15px 15px;
     font-size: 38px;
     margin: 5px;
     color: white;

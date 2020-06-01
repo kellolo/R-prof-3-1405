@@ -1,28 +1,31 @@
 import React from 'react';
 import ReactDom from 'react-dom';
-import 'bootstrap';
+import Router from './router.jsx';
+import { Provider } from 'react-redux';
+import { ConnectedRouter } from 'connected-react-router';
+import { PersistGate } from 'redux-persist/integration/react';
+import initStore, { history } from './store/store.js';
+
+/* import 'bootstrap'; */
 import 'bootstrap/dist/css/bootstrap.min.css';
+
 import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider.js';
 
 import './layout/style/main.css';
 
-//redux
-import { Provider } from 'react-redux';
-import initStore from './store/store.js';
-
-// components
-//import ChatList from './components/ChatList/ChatList.jsx';
-import Layout from './components/Layout/Layout.jsx';
-
-let container = document.getElementById('app');
-
-let user = 'Loontik';
+const container = document.getElementById('app');
+const { store, persistor } = initStore();
 
 ReactDom.render(
-    <Provider store={ initStore() }>
-        <MuiThemeProvider>
-            <Layout user={ user } />
-        </MuiThemeProvider>
-    </Provider>,
+    <Provider store={ store }>
+        <PersistGate loading={ null } persistor={ persistor }>
+            <ConnectedRouter history={ history }>
+                <MuiThemeProvider>
+                    <Router />
+                </MuiThemeProvider>
+            </ConnectedRouter>
+        </PersistGate>
+    </Provider>
+    ,
     container
 );

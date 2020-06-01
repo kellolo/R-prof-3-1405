@@ -1,86 +1,79 @@
-import React, { Component } from "react";
-import ReactDOM from "react-dom";
-import Message from './../Message/Message.jsx';
 
-export default class MessageField extends Component {
-	constructor(props) {
-		super(props)
-		this.state = {
-			text: '',
-			messages: [
-				{
-					user: 'Loontik',
-					text: 'Hi'
-				},
-				{
-					user: null,
-					text: 'Hello'
-				},
-				{
-					user: 'Loontik',
-					text: 'How are you?'
-				},
-				{
-					user: null,
-					text: 'Fine'
-				},
-			]
-		}
-	}
+import React, { Component } from 'react';
+import Message from '../Message/Message.jsx';
 
-	handleSend = (evt) => {
-		this.setState({
-			text: '',
-			messages: [...this.state.messages, {
-				user: this.props.user,
-				text: this.state.text,
-			}]
-		});
-	}
+import { TextField, FloatingActionButton } from 'material-ui';
+import SendIcon from 'material-ui/svg-icons/content/send';
 
-	handleChange = (evt) => {
-		evt.keyCode !== 13 ?
-			this.setState({ text: evt.target.value }) :
-			this.handleSend(evt)
-	}
+import './style.css'
 
-	componentDidUpdate() {
-		debugger
-		if (this.state.messages[this.state.messages.length - 2].user === 'Loontik'
-			&& this.state.messages[this.state.messages.length - 1].user === 'Loontik'
-			&& this.state.text.length === 0) {
-			setTimeout(() => {
-				this.setState({
-					text: '',
-					messages: [...this.state.messages, {
-						user: null,
-						text: '',
-					}]
-				});
-			}, 2000);
-		}
-	}
-	render() {
+import { sendMessage } from '../../store/actions/messages_actions.js';
+import { bindActionCreators } from 'redux';
+import connect from 'react-redux/es/connect/connect';
 
-		let messages = this.state.messages;
-		let msgArr = messages.map(msg => {
-			return (<Message text={msg.text} sender={msg.user} />);
-		});
-		return (<div className="d-flex flex-column w-50">
-			<div>
-				{msgArr}
-			</div>
-			<hr />
-			<div className="controls d-flex w-100">
-				<input
-					type="text"
-					className="w-75"
-					onChange={this.handleChange}
-					onKeyUp={this.handleChange}
-					value={this.state.text}
-				/>
-				<button className="ml-3" onClick={this.handleSend}>Send</button>
-			</div>
-		</div>)
-	}
+class MessagesField extends Component {
+    constructor(props) {
+        super(props)
+        this.state = {
+            text: ''
+        }
+    }
+
+    handleSend = (text, sender) => {
+        this.setState({ text: '' });
+        if (sender == 'Me') {
+            this.sendMessage(text, sender)
+        }
+    }
+    sendMessage = (text, sender) => {
+        let { messages } = this.props;
+        let messageId = Object.keys(messages).length + 1;
+        
+        this.props.sendMessage(messageId, sender, text)
+    }
+    handleChange = (evt) => {
+        if (evt.keyCode !== 13) {
+            this.setState({ text: evt.target.value })
+        }
+    }
+
+    render() {
+
+        let { messages } = this.props;        
+        let msgArr = [];
+        Object.keys(messages).forEach(key => {
+            msgArr.push(<Message
+                text={messages[key].text}
+                sender={messages[key].user}
+                key={key} 
+                />);
+        });
+        return (<div className="d-flex flex-column msgPosition">
+            <div>
+                {msgArr}
+            </div>
+            <hr />
+            <div className="controls d-flex w-100">
+                <TextField                    
+                    id="outlined-basic"
+                    label="Outlined"
+                    variant="outlined"
+                    onChange={this.handleChange}
+                    onKeyUp={this.handleChange}
+                    value={this.state.text}
+                />
+                <FloatingActionButton className="ml-3" onClick={() => this.handleSend(this.state.text, 'Me')}>
+                    <SendIcon />
+                </FloatingActionButton>
+            </div>
+        </div>)
+    }
 }
+
+const mapStateToProps = ({ msgReducer }) => ({
+    messages: msgReducer.messages
+});
+
+const mapDispatchToProps = dispatch => bindActionCreators({ sendMessage }, dispatch);
+
+export default connect(mapStateToProps, mapDispatchToProps)(MessagesField)

@@ -1,0 +1,26 @@
+.enter-text {
+    margin: 10px 0;
+}
+
+.chat-text {
+    width: 1000px;
+    margin: 0 15px; 
+    border-left:1px solid rgb(224, 225, 236);
+    padding-left:15px;
+}   
+
+.mass-text {
+    font-size: 20px;
+	font-weight: normal;
+    max-width: 730px;	
+}
+
+.button-text, 
+.button-text:active, 
+.button-text:focus {
+    outline: none;
+}
+
+button.MuiButtonBase-root.MuiButton-root.MuiButton-outlined.ml-3.button-text {
+    border: none;
+}

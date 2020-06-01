@@ -1,1 +1,31 @@
-i
+.send-message-form {
+  display: flex;
+  align-items: flex-end;
+  margin-bottom: 10px;
+}
+
+.send-message-btn {
+  border: 0;
+  padding: 0;
+  margin: 0 0 0 10px;
+  background-color: inherit;
+  cursor: pointer;
+  outline: none;
+}
+
+.send-message-btn svg {
+  fill: #cccccc;
+}
+
+.send-message-btn:hover {
+  fill-opacity: 1;
+  fill: #5f75b6;
+}
+
+.send-message-btn.action svg {
+  fill: #5f75b6;
+}
+
+.send-message-btn.action svg:hover {
+  fill: #7283b0;
+}

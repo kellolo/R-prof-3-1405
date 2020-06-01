@@ -1,0 +1,8 @@
+h2 {
+    text-align: center;
+}
+
+.contact-list {
+    background-color: #f7f7f7;
+    flex-grow: 2;
+}

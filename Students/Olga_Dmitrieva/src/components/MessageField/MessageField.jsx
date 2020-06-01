@@ -34,20 +34,8 @@ class MessagesField extends Component {
 
     handleChange = (evt) => {
         if (evt.keyCode !== 13) this.setState({ text: evt.target.value })
-            // evt.keyCode !== 13 ? 
-            // this.setState({ text: evt.target.value }) :
-            // this.handleSend(evt)
     }
-
-    // componentDidUpdate() {
-    //     setTimeout(() => {
-    //         console.log(`Bot answers`)
-    //     }, 1000);
-    //     // console.log(``)
-    // }
-
     render() {
-        // let { user } = this.props;
         let { messages } = this.props;
 
         let msgArr = []
@@ -59,7 +47,7 @@ class MessagesField extends Component {
                 key = { key }/>);
         });
 
-        return (<div className="d-flex flex-column messageField-block w-75">
+        return (<div className="d-flex flex-column messageField-block w-100">
                     <div className="msg-box">
                         { msgArr }
                     </div>

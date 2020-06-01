@@ -1,0 +1,42 @@
+.chatList {
+  border-right: 1px solid darkgoldenrod;
+  width: 20%;
+  padding: 20px;
+}
+
+.chatListInner {
+  height: 90%;
+  overflow-y: auto;
+}
+
+.chatAdder {
+  height: 10%;
+}
+
+.chatListItem {
+  position: relative;
+  background-color: dimgray;
+  width: 100%;
+  color: antiquewhite;
+  height: 50px;
+  border-radius: 10px;
+  line-height: 50px;
+  padding: 0 20px;
+  margin-bottom: 5px;
+  overflow: hidden;
+  cursor: pointer;
+  font-size: 12px;
+}
+
+.deleteIcon {
+  position: absolute;
+  right: 15px;
+}
+
+.chatListItem:hover {
+  background-color: darkgoldenrod;
+}
+
+.chatListItemActive {
+  background-color: darkgoldenrod;
+}

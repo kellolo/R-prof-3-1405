@@ -1,6 +1,5 @@
 import React, { Component } from 'react';
 // import ReactDom from 'react-dom';
-import 'bootstrap';
 
 // styles
 
@@ -14,7 +13,6 @@ import Message from '../Message/Message.jsx';
 
 import { Send, AttachFile } from '@material-ui/icons';
 import MicIcon from '@material-ui/icons/Mic';
-import AttachFileIcon from '@material-ui/icons/AttachFile';
 import { IconButton, TextField, Button } from '@material-ui/core';
 
 // redux 
@@ -61,23 +59,14 @@ class MessagesField extends Component {
 
     }
 
-    componentDidUpdate(evt) { // Апдейт компонента по условиям тернарника
+    componentDidUpdate() { // Апдейт компонента 
+
          setTimeout(() => {
-           
-         }, 2000)
-         
+
+          }, 2000)
     }
+
     
-    // shouldComponentUpdate() { // Если я - последний сендер, то меняем на бота
-    //     if(this.state.lastSender == 'Me') {
-    //         this.setState({
-    //             lastSender: 'Bot',
-    //             user: 'Bot'
-    //         }) 
-    //     } else {
-    //         return true // Если бот последний - тру 
-    //     }
-    // }
 
     render() {
          
@@ -99,42 +88,43 @@ class MessagesField extends Component {
         return (
             <div className="d-flex container flex-column w-100">
                 <div className="d-flex flex-column messagesField overflow-auto w-100">
-                    <div key={messages.user}>
                     { msgArr }    
-                    </div>
                 </div>
                 <hr/>
                 <div className="d-flex w-75">
                     <Button>
-                    <AttachFile style={{
-                        display: 'flex',
-                        alignSelf: 'center'
-                    }} />
+                        <AttachFile style={{
+                            display: 'flex',
+                            alignSelf: 'center'
+                            }} 
+                        />
                     </Button>
                     <Button>
-                    <MicIcon style={{
-                        display: 'flex',
-                        alignSelf: 'center'
-                    }}/>
+                        <MicIcon style={{
+                            display: 'flex',
+                            alignSelf: 'center'
+                            }}
+                        />
                     </Button>
-                    <TextField
-                        id="input-message"
-                        size="small"
-                        variant="outlined"
-                        style={{
-                            backgroundColor: 'white',
-                        }}
-                        fullWidth
-                        label="Type your message"
-                        onChange={this.handleChange }
-                        onKeyUp={this.handleChange } 
-                        value={ this.state.text }/>
-                        <IconButton
-                            id="sendButton"
-                            color="primary"
-                            onClick={ () => this.handleSend(this.state.text, 'Me') }>
-                            <Send />
-                        </IconButton>
+                        <TextField
+                            id="input-message"
+                            size="small"
+                            variant="outlined"
+                            style={{
+                                backgroundColor: 'white',
+                            }}
+                            fullWidth
+                            label="Type your message"
+                            onChange={this.handleChange }
+                            onKeyUp={this.handleChange } 
+                            value={ this.state.text }
+                        />
+                            <IconButton
+                                id="sendButton"
+                                color="primary"
+                                onClick={ () => this.handleSend(this.state.text, 'Me') }>
+                                    <Send />
+                            </IconButton>
                 </div>
             </div>
         )

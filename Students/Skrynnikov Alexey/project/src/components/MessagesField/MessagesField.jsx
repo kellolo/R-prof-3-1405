@@ -5,6 +5,8 @@ import SendIcon from 'material-ui/svg-icons/content/send';
 
 import Message from '../Message/Message.jsx';
 
+import "./style.css";
+
 import { sendMessage } from '../../store/actions/messages_actions.js';
 import { bindActionCreators } from 'redux';
 import connect from 'react-redux/es/connect/connect';
@@ -20,7 +22,7 @@ class MessagesField extends Component {
 
     handleSend = (text, sender) => {
         this.setState({text: ''});
-        if(sender == 'Me' && text !== "") {
+        if(sender == this.props.user && text !== "") {
             this.sendMessage(text, sender);
         }
     };
@@ -33,27 +35,14 @@ class MessagesField extends Component {
     }
 
     handleChange = (evt) => {
-        if (evt.keyCode !== 13) this.setState({ text: evt.target.value });
-        // evt.keyCode !== 13 ?
-        //     this.setState({ text: evt.target.value }) :
-        //     this.handleSend(evt)
-    };
-
-    // componentDidUpdate() {
-    //     if(this.state.messages[this.state.messages.length - 1].user && this.state.messages.length % 2 == 1){
-    //         setTimeout(() => {
-    //             this.setState({
-    //                 messages: [...this.state.messages, {
-    //                   user: null,
-    //                   text: 'Bot answers'
-    //                 }]
-    //             })
-    //         }, 500);
-    //     }
-    // }    
+        if (evt.keyCode !== 13) {
+            this.setState({ text: evt.target.value });
+        } else {
+            this.handleSend(evt.target.value, this.props.user);
+        }
+    };   
 
     render() {
-        // let { user } = this.props;
         let { messages } = this.props;
 
         let msgArr = [];
@@ -65,33 +54,38 @@ class MessagesField extends Component {
                 key = { key }/>)
         });
 
-        return (<div className="d-flex flex-column w-50">
-                    <div>
+        return (<div className = "d-flex flex-column msgfield">
+                    <div className = "msgs">
                         { msgArr }
                     </div>
                     <hr/>
-                    <div className="controls d-flex w-100">
+                    <div className = "d-flex w-80 textblock">
                         <TextField
                         name="input"
-                        fullWidth={ true }
-                        hintText='Введите сообщение' 
-                        type="text" 
-                        className="w-75"
-                        onChange={ this.handleChange }
-                        onKeyUp={ this.handleChange }
-                        value={ this.state.text }
+                        fullWidth = { true }
+                        hintText = 'Введите сообщение' 
+                        type = "text" 
+                        onChange = { this.handleChange }
+                        onKeyUp = { this.handleChange }
+                        value = { this.state.text }
                         />
-                        <FloatingActionButton className="ml-3" onClick={ () => this.handleSend(this.state.text, 'Me') }>
+                        <FloatingActionButton 
+                        onClick = { () => this.handleSend(this.state.text, this.props.user) }
+                        disabled = { !this.state.text }
+                        disabledColor = 'rgb(243, 243, 243)'
+                        className = "ml-3"
+                        >
                             <SendIcon />
                         </FloatingActionButton>  
                     </div>
                 </div>    
-                )
+                );
     };
 }
 
-const mapStateToprops = ({ msgReducer }) => ({
-    messages: msgReducer.messages
+const mapStateToprops = ({ msgReducer, profReducer }) => ({
+    messages: msgReducer.messages,
+    user: profReducer.user
 });
 
 const mapDispatchToProps = dispatch => bindActionCreators({ sendMessage }, dispatch);

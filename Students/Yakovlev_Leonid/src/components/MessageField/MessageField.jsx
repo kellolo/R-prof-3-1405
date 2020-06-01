@@ -1,87 +1,109 @@
 //container
 import React, { Component } from 'react';
-// import ReactDom from 'react-dom';
+//import ReactDom from 'react-dom';
+import Button from '@material-ui/core/Button';
+import TextField from '@material-ui/core/TextField';
+import './style.css';
 
 import Message from '../Message/Message.jsx';
 
-export default class MessagesField extends Component {
+import { sendMessage } from '../../store/actions/messages_actions.js';
+import { bindActionCreators } from 'redux';
+import connect from 'react-redux/es/connect/connect';
+import ContentSend from 'material-ui/svg-icons/content/send';
+
+
+
+
+class MessagesField extends Component {
     constructor(props) {
         super(props)
         this.state = {
-            text: '',
-            messages: [
-                {
-                    user: 'Loontik',
-                    text: 'Hi'
-                },
-                {
-                    user: null,
-                    text: 'Hello'
-                },
-                {
-                    user: 'Loontik',
-                    text: 'How are you?'
-                },
-                {
-                    user: null,
-                    text: 'Fine'
-                },
-            ]
+            text: ''
+        }
+    } 
+    
+    handleSend = (text, sender) => {
+        this.setState({text: ''});
+        if (sender == 'Me') {
+            this.sendMessage(text, sender)
         }
     }
 
-    handleSend = (evt) => {
-        this.setState({
-            text: '',
-            messages: [...this.state.messages, { 
-                user: this.props.user, 
-                text: this.state.text 
-            }]
-        });
+    sendMessage = (text, sender) => {
+        let { messages } = this.props;
+        let messageId = Object.keys(messages).length + 1;
+        //вызов Action
+        this.props.sendMessage(messageId, sender, text);
     }
 
     handleChange = (evt) => {
-        evt.keyCode !== 13 ? 
-            this.setState({ text: evt.target.value }) :
-            this.handleSend(evt)
+        if (evt.keyCode !== 13) this.setState({ text: evt.target.value })
+            // evt.keyCode !== 13 ? 
+            // this.setState({ text: evt.target.value }) :
+            // this.handleSend(evt)
     }
 
-    componentDidUpdate() {
-        if(this.state.messages[this.state.messages.length - 1].user && this.state.messages.length % 2 == 1){
-            setTimeout(() => {
-                this.setState({
-                    messages: [...this.state.messages, {
-                      user: null,
-                      text: 'Извините, не понял вас. Попробуйте еще раз'
-                    }]
-                })
-            }, 1000);
-        }
-    }
+    // componentDidUpdate() {
+    //     setTimeout(() => {
+    //         console.log(`Bot answers`)
+    //     }, 1000);
+    //     // console.log(``)
+    // }
 
     render() {
-        let { user } = this.props;
-        let { messages } = this.state;
+        // let { user } = this.props;
+        let { messages } = this.props;
 
-        let msgArr = messages.map(msg => {
-            return (<Message text={ msg.text } sender={ msg.user } />);
+        let msgArr = []
+        
+        Object.keys(messages).forEach(key => {
+            msgArr.push (<Message 
+                text={ messages[key].text } 
+                sender={ messages[key].user } 
+                key = { key }/>);
         });
 
-        return (<div className="d-flex flex-column w-50">
-                    <div>
+
+        return (<div className="d-flex flex-column chat-text">
+                    <div className="d-flex flex-column mass-text">
                         { msgArr }
-                    </div>
-                    <hr/>
-                    <div className="controls d-flex w-100">
-                        <input 
+                    </div>                    
+                    <div className="controls d-flex w-100  enter-text">
+                        {/* <input 
+                            type="text" 
+                            className="w-75 inputText"
+                            onChange={ this.handleChange }
+                            onKeyUp = { this.handleChange }
+                            value={ this.state.text }
+                        />    */}
+                        <TextField
                             type="text" 
                             className="w-75"
                             onChange={ this.handleChange }
                             onKeyUp = { this.handleChange }
                             value={ this.state.text }
-                        />
-                        <button className="ml-3" onClick={ this.handleSend }>Send</button>
+                            id="standard-textarea"
+                            label="Введите сообщение"
+                            placeholder="Ваше сообщение"
+                            multiline                                
+                        />                   
+                        <Button  
+                            className="ml-3 button-text" 
+                            onClick={ () => this.handleSend(this.state.text, 'Me') } 
+                            variant="outlined">
+                            <ContentSend />
+                        </Button>                                                
                     </div>
                 </div>)
     }
 }
+
+const mapStateToProps = ({ msgReducer }) => ({
+    messages: msgReducer.messages
+});
+
+const mapDispatchToProps = dispatch => bindActionCreators({ sendMessage }, dispatch);
+
+
+export default connect(mapStateToProps, mapDispatchToProps)(MessagesField);

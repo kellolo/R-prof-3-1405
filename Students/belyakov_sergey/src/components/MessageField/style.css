@@ -1,0 +1,22 @@
+.messages-field {
+  width: 70%;
+  padding: 10px;
+  height: calc(100vh - 50px);
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+}
+
+.messages-field.hidden {
+  display: flex;
+}
+
+@media screen and (max-width: 768px) {
+  .messages-field {
+    width: 100%;
+  }
+
+  .messages-field.hidden {
+    display: none;
+  }
+}

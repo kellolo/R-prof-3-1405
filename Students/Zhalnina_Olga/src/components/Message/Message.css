@@ -1,0 +1,25 @@
+.msg {
+  margin: 5px;
+  padding: 5px 15px;
+  min-width: 100px;
+  max-width: 500px;
+  word-break: break-all;  
+  box-shadow: 2px 4px 4px rgba(255, 229, 196, 0.37);
+  border-radius: 8px;
+  font-size: 16px;
+  color: #2a2a2a;
+}
+
+.msg p {
+  margin: 0;
+}
+
+.sender {
+  background: #F0FFFE;
+  align-self: flex-end;
+}
+
+.bot {
+  background: #FFFFFF;
+  align-self: flex-start;
+}

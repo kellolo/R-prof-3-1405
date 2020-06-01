@@ -1,0 +1,31 @@
+.layout {
+    height: 100%;
+    width: 70%;
+    margin-left: auto;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+}
+
+.message-field {
+    display: flex;
+    flex-direction: column;
+    background-color: #e2e2e2;
+    height: 60vh;
+    width: 100%;
+    padding: 20px;
+    overflow-y: scroll;
+}
+
+.inputMsg {
+    margin-top: 20px;
+    width: 95%;
+    display: flex;
+}
+
+button, 
+button:active, 
+button:focus {
+    outline: none;
+}

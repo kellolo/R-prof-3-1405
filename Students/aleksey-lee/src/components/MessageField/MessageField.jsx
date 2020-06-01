@@ -1,4 +1,3 @@
-//container
 import React, { Component } from 'react';
 // import ReactDom from 'react-dom';
 import { TextField, FloatingActionButton } from 'material-ui';
@@ -18,8 +17,8 @@ class MessagesField extends Component {
         this.state = {
             text: ''
         }
-        // создадим ref в поле `textInput` для хранения DOM-элемента
-       this.textInput = React.createRef();
+        
+        this.textInput = React.createRef();
     }
 
     handleSend = (text, sender) => {
@@ -36,43 +35,34 @@ class MessagesField extends Component {
         this.props.sendMessage(messageId, sender, text);
     }
 
-    // Ставим фокус на <input> при монтировании компонента
     componentDidMount() {
         this.textInput.current.focus();
     }
 
 
-    // componentDidUpdate() {
-    //     if (this.state.messages.length%2 == 1 && this.state.lastUser !== 'Bot') {
-    //         setTimeout(() => {
-    //             this.setState({
-    //                 messages: [
-    //                     ...this.state.messages, {
-    //                         text: 'Bot answer',
-    //                         user: 'Bot'
-    //                     }
-    //                 ],
-    //                 lastUser: 'Bot'
-    //             });
-    //         }, 1000);
-    //     }
-    // }
+    componentDidUpdate() {
+        this.scrollToBottom();
+    }
+    scrollToBottom = () => {
+        this.messagesEnd.scrollIntoView({ behavior: "smooth", block: "end", inline: "nearest" });
+    }
 
     render() {
-        // let { user } = this.props;
         let { messages } = this.props;
 
         let msgArr = []
         
         Object.keys(messages).forEach(key => {
-            msgArr.push (<Message 
+            msgArr.push (<div ref={(el) => { this.messagesEnd = el; }} 
+            key={key}>
+            <Message 
                 text={ messages[key].text } 
-                sender={ messages[key].user } 
-                key = { key }/>);
+                sender={ messages[key].user }
+            /></div>);
         });
 
-        return (<div className="d-flex flex-column w-100">
-                    <div className="mb-3">
+        return (<div className="d-flex flex-column w-100 h-100 pb-3">
+                    <div className="mb-3 flex-grow-1 chat__list">
                         { msgArr }
                     </div>
                     <form className="controls d-flex w-100" onSubmit={ (e) => { this.handleSend(this.state.text, 'Me');e.preventDefault() } } autoComplete="off">

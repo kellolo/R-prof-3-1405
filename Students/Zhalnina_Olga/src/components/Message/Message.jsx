@@ -1,14 +1,13 @@
 import React from 'react';
 import ReactDom from 'react-dom';
-import './style.css';
+import './Message.css';
 
 export default (props) => {    
     let { sender, text } = props;
     return (
-        <div className="d-flex flex-column msg">
-            {/* <strong>{ sender }</strong> */}
+        <div className={`msg ${!sender ? "bot" : "sender"}`}>
             { sender && <strong>{ sender }</strong> }
-            { !sender && <strong className="bot">Bot</strong> }
+            { !sender && <strong>Bot</strong> }
             <p>{ text }</p>
         </div>
     )

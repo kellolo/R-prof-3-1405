@@ -1,10 +1,7 @@
 import update from 'react-addons-update';
 
 //import actions
-import {
-  SEND_MSG
-} from '../actions/messages_actions.js';
-
+import {SEND_MSG} from '../actions/messages_actions.js';
 
 const initialStore = {
   messages: {

@@ -1,15 +1,31 @@
 .msg {
-  background-color: rgb(255, 243, 228);
+  background-color: rgb(243, 243, 243);
   padding: 5px 20px;
   border-radius: 10px;
-  font-size: 18px;
+  font-size: 16px;
   margin: 5px;
+  width: 70%;
+}
+
+.msgSelf {
+  align-self: flex-end;
+  text-align: right;
+  background-color: rgb(255, 243, 228);
+}
+
+.msg:hover {
+  background-color: rgb(240, 240, 240);
+}
+
+.msgSelf:hover {
+  background-color: rgb(253, 240, 225);
 }
 
 .msg p {
   font-weight: 300;
-  font-size: 15px;
+  font-size: 12px;
   margin: 0;
+  word-break: break-all;
 }
 
 .authorMsg {

@@ -29,28 +29,35 @@ const rightIconMenu = (
 export default (props) => {
 
     let { sender, text } = props;
+    let customClasses = '';
+
+    let customStyles = {
+        border: "1px solid #bbc5dd",
+        borderRadius: "10px",
+        marginBottom: "15px"
+    };
 
     sender ? sender = sender : sender = 'Bot';
 
+    if(sender !== 'Bot') {
+        customClasses = 'message__wrapper message__wrapper--'+sender;
+    } else {
+        customClasses = 'message__wrapper message__wrapper--Bot';
+    }
+
     return (
         <ListItem
-            className={sender ?
-                'message__wrapper message__wrapper--'+sender :
-                'message__wrapper message__wrapper--Bot'}
+            className={ customClasses }
             leftAvatar={<Avatar src="https://via.placeholder.com/64" className="user__avatar" />}
             rightIconButton={ rightIconMenu }
             primaryText={ sender }
             secondaryText={
-            <p>
-                { text }
-            </p>
+                <p>
+                    { text }
+                </p>
             }
-            secondaryTextLines={2}
-            style={{
-                border: "1px solid #bbc5dd",
-                borderRadius: "10px",
-                marginBottom: "15px"
-            }}
+            secondaryTextLines={ 2 }
+            style={ customStyles }
         />
     )
 };

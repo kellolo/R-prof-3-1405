@@ -1,0 +1,35 @@
+.header {
+    position: relative;
+}
+
+.header-appbar {
+    font-family: 'Montserrat', sans-serif;
+}
+  
+.btn {
+    position: absolute;
+    background-color: #191c21;
+    border-radius: 50%;
+}
+  
+.btn, .btn:focus {
+    outline: none;
+    border: none;
+    width: 40px;
+    height: 40px;
+}
+  
+.header-profile-btn {
+    left: 25px;
+    top: 23px;
+    color: #00bcd4;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: transform 0.7s ease-out;
+}
+
+.header-profile-btn:hover {
+    transform: rotate(360deg);
+    color: white;
+}

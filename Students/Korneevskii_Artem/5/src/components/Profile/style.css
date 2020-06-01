@@ -1,0 +1,13 @@
+.profile {
+    margin: 10px 10px 10px 14px;
+    padding: 0;
+    background-color: #ffffff;   
+    border: 1px solid lightskyblue;  
+    border-radius: 7px;  
+    list-style: none;   
+    width: 100%;
+}
+
+.profile li {
+    margin: 10px;
+}

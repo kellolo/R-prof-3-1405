@@ -1,4 +1,30 @@
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+a, a:hover {
+  text-decoration: none;
+}
+
+html {
+  min-height: 100vh;
+}
+
 body {
+    box-sizing: border-box;
     margin: 0;
     padding: 0;
+    height: 100vh;
+}
+
+#app {
+  width: 100%;
+  min-width: 1200px;
+  max-width: 1600px;
+  height: calc(100% - 50px);
+  margin: 0 auto;
+  padding: 15px;
+  border-radius: 5px;
 }

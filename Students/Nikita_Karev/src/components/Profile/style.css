@@ -1,0 +1,18 @@
+.profile-wrapper {
+  font-family: 'Montserrat', sans-serif;
+  margin-top: 275px;
+  height: 90%;
+}
+
+.profile-form {
+  margin: 0 auto;
+  padding: 10px 0;
+  width: 50%;
+  height: calc(100% - 30px);
+  text-align: center;
+}
+
+.profile-form 
+.name-input {
+  margin-top: 10px;
+}

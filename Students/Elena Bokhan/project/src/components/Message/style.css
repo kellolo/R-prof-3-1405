@@ -1,7 +1,22 @@
 .msg {
-    background-color: lightblue;
+    background-color: rgb(186, 226, 240);
     padding: 5px 15px;
     border-radius: 20px;
     font-size: 18px;
     margin: 5px;
+}
+.msgSender{
+    border-bottom-left-radius: 0;
+}
+.msgBot{
+    border-bottom-Right-radius: 0;
+    text-align: right;
+}
+.msgAvatar img{
+    width:50px ;  
+	margin: 10px ;
+	border-radius: 50%;
+}
+.msgBot img{
+    float: left;
 }

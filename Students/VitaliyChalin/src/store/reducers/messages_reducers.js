@@ -7,7 +7,7 @@ const initialStore ={
     
     messages: {
         1: {
-                user: 'Loontik',
+                user: 'Me',
                 text: 'Lorem, ipsum dolor sit amet consectetur adipisicing elit. Quidem, ratione'
             },
         2: {
@@ -15,7 +15,7 @@ const initialStore ={
                 text: 'Lorem ipsum dolor sit amet'
             },
         3: {
-                user: 'Loontik',
+                user: 'Me',
                 text: 'Lorem ipsum, dolor sit amet consectetur adipisicing elit. Architecto, voluptatum quasi?'
             },
         4: {
@@ -25,11 +25,13 @@ const initialStore ={
     },
 }
 
+
+
 export default function msgReducer(store = initialStore, action) {
     switch (action.type) {
         case SEND_MSG: {
             return update(store, {
-                messages: { $merge: { [action.messageId]: { user: action.sender, text: action.text } } }
+                messages: { $merge: { [action.messageId]: { user: action.sender, text: action.text, chatId: action.chatId } } }
             })
         }
         default:

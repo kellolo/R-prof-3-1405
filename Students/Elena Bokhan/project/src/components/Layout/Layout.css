@@ -1,0 +1,7 @@
+.msgList {
+	background-color: rgb(230, 253, 255);
+	height: max-content;
+	height: 500px;
+	overflow-y: scroll;
+	
+}

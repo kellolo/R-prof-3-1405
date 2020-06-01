@@ -6,6 +6,14 @@ const path = require('path');
 
 
 module.exports = {
+    
+    devServer: {
+        port: 8080, 
+        historyApiFallback: {
+            index: 'index.html'
+        },
+    },
+
     entry: {
         // точка входа до index.js
             main: path.resolve(__dirname, 'src', 'index.jsx')
@@ -16,6 +24,7 @@ module.exports = {
             filename: path.join('js', 'bundle.js')
     },
     target: 'web',    // настройка типа сборки 
+    
     module: {
         rules: [
             {

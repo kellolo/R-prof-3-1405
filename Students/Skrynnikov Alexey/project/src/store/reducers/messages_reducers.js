@@ -5,7 +5,7 @@ import { SEND_MSG } from '../actions/messages_actions.js';
 const initialStore = {
     messages: {
         1: {
-            user: "Me",
+            user: 'Me',
             text: 'Hi'
         },
         2: {

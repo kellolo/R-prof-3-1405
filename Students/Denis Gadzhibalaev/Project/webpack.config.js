@@ -3,6 +3,13 @@ const HtmlWebpackPlugin = require('html-webpack-plugin');
 const path = require('path');
 
 module.exports = {
+    devtool: 'cheap-inline-module-source-map',
+    devServer: {
+        port: 8080,
+        historyApiFallback: {
+            index: 'public/index.html'
+        }
+     },  
     entry: {
         main: path.resolve(__dirname, 'src', 'index.jsx')
     },

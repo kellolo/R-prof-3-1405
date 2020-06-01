@@ -1,15 +1,22 @@
 import React, { Component } from 'react';
-import ReactDom from 'react-dom';
-import 'bootstrap';
 
 import Header from '../Header/Header.jsx';
 import ChatList from '../ChatList/ChatList.jsx';
 import MessagesField from '../MessageField/MessageField.jsx';
-import initStore from '../../store/store.js';
 
 import { Container, Grid } from '@material-ui/core'
 
-export default class Layout extends Component {
+import PropTypes from 'prop-types';
+
+export default class Layout extends React.Component {
+    static propTypes = {
+        chatId: PropTypes.number
+      } 
+  
+      static defaultProps = {
+        chatId: 1
+      }
+
     render() {
         return (
             <Container 
@@ -22,7 +29,7 @@ export default class Layout extends Component {
                     height: '700px'
                     }}>
 
-                    <Header></Header>
+                    <Header chatId={this.props.chatId} />
 
                     <Grid container spacing={3}
                         style={{
@@ -46,7 +53,7 @@ export default class Layout extends Component {
                                 borderTopLeftRadius: '1.5em',
                             }}
                             >
-                                <MessagesField store={initStore()} />
+                                <MessagesField />
                         </Grid>
                             <Grid
                                 container
@@ -60,8 +67,7 @@ export default class Layout extends Component {
                                     borderBottomRightRadius: '1.5em',
                                     borderTopRightRadius: '1.5em',
                                 }}>    
-                                    <ChatList>
-                                    </ChatList>
+                                    <ChatList />
                             </Grid>
                     </Grid>
                         

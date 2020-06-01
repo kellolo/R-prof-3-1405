@@ -1,21 +1,28 @@
 .message-field_container
     border: 2px solid lightblue
     border-radius: 0 0 10px 
-    background-color: #e2e2e2
+    background-color: #f8f5f5
     position: relative
 
 .message-field
     overflow-y: scroll
-    margin-bottom: 12%
+    margin-bottom: 20px
     scroll-behavior: smooth
-    
+    height: 90%
+    transition: overflow 3s
+    padding: 10px   
+          
 .message-field::-webkit-scrollbar
-    width: 0px
-    background: transparent
+    width: 10px
+    background-color: #f8f5f5
+    border-radius: 5px
+
+.message-field::-webkit-scrollbar-thumb
+    background-color: lightblue
+    border-radius: 5px
 
 .controls
-    position: absolute
-    bottom: 0
+    padding: 10px
 
 .messageList_input
     height: 50px

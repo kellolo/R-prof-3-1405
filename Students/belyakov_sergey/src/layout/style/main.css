@@ -2,3 +2,12 @@ body {
   margin: 0;
   padding: 0;
 }
+
+.wrapper {
+  box-sizing: border-box;
+  display: flex;
+  flex-direction: row;
+  width: 100%;
+  margin-top: 50px;
+  box-shadow: 0 0 5px 0 #cccccc;
+}

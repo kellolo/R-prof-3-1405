@@ -5,11 +5,16 @@ import './style.css';
 export default (props) => {
     //props: sender, text
     let { sender, text } = props;
-
+    let className = "d-flex flex-column msg";
+    if (sender) {
+        className += " msg-sender";
+    } else {
+        className += " msg-bot";
+    }
     // sender = sender ? sender : 'Bot';
     //dopil
     return (
-        <div className="d-flex flex-column msg">
+        <div className= { className }>
             {/* <strong>{ sender }</strong> */}
             { sender && <strong>{ sender }</strong> }
             { !sender && <strong>Bot</strong> }

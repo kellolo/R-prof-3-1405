@@ -1,11 +1,50 @@
 .chatList-list {
+    padding-top: 0px !important;
     border: 1px solid rgba(0,0,0,.125);
+    width: 100%;
+    border-top: 0;
+    border-left: 0;
 }
 
-.list-group-item.active {
+.item {
+    border: 1px solid rgba(0,0,0,.125) !important;
+}
+
+.item:hover {
+    color: #fff !important;
+    background-color: #7952B3 !important;
+    border-color:#7952B3 !important;  
+}
+
+.item:hover .icon {
+    color: #fff !important;
+    fill: #fff !important; 
+}
+
+.item-active {
     z-index: 2;
-    color: #fff;
-    background-color: #7952B3;
-    border-color: #7952B3;
+    color: #fff !important;
+    background-color: #7952B3 !important;
+    border-color: #7952B3 !important;
 }
 
+.item-active:hover {
+    color: #7952B3 !important;
+    background-color: #fff !important;
+    border-color:#fff !important;
+}
+
+.item-active:hover .icon {
+    color: #7952B3 !important;
+    fill: #7952B3 !important; 
+}
+
+.icon {
+    color: #7952B3 !important;
+    fill: #7952B3 !important; 
+}
+
+.item-active .icon {
+    color: white !important;
+    fill: white !important; 
+}

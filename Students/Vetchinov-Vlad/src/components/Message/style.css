@@ -4,4 +4,15 @@
     border-radius: 20px;
     font-size: 18px;
     margin: 5px;
+    word-break: break-word;
+}
+
+.msg-sender {
+    align-items: flex-start;
+    background-color: #e2ffca;
+}
+
+.msg-bot {
+    align-items: flex-end;
+    background-color: #fefefe;
 }
