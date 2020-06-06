@@ -17,7 +17,7 @@ import { IconButton, TextField, Button } from '@material-ui/core';
 
 // redux 
 
-import { sendMessage } from '../../store/actions/messages_actions.js';
+import { sendMessage, loadMessages } from '../../store/actions/messages_actions.js';
 import { bindActionCreators } from 'redux';
 import connect from 'react-redux/es/connect/connect';
 
@@ -74,6 +74,9 @@ class MessagesField extends Component {
 
     }
     
+    componentDidMount() {
+        this.props.loadMessages();
+    }
 
     render() {
          
@@ -134,6 +137,6 @@ const mapStateToProps = ({ msgReducer }) => ({
     messages: msgReducer.messages
 });
 
-const mapDispatchToProps = dispatch => bindActionCreators({ sendMessage }, dispatch);
+const mapDispatchToProps = dispatch => bindActionCreators({ sendMessage, loadMessages }, dispatch);
 
 export default connect(mapStateToProps, mapDispatchToProps)(MessagesField);

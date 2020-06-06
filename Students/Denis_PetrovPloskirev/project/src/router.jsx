@@ -19,7 +19,7 @@ class Router extends React.Component {
     return (
       <Switch>
         <Route path='/' render={() => <Profile />} exact />
-        <Route path='/chats/' render={() => <Layout chatName='Choose chat' />} exact />
+        <Route path='/chats/' render={() => <Layout chatName='Choose chat' noMessages = 'true' />} exact />
         <Route path='/profile/' render={() => <Profile />} exact />
         <Route path='/p404/' render={() => <NotPage type='404' />} exact />
         <Route path='/exit/' render={() => <NotPage type="exit" />} exact />

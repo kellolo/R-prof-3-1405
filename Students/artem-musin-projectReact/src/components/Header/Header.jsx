@@ -5,7 +5,6 @@ import Toolbar from '@material-ui/core/Toolbar';
 import Typography from '@material-ui/core/Typography';
 import Button from '@material-ui/core/Button';
 
-import { AccountCircle } from '@material-ui/icons';
 import { Link } from 'react-router-dom';
 
 
@@ -20,8 +19,14 @@ const chatTitleStyles = {
 }
 
 const profileButtonStyles = {
+  alignContent: 'center',
+  justifyContent: 'center',
   textDecoration: 'none',
+}
+
+const buttonStyles = {
   color: 'whitesmoke',
+  outline: 'none'
 }
 
 export default class Header extends React.Component {
@@ -49,13 +54,21 @@ export default class Header extends React.Component {
                   { this.props.chatTitle }
                 </Typography>
                     
-                        
-                          <Button>
-                            <Link to='/profile/'
+                          <Link to='/profile/'
                               style={profileButtonStyles}>
-                              <AccountCircle />
+                              <Button
+                                 style={buttonStyles}>
+                                  PROFILE
+                            
+                              </Button>
                             </Link>
-                          </Button>
+
+                              <Link to='/auth/'>
+                                <Button 
+                                  style={buttonStyles} >
+                                  LOGIN
+                                </Button>
+                              </Link>
                         
           </Toolbar>
         </AppBar>

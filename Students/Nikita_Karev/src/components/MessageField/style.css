@@ -4,9 +4,16 @@
   
 .dialog-window {
     font-family: 'Montserrat', sans-serif;
-    width: 65%;
+    width: 75%;
     justify-content: space-between;
     padding: 0px 0px 0px 4px;
-    float: right;
+    margin-top: 85px;
+}
+
+.message-text {
+    background-color: #111419;
+    padding: 5px 15px;
+    display: flex;
+    width: 100%;
 }
   

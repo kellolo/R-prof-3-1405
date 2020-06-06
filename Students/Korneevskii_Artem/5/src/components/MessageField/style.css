@@ -10,7 +10,8 @@
 }
 
 .messages {
-    max-height: 330px;
+    min-height: 330px;
+    height: calc(100vh - 167px);
     overflow-y: scroll;
 }
 

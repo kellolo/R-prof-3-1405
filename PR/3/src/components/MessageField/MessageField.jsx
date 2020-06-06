@@ -33,20 +33,9 @@ class MessagesField extends Component {
 
     handleChange = (evt) => {
         if (evt.keyCode !== 13) this.setState({ text: evt.target.value })
-            // evt.keyCode !== 13 ? 
-            // this.setState({ text: evt.target.value }) :
-            // this.handleSend(evt)
     }
 
-    // componentDidUpdate() {
-    //     setTimeout(() => {
-    //         console.log(`Bot answers`)
-    //     }, 1000);
-    //     // console.log(``)
-    // }
-
     render() {
-        // let { user } = this.props;
         let { messages } = this.props;
 
         let msgArr = []

@@ -26,7 +26,8 @@ class Header extends React.Component {
 
     state = {
         showMenu: false,
-        showProfile: false
+        showProfile: false,
+        chtLoaded: false
     }
 
 
@@ -59,6 +60,12 @@ class Header extends React.Component {
             });   
     }
 
+    componentDidMount() {
+        this.setState({
+            chtLoaded: true
+        })
+    }
+
     componentWillUnmount() {
         document.removeEventListener('click', this.hiddenMenu);
     }
@@ -77,7 +84,7 @@ class Header extends React.Component {
 
         return(
             <div className="header w-100">
-                <h1 className="header_title w-100"> Chat Room { this.props.chatId } </h1>
+                <h1 className="header_title w-100"> Chat Room { !this.props.isLoading && this.state.chtLoaded  && this.props.chats[this.props.chatId].title } </h1>
                 <div className = 'header_menu__wrapper'>    
                     <Link  to = '/profile/'>
                     <button onMouseEnter = { this.showProfile } onMouseLeave = { this.hiddenProfile } className= "header_menu__btn" style = {modalPosition}><PersonIcon /></button>
@@ -93,9 +100,11 @@ class Header extends React.Component {
     }
 }
 
-const mapStateToProps = ({ prfReducer }) => ({
+const mapStateToProps = ({ prfReducer, chtReducer }) => ({
     userName: prfReducer.userName,
-    userEmail: prfReducer.userEmail
+    userEmail: prfReducer.userEmail,
+    chats: chtReducer.chats,
+    isLoading: chtReducer.isLoading
 });
 
 const mapDispathToProps = dispatch => bindActionCreators({ }, dispatch);

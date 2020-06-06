@@ -1,0 +1,35 @@
+import initialReducers from './reducers/index';
+import { applyMiddleware, createStore } from 'redux';
+
+import { createBrowserHistory } from 'history';
+import { routerMiddleware } from 'connected-react-router';
+
+import { composeWithDevTools } from 'redux-devtools-extension';
+
+import { persistStore, persistReducer } from 'redux-persist';
+import storage from 'redux-persist/lib/storage';
+import autoMergeLevel2 from 'redux-persist/lib/stateReconciler/autoMergeLevel2';
+
+import middleWares from '../middlewares/index';
+
+
+const persistConfig = {
+    key: 'messenger',
+    storage,
+    whitelist: ['messengerReducer', 'messagesReducer'],
+    stateReconciler: autoMergeLevel2,
+};
+
+export const history = createBrowserHistory();
+
+export default function initStore() {
+    let initialStore = {};
+    const store = createStore(
+        persistReducer(persistConfig, initialReducers(history)),
+        initialStore,
+        composeWithDevTools(applyMiddleware(routerMiddleware(history), ...middleWares)));
+    const persistor = persistStore(store);
+
+
+    return { store, persistor };
+}

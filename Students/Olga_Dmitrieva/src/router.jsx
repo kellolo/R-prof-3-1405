@@ -3,19 +3,32 @@ import React from 'react';
 import { Switch, Route } from 'react-router-dom';
 
 import Layout from './components/Layout/Layout.jsx';
+import { connect } from 'react-redux';
+import { bindActionCreators } from 'redux';
 
-export default class Router extends React.Component { 
+class Router extends React.Component { 
     render() {
+        let { chats } = this.props;
+
+        let routesArray = Object.keys(chats).map(key => (
+            <Route path = { `/chat/${ key }/` } render = { () => <Layout chatId = { key } /> } key={ key } exact/>
+        ))
         return(
             <Switch>
                 <Route path = '/' component = { Layout } exact/>
-                <Route path = '/chat/1/' render = { () => <Layout chatId = { 1 } /> } exact/>
-                <Route path = '/chat/2/' render = { () => <Layout chatId = { 2 } /> } exact/>
-                <Route path = '/chat/3/' render = { () => <Layout chatId = { 3 } /> } exact/>
-                <Route path = '/chat/4/' render = { () => <Layout chatId = { 4 } /> } exact/>
-                <Route path = '/chat/5/' render = { () => <Layout chatId = { 5 } /> } exact/>
+                { routesArray }
             </Switch>
         )
     }
  }
+
+ 
+const mapStateToProps = ({ chatsReducer }) => ({
+    chats: chatsReducer.chats
+
+});
+
+const mapDispatchToProps = dispatch => bindActionCreators({  }, dispatch);
+
+export default connect(mapStateToProps, mapDispatchToProps)(Router);
 

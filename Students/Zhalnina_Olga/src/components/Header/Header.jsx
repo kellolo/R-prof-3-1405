@@ -7,11 +7,11 @@ import "./Header.css";
 
 export default class Header extends React.Component {
   static propTypes = {
-    chatId: PropTypes.number,
+    chatId: PropTypes.string,
     profile: PropTypes.bool,
   };
   static defaultProps = {
-    chatId: 1,
+    chatId: '1',
     profile: false,
   };
 

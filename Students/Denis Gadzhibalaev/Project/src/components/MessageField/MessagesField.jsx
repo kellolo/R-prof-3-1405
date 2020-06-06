@@ -2,13 +2,14 @@ import React from 'react';
 import ReactDom from 'react-dom';
 import shortid from 'shortid';
 import { TextField, FloatingActionButton } from 'material-ui';
+import CircularProgress from 'material-ui/CircularProgress';
 import SendIcon from 'material-ui/svg-icons/content/send';
 
 import './style.sass';
 
 import Message from '../Message/Message.jsx';
 
-import { sendMessage } from '../../store/actions/messages_actions.js';
+import { sendMessage, deleteMessage, loadMessages } from '../../store/actions/messages_actions.js';
 import { bindActionCreators } from 'redux';
 import connect from 'react-redux/es/connect/connect';
 
@@ -19,6 +20,7 @@ class MessagesField extends React.Component {
         this.focusTextInput = React.createRef();
         this.state = {
             inputText: '',
+            msgLoaded: false
         }
     }
 
@@ -50,7 +52,9 @@ class MessagesField extends React.Component {
     }
      
     focusMessageInput = () => {
-        this.focusTextInput.current.focus();
+        if (!this.props.isLoading) {
+             this.focusTextInput.current.focus();
+        }   
     }
 
     scrollChat = (msgLenght) => {
@@ -59,30 +63,33 @@ class MessagesField extends React.Component {
             }   
     }
 
+    componentDidMount() {
+        this.props.loadMessages();
+        this.setState({
+            msgLoaded: true
+        })
+    }
+
     componentDidUpdate(prevProps, prevState) {
         let { messages } = this.props;
-        let messageId = Object.keys(messages).length + 1;
-        const userSendLastMessage = messages[Object.keys(messages).length].user;
         const messagesLenghtIncreased = Object.keys(messages).length > Object.keys(prevProps.messages).length;
         this.focusMessageInput();
         this.scrollChat(messagesLenghtIncreased);
-        if ( userSendLastMessage && messagesLenghtIncreased) {
-                setTimeout(() => {
-                    this.props.sendMessage(messageId, null, '');
-                }, 2000);
-            }
-        
     }
 
     render() {
+        if (this.props.isLoading) {
+            return <CircularProgress style = { {margin: 'auto'} }/>
+        } 
         let { messages } = this.props;
-        const messagesArr = [];
+        let messagesArr = [];
         Object.keys(messages).map(key => {
-            messagesArr.push(<Message key={ shortid.generate() } 
-                                      sender={ messages[key].user } 
-                                      text={ messages[key].text } />)
+            messagesArr.push(!this.props.messages[key].deleted && <Message   deleteMessage = { this.props.deleteMessage } 
+                                                                            messageId = { key } 
+                                                                            key={ shortid.generate() } 
+                                                                            sender={ messages[key].user } 
+                                                                            text={ messages[key].text } />)
         });
-
         return (
         <div  className= "message-field_container d-flex flex-column w-75 h-100">
             <div ref={this.messagesFieldContainer} className = "message-field d-flex flex-column">
@@ -94,7 +101,7 @@ class MessagesField extends React.Component {
                    name="input"
                    autoFocus
                    ref={ this.focusTextInput }
-                   disabled = { (messages[Object.keys(messages).length].user ) ? true : false}
+                   disabled = { (this.state.msgLoaded && messages[Object.keys(messages).length].user ) ? true : false}
                    fullWidth={ true }
                    hintText="Enter Message"
                    style={ { fontSize: '22px' } }
@@ -113,9 +120,11 @@ class MessagesField extends React.Component {
 
 const mapStateToProps = ({ msgReducer, prfReducer }) => ({
     messages: msgReducer.messages,
-    user: prfReducer.userName
+    user: prfReducer.userName,
+    isLoading: msgReducer.isLoading,
+
 });
 
-const mapDispathToProps = dispatch => bindActionCreators({ sendMessage }, dispatch);
+const mapDispathToProps = dispatch => bindActionCreators({ sendMessage, deleteMessage, loadMessages }, dispatch);
 
 export default connect(mapStateToProps, mapDispathToProps)(MessagesField);

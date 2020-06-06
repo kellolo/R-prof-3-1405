@@ -4,18 +4,19 @@ import './style.sass';
 import shortid from 'shortid';
 
 
-import { Link } from 'react-router-dom';
+import { push } from 'connected-react-router';
 
 import Avatar from 'material-ui/Avatar';
 import {List, ListItem} from 'material-ui/List';
 import { TextField, FloatingActionButton } from 'material-ui';
 import AddIcon from '@material-ui/icons/Add';
 import Subheader from 'material-ui/Subheader';
-import CommunicationChatBubble from 'material-ui/svg-icons/communication/chat-bubble';
+import HighlightOffIcon from '@material-ui/icons/HighlightOff';
+import CircularProgress from 'material-ui/CircularProgress';
 
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
-import { addChat } from '../../store/actions/chats_actions.js';
+import { addChat, deleteChat, loadChats } from '../../store/actions/chats_actions.js';
 
 class ChatList extends React.Component {  
 
@@ -51,24 +52,35 @@ class ChatList extends React.Component {
         }        
     }
 
-    render() { 
+    handleNavigate = (link) => {
+        this.props.push(link);
+    };
+ 
+    componentDidMount() {
+        this.props.loadChats();
+    }
+
+    render() {
+        if (this.props.isLoading) {
+            return <CircularProgress style = { {margin: 'auto'} }/>
+        } 
         let { chats } = this.props;
         let chatId = Object.keys(chats).length + 1;
         let chatsArr = [];
 
         Object.keys(chats).map(key => {
             chatsArr.push(
-                <div key = {shortid.generate()} className = "chat-list_list-item__wrapper">
-                     <Link className = "chat-list_list-link" to ={ `/chat/${key}`} >
-                        <ListItem
-                                style={ { wordBreak: 'break-all' } }
-                                className = "chat-list_list-item"
-                                primaryText= {chats[key].title}
-                                leftAvatar={<Avatar src="https://placeimg.com/640/480/nature" />}
-                                />
-                    </Link>
-                    <CommunicationChatBubble />
-                </div>
+                !this.props.chats[key].deleted && <ListItem
+                                                        key = {shortid.generate()}
+                                                        style={ { wordBreak: 'break-all' } }
+                                                        className = "chat-list_list-item"
+                                                        primaryText= {chats[key].title}
+                                                        leftAvatar={<Avatar src="https://placeimg.com/640/480/nature" />}
+                                                        onClick = { () => this.handleNavigate(`/chat/${key}`)}
+                                                        rightIconButton = {<HighlightOffIcon className = "delete-btn" style={ { top: '14px', right: '10px' } }
+                                                                                            onClick = {  () => {this.props.deleteChat(key)}} 
+                                                                                            /> }
+                                                    />     
             )
         })
 
@@ -102,9 +114,10 @@ class ChatList extends React.Component {
 }
 
 const mapStateToProps = ({ chtReducer }) => ({ 
-    chats: chtReducer.chats
+    chats: chtReducer.chats,
+    isLoading: chtReducer.isLoading
 });
 
- const mapDispatchToProps = dispatch => bindActionCreators({ addChat }, dispatch);
+ const mapDispatchToProps = dispatch => bindActionCreators({ addChat, deleteChat, push, loadChats }, dispatch);
  
  export default connect(mapStateToProps, mapDispatchToProps)(ChatList);

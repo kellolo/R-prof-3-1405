@@ -6,7 +6,7 @@ import './style.css';
 
 import Message from '../Message/index.jsx';
 
-import { sendMessage } from '../../store/actions/messages_actions.js';
+import { sendMessage, loadMessages } from '../../store/actions/messages_actions.js';
 import { bindActionCreators } from 'redux';
 import connect from 'react-redux/es/connect/connect';
 
@@ -37,6 +37,10 @@ class MessageField extends Component {
             this.handleSend( evt.target.value ,'Vader')
     }
 
+    componentDidMount() {
+        this.props.loadMessages();
+    }
+
     render() {
         let { messages } = this.props;
 
@@ -50,17 +54,15 @@ class MessageField extends Component {
         });        
 
         return (<div className="d-flex flex-column w-75 messenger-chat">
-                    <div className="messages">
+                    <div className="messages">                 
                         { messageArray }
                     </div>
                     <div className="controls d-flex w-100 justify-content-between">
                         <TextField
                             type="text" 
-                            //className="w-75"
                             onChange={ this.handleChange }
                             onKeyUp = { this.handleChange }
                             value={ this.state.text }
-     
                             name="input"
                             fullWidth={ true }
                             hintText="Введите сообщение"
@@ -78,6 +80,6 @@ const mapStateToProps = ({ messageReducer }) => ({
     messages: messageReducer.messages
 });
 
-const mapDispatchToProps = dispatch => bindActionCreators({ sendMessage }, dispatch);
+const mapDispatchToProps = dispatch => bindActionCreators({ sendMessage, loadMessages }, dispatch);
 
 export default connect(mapStateToProps, mapDispatchToProps)(MessageField);

@@ -25,7 +25,7 @@ class Router extends React.Component {
 
         return (
             <Switch>
-                <Route path='/auth' component={ Auth } exact/>
+                <Route path='/auth/' component={ Auth } exact/>
                 <Route path='/' render={() => <Layout chatTitle='Pick room and go!' /> } exact/>
                 <Route path='/profile/' component={ Profile } exact />
                 { routesArray }

@@ -1,11 +1,12 @@
 import React, { Component } from 'react';
 
-import { TextField, FloatingActionButton } from 'material-ui';
+import { TextField } from 'material-ui';
 import SendIcon from 'material-ui/svg-icons/content/send';
+import CircularProgress from 'material-ui/CircularProgress';
 
 import Message from '../Message/Message.jsx';
 
-import { sendMessage } from '../../store/actions/messages_actions.js';
+import { sendMessage, loadMessages } from '../../store/actions/messages_actions.js';
 import { bindActionCreators } from 'redux';
 import connect from 'react-redux/es/connect/connect';
 
@@ -30,7 +31,7 @@ class MessagesField extends Component {
 
   sendMessage = (text, sender) => {
     let { messages } = this.props;
-    let messageId = Object.keys(messages).length + 1;
+    let messageId = `id${Date.now()}`
     //вызов Action
     this.props.sendMessage(messageId, sender, text);
   }
@@ -43,40 +44,45 @@ class MessagesField extends Component {
     }
   }
 
+  componentDidMount() {
+    this.props.loadMessages();
+  }
+
   render() {
-    let { messages, botName } = this.props;
     let msgArr = [];
-    Object.keys(messages).forEach(key => {
+    let msgLoader = <CircularProgress color = "darkgoldenrod" thickness = { 2 } className = 'loader'/>;
+    let msgBlock = this.props.isLoading ? msgLoader : msgArr;
+    let { messages, botName } = this.props;
+      Object.keys(messages).forEach(key => {
       msgArr.push(<Message
         botName = { botName }
         text = { messages[key].text }
         sender = { messages[key].user }
         key = { key } />);
-    });
+      });
 
     return (
       <div className = "chatWindow d-flex flex-column">
         <div className = "msgList">
-          { msgArr }
+          { !this.props.noMessages && msgBlock }
         </div>
         <div className = "inputBlock" style = { { width: '75%', display: 'flex', margin: '0 auto' } }>
           <TextField
             fullWidth = { true }
             hintText = { `${this.props.user}, введите сообщение` }
-            style = { { fontSize: '14px' } }
+            style = { { fontSize: '12px' } }
             onChange = { this.handleChange }
             onKeyUp = { this.handleChange }
             value = { this.state.text }
             underlineFocusStyle = { {borderColor: 'darkgoldenrod'} }
           />
-          <FloatingActionButton 
-            backgroundColor = 'darkgoldenrod' 
-            onClick = { () => this.handleSend(this.state.text, this.props.user) }
-            disabled = { !this.state.text }
-            disabledColor = 'rgb(243, 243, 243)'
-          >
-            <SendIcon />
-          </FloatingActionButton>
+            <SendIcon 
+              
+              onClick = { () => this.handleSend(this.state.text, this.props.user) }
+              color = { !this.state.text ? "rgb(243, 243, 243)" : "grey" }
+              hoverColor = { !this.state.text ? "rgb(243, 243, 243)" : "darkgoldenrod" }
+              style = { {cursor: "pointer", width: "20px", height: "20px", marginTop: "10px"} }
+            />
         </div>
       </div>)
   }
@@ -85,8 +91,9 @@ class MessagesField extends Component {
 const mapStateToProps = ({ msgReducer, prflReducer}) => ({
   messages: msgReducer.messages,
   user: prflReducer.user,
+  isLoading: msgReducer.isLoading
 });
 
-const mapDispatchToProps = dispatch => bindActionCreators({ sendMessage }, dispatch);
+const mapDispatchToProps = dispatch => bindActionCreators({ sendMessage, loadMessages }, dispatch);
 
 export default connect(mapStateToProps, mapDispatchToProps)(MessagesField);

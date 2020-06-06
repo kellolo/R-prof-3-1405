@@ -1,5 +1,6 @@
 .messenger-layout {
-    min-height: 487px;
+    min-height: 499px;
+    height: 100vh;
 }
 
 .messenger-wrapper {
@@ -7,4 +8,5 @@
     border: 1px solid #03A9F4;
     border-radius: 7px;
     overflow: hidden;
+    margin: 5px;
 }

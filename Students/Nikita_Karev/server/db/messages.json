@@ -1,0 +1,18 @@
+{
+    "1": {
+        "user": "John Carmack",
+        "text": "Hello Bot!" 
+    },
+    "2": {
+        "user": null,
+        "text": "Hi!"
+    },
+    "3": {
+        "user": "John Carmack",
+        "text": "How are you?" 
+    },
+    "4": {
+        "user": null,
+        "text": "I am fine!"
+    }
+}

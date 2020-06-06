@@ -5,7 +5,7 @@ import SendIcon from '@material-ui/icons/Send';
 import './style.css';
 import Message from '../Message/Message.jsx';
 
-import { sendMessage } from '../../store/actions/messages_actions.js';
+import { sendMessage,loadMessages } from '../../store/actions/messages_actions.js';
 import { bindActionCreators } from 'redux';
 import connect from 'react-redux/es/connect/connect';
 
@@ -31,6 +31,10 @@ class MessageField extends Component {
         let messageId = Object.keys(messages).length + 1;
         //вызов Action
         this.props.sendMessage(messageId, sender, text)
+    }
+
+    componentDidMount() {
+        this.props.loadMessages();
     }
 
     handleChange = (evt) => {
@@ -79,6 +83,6 @@ const mapStateToProps = ({ msgReducer }) => ({
     messages: msgReducer.messages
 })
 
-const mapDispatchToProps = dispatch => bindActionCreators({ sendMessage }, dispatch);
+const mapDispatchToProps = dispatch => bindActionCreators({ sendMessage, loadMessages }, dispatch);
 
 export default connect(mapStateToProps, mapDispatchToProps)(MessageField);

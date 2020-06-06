@@ -1,38 +1,60 @@
-import update from 'react-addons-update';
+import update from "react-addons-update";
 
 //import actions
-import { SEND_MSG } from '../actions/messages_actions.js';
-
+import {
+  CLOSE_RESPONDENT,
+  SELECT_RESPONDENT,
+  SEND_MSG,
+} from "../actions/messages_actions.js";
+import { SUCCESS_MESSAGES_LOADING } from "../../../../../PR/6/src/store/actions/messages_actions.js";
 
 const initialStore = {
-    messages: {
-        1: {
-            user: 'Me',
-            text: 'Hi'
-        },
-        2: {
-            user: null,
-            text: 'Hello'
-        },
-        3: {
-            user: 'Me',
-            text: 'How are you?'
-        },
-        4: {
-            user: null,
-            text: 'Fine'
-        },
-    }
-}
+  sender: "Me",
+  users: ["Bob", "Alice", "Fill", "Alex"],
+  respondent: "",
+  messages: {},
+};
 
 export default function msgReducer(store = initialStore, action) {
-    switch(action.type) {
-        case SEND_MSG: {
-            return update(store, {
-                messages: { $merge: { [action.messageId]: { user: action.sender, text: action.text } } }
-            })
-        }
-        default:
-            return store;
+  switch (action.type) {
+    case SEND_MSG: {
+      return update(store, {
+        messages: {
+          $merge: {
+            [action.messageId]: {
+              sender: action.sender,
+              text: action.text,
+            },
+          },
+        },
+      });
     }
+    case SUCCESS_MESSAGES_LOADING: {
+      return update(store, {
+        messages: { $set: action.payload },
+      });
+    }
+
+    case SELECT_RESPONDENT: {
+      return {
+        ...store,
+        respondent: action.sender,
+      };
+    }
+
+    case CLOSE_RESPONDENT: {
+      return {
+        ...store,
+        messages: {
+          1: {
+            sender: null,
+            text: "Выберите чат",
+          },
+        },
+      };
+    }
+
+    default:
+      return store;
+  }
 }

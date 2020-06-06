@@ -37,10 +37,9 @@ const useStyles = makeStyles({
 export default (props) => {
     const classes = useStyles();
     let { sender, text } = props;
-    let differenceMessages = sender === null ? classes.root : classes.user
+    let differenceMessages = sender === 'Bot' ? classes.root : classes.user
     const messageBody = classes.bodyMessage;
-    let p = sender === null ? classes.pClassBot : classes.pClass;
-    // sender = sender ? sender : 'Bot';
+    let p = sender === 'Bot' ? classes.pClassBot : classes.pClass;
 
 
     return (

@@ -1,5 +1,6 @@
 import React from 'react';
-import { Link } from 'react-router-dom';
+// import { Link } from 'react-router-dom';
+import { push } from 'connected-react-router';
 import './style.css';
 
 import Avatar from '@material-ui/core/Avatar';
@@ -9,7 +10,7 @@ import { TextField } from '@material-ui/core';
 import AddIcon from 'material-ui/svg-icons/content/add';
 // import ContentSend from 'material-ui/svg-icons/content/send';
 
-import { addChat } from '../../store/actions/chats_actions.js';
+import { addChat, loadChats } from '../../store/actions/chats_actions.js';
 import { bindActionCreators } from 'redux';
 import connect from 'react-redux/es/connect/connect';
 
@@ -27,26 +28,32 @@ class ChatList extends React.Component {
 
     handleChange = (evt) => {
         if (evt.keyCode !== 13) this.setState({ [evt.target.name]: evt.target.value })
-        // this.setState({ text: value });
     }
 
     handleKeyUp = evt => {
         if (evt.keyCode == 13) this.handleAdd();
     }
 
+    handleNavigate = (link) => {
+        this.props.push(link);
+    };
+
+    componentDidMount() {
+        this.props.loadChats();
+    };
+
     render() {
         let { chats } = this.props;
 
         let chatsArray = Object.keys(chats).map(key => (
-            <Link to = { `/chat/${ key }/` } key={ key } style={ { textDecoration: 'none' } }>
-                <ListItem className="dialog-list-item mb-1"
-                    style={ { color: '#fff' } }
-                    primaryText={ chats[key].title }
-                    leftAvatar={<Avatar style={ { backgroundColor: '#00bcd4' } } />}                        
-                    rightIcon={<ChatIcon className="dialog-icon" />}
-                    hoverColor="#3e4b5e"
-                />
-            </Link>
+            <ListItem className="dialog-list-item mb-1"
+                style={ { color: '#fff', fontFamily: 'Montserrat' } }
+                primaryText={ chats[key].title }
+                leftAvatar={<Avatar style={ { backgroundColor: '#00bcd4' } } />}                        
+                rightIcon={<ChatIcon className="dialog-icon" />}
+                hoverColor="#3e4b5e"
+                onClick={ () => this.handleNavigate(`/chat/${ key }`) }
+            />
         ));
         return(
             <div className="dialog-main-list">
@@ -77,6 +84,6 @@ class ChatList extends React.Component {
 
 const mapStateToProps = ({ chatsReducer }) => ({ chats: chatsReducer.chats });
 
-const mapDispatchToProps = dispatch => bindActionCreators({ addChat }, dispatch);
+const mapDispatchToProps = dispatch => bindActionCreators({ addChat, push, loadChats }, dispatch);
 
 export default connect(mapStateToProps, mapDispatchToProps)(ChatList);

@@ -1,0 +1,7 @@
+import botMD from './botMD';
+import { apiMiddleware } from 'redux-api-middleware';
+
+export default [
+    apiMiddleware,
+    botMD
+];

@@ -1,10 +1,11 @@
+
 import React, { Component } from 'react';
 // import ReactDom from 'react-dom';
 import { TextField, FloatingActionButton } from 'material-ui';
 import SendIcon from 'material-ui/svg-icons/content/send';
 
 import Message from '../Message/Message.jsx';
-import { sendMessage } from '../../store/actions/messages_actions.js';
+import { sendMessage, loadMessages } from '../../store/actions/messages_actions.js';
 import { bindActionCreators } from 'redux';
 import connect from 'react-redux/es/connect/connect';
 
@@ -36,6 +37,7 @@ class MessagesField extends Component {
     }
 
     componentDidMount() {
+        this.props.loadMessages();
         this.textInput.current.focus();
     }
 
@@ -87,6 +89,6 @@ const mapStateToProps = ({ msgReducer }) => ({
     messages: msgReducer.messages
 });
 
-const mapDispatchToProps = dispatch => bindActionCreators({ sendMessage }, dispatch);
+const mapDispatchToProps = dispatch => bindActionCreators({ sendMessage, loadMessages }, dispatch);
 
 export default connect(mapStateToProps, mapDispatchToProps)(MessagesField);

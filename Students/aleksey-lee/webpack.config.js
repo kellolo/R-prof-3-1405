@@ -45,5 +45,8 @@ module.exports = {
             template: path.resolve(__dirname, 'src', 'public', 'index.html')
         })
     ],
-    devtool: 'cheap-inline-module-source-map'
+    devtool: 'cheap-inline-module-source-map',
+    devServer: {
+        historyApiFallback: true
+    }
 }

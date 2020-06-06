@@ -1,27 +1,28 @@
-import { ADD_CHAT } from '../actions/chats_actions.js';
+import update from 'react-addons-update';
+import { ADD_CHAT, 
+         DELETE_CHAT,
+         START_CHATS_LOADING,
+         SUCCES_CHATS_LOADING,
+         ERROR_CHATS_LOADING
+} from '../actions/chats_actions.js';
 
 const initialStore = {
-    chats: {
-        1: {
-            title: 'Chat1',
-            messagesList: []
-        },
-        2: {
-            title: 'Chat2',
-            messagesList: []
-        },
-        3: {
-            title: 'Chat3',
-            messagesList: []
-        }
-    }
+    chats: {},
+    sLoading: false
 }
 
-export default function chtReducer(store = initialStore, action) {     
-    console.log(store)
+export default function chtReducer(store = initialStore, action) {    
     switch (action.type) {
         case ADD_CHAT:       
-            return {...store, chats: {...store.chats,  [action.chatId]: { title: action.title, messageList: [] } } }
+            return {...store, chats: {...store.chats,  [action.chatId]: { title: action.title, deleted: false, messageList: [] } } }
+        case DELETE_CHAT:
+            return {...store, chats: {...store.chats, [action.chatId]: {title: store.chats[action.chatId].title, deleted: true, messageList: []} } }
+            case START_CHATS_LOADING: {
+                return {...store, isLoading: true } }
+            case SUCCES_CHATS_LOADING: {
+                return {...store, chats: action.payload, isLoading: false } }
+            case ERROR_CHATS_LOADING: { 
+                return {...store, isLoading: true } }
         default:
             return store;
     }

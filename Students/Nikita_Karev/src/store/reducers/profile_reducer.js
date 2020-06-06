@@ -2,7 +2,7 @@ import {SET_NAME} from '../actions/profile_actions.js';
 
 
 const initialStore = {
-  user: ''
+  user: 'John Carmack'
 }
 
 export default function profileReducer(store = initialStore, action) {

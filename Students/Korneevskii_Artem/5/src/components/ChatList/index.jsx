@@ -4,8 +4,9 @@ import { Link } from 'react-router-dom';
 import './style.css';
 
 import { connect } from 'react-redux';
-import { addChat } from '../../store/actions/chats_actions.js';
+import { addChat, loadChats } from '../../store/actions/chats_actions.js';
 import { bindActionCreators } from 'redux';
+import { push } from 'connected-react-router';
 
 import { TextField } from 'material-ui';
 import AddIcon from 'material-ui/svg-icons/content/add';
@@ -30,11 +31,25 @@ class ChatList extends Component {
         if (evt.keyCode == 13) this.handleAdd();
     }
 
+    handleNavigate = (link) => {
+        this.props.push(link);
+    };
+
+    componentDidMount() {
+        this.props.loadChats();
+    }
+
     render() {
         let { chats } = this.props;
 
         let chatsArray = Object.keys(chats).map(key => (
-            <li key = { key }><Link className="chatname-wrap" to = { `/chat/${ key }/` } key = { key }>{ chats[key].title }</Link></li>            
+            <li key = { key }
+                onClick={ () => this.handleNavigate(`/chat/${ key }/`) }
+                className={ this.props.active == key ? "chatname-wrap active" : "chatname-wrap" }
+                >
+                { chats[key].title }
+            </li>                        
+            /*<li key = { key }><Link className={ this.props.active == key ? "chatname-wrap active" : "chatname-wrap" } to = { `/chat/${ key }/` } key = { key }>{ chats[key].title }</Link></li>*/            
         ));
 
         return (
@@ -68,6 +83,6 @@ class ChatList extends Component {
 
 const mapStateToProps = ({ chatsReducer }) => ({ chats: chatsReducer.chats });
 
-const mapDispatchToProps = dispatch => bindActionCreators({ addChat }, dispatch);
+const mapDispatchToProps = dispatch => bindActionCreators({ addChat, loadChats, push }, dispatch);
 
 export default connect(mapStateToProps, mapDispatchToProps)(ChatList);

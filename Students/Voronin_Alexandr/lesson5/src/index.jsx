@@ -6,22 +6,28 @@ import './layout/style/main.css';
 
 //redux
 import { Provider } from 'react-redux';
-import initStore from './store/store.js'; //хранилище
+import  { initStore, history } from './store/store.js'; //хранилище
+
+import { ConnectedRouter } from 'connected-react-router'
+import { PersistGate } from 'redux-persist/integration/react'
 
 //components
-import { BrowserRouter } from 'react-router-dom'
 import Router from './router.jsx';
 
 let container = document.getElementById('app')
 const theme = createMuiTheme({})
+const { store, persistor } = initStore()
 
 ReactDom.render (
-    <Provider store={ initStore ()}>
-        <BrowserRouter>
+    <Provider store={ store }>
+        <PersistGate loading={ null } persistor = { persistor }>
+            <ConnectedRouter history = { history }>
             <MuiThemeProvider theme={theme}>
                 <Router />
             </MuiThemeProvider> 
-        </BrowserRouter>
+        </ConnectedRouter>
+        </PersistGate>
+        
     </Provider>
     ,
  container)

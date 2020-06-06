@@ -3,4 +3,6 @@ import msgReducer from './messages_reducers.js';
 import prflReducer from './profile_reducers.js';
 import chatsReducer from './chats_reducer.js';
 
-export default combineReducers({ msgReducer, prflReducer, chatsReducer });
+import { connectRouter } from 'connected-react-router';
+
+export default history => combineReducers({ router: connectRouter(history), msgReducer, prflReducer, chatsReducer });

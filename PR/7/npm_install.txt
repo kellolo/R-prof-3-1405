@@ -1,0 +1,15 @@
+npm i webpack webpack-cli webpack-dev-server -D
+
+npm i -D @babel/core @babel/preset-env babel-loader @babel/preset-react @babel/plugin-proposal-class-properties 
+
+npm i -D css-loader mini-css-extract-plugin
+
+npm i -D html-webpack-plugin
+
+npm i bootstrap jquery popper.js
+
+npm i react react-dom
+
+npm i react-redux redux
+npm i -D react-addons-update
+npm i material-ui

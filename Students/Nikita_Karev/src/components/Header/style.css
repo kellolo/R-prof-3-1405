@@ -1,5 +1,6 @@
 .header {
-    position: relative;
+    position: absolute;
+    width: 100%;
 }
 
 .header-appbar {

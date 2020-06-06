@@ -19,10 +19,8 @@ class Router extends React.Component {
         ));
         return (
             <Switch>
-                {/* <Route path='/' component={ Layout } exact/>
-                
-                { routesArray } */}
-                <Route path = '/' render = { () => <Profile /> } exact/>
+                {/* <Route path = '/' render = { () => <Profile /> } exact/> */}
+                <Route path = '/' render = { () => <Layout /> } exact/>
                 { routesArray }
                 <Route path = '/profile/' render = { () => <Profile /> } exact />
             </Switch>

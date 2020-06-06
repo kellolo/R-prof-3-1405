@@ -1,0 +1,51 @@
+import update from 'react-addons-update';
+
+import { NEW_STORY_LINE, SEND_MESSAGE, SUCCESS_MESSAGES_LOADING } from '../action/messages';
+
+
+const initialStore = {
+    messages: {}
+}
+
+export default function msgReducer(store = initialStore, action) {
+    switch (action.type) {
+        case NEW_STORY_LINE: {
+            let messages = store.messages;
+            messages[action.id] = {
+                [action.messageId]: {
+                    user: action.text,
+                    text: action.sender
+                }
+            };
+            return {
+                ...store,
+                messages: messages
+
+            }
+        }
+        case SEND_MESSAGE: {
+            return update(store, {
+                messages: {
+                    [action.id]: {
+                        $merge:
+                            {
+                                [action.messageId]: {
+                                    user: action.sender,
+                                    text: action.text
+                                }
+                            }
+                    }
+                }
+            })
+        }
+
+        case SUCCESS_MESSAGES_LOADING: {
+            return update(store, {
+                messages: { $set: action.payload }
+            })
+        }
+
+        default:
+            return store;
+    }
+}

@@ -14,14 +14,14 @@
   display: flex;
   flex-direction: column; 
   background: linear-gradient(180deg, rgba(90, 129, 158, 0.37) 0%, rgba(90, 129, 158, 0.37) 22.11%, rgba(255, 229, 196, 0.37) 100%);
+  overflow-y: auto;
 }
 
 .answer_group {
   display: flex;
   width: 100%;
   background-color: #fff;
-  box-shadow: 0px -4px 0px rgba(255, 229, 196, 0.4);
-  overflow-y: auto;
+  box-shadow: 0px -4px 0px rgba(255, 229, 196, 0.4);  
 }
 
 .answer_group_input {

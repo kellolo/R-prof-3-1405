@@ -7,9 +7,12 @@ import Header from '../Header/index.jsx';
 import MessageField from '../MessageField/index.jsx';
 import ChatList from '../ChatList/index.jsx';
 
-import { viewProfile } from '../../store/actions/profile_actions.js';
+import { viewProfile, loadProfile } from '../../store/actions/profile_actions.js';
 import { bindActionCreators } from 'redux';
 import connect from 'react-redux/es/connect/connect';
+import { goBack } from 'connected-react-router';
+
+import CloseIcon from '@material-ui/icons/Close';
 
 class Profile extends Component {    
     static propTypes = {
@@ -19,21 +22,29 @@ class Profile extends Component {
         chatId: 'Profile'
     }
 
+    componentDidMount() {
+        this.props.loadProfile();
+    }
+
     render() {
         let { profiles } = this.props;
 
         return (
-            <div className="d-flex w-100 justify-content-center messenger-layout mt-4 mb-4">
-                <div className="d-flex flex-column w-50 messenger-wrapper">
+            <div className="d-flex w-100 justify-content-center messenger-layout">
+                <div className="d-flex flex-column w-100 messenger-wrapper">
                     <Header chatId = { this.props.chatId } />
                     <div className="d-flex">
-                        <ChatList />        
-                        <div className="d-flex w-75 messenger-profile">
-                            <ul className="profile">
-                                <li><strong>Имя: </strong>{ profiles[1].userName }</li>
-                                <li><strong>Статус: </strong>{ profiles[1].status }</li>                            
-                                <li><strong>Телефон: </strong>{ profiles[1].phone }</li>  
-                            </ul>                          
+                        <div className="d-flex w-100 messenger-profile">
+                            <div className="profile">                        
+                                <ul className="profile-list">
+                                    <li><strong>Имя: </strong>{ profiles[1].userName }</li>
+                                    <li><strong>Статус: </strong>{ profiles[1].status }</li>                            
+                                    <li><strong>Телефон: </strong>{ profiles[1].phone }</li>  
+                                </ul>
+                                <div className="profile-close" onClick={ () => this.props.goBack() }>
+                                    <CloseIcon style={ { color: 'lightskyblue' } } />                                
+                                </div>
+                            </div>                          
                         </div>            
                     </div>
                 </div>
@@ -46,6 +57,6 @@ const mapStateToProps = ({ profileReducer }) => ({
     profiles: profileReducer.profiles
 });
 
-const mapDispatchToProps = dispatch => bindActionCreators({ viewProfile }, dispatch);
+const mapDispatchToProps = dispatch => bindActionCreators({ viewProfile, loadProfile, goBack }, dispatch);
 
 export default connect(mapStateToProps, mapDispatchToProps)(Profile);

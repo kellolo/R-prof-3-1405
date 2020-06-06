@@ -17,11 +17,11 @@ export default class Layout extends Component {
 
     render() {
         return (
-            <div className="d-flex w-100 justify-content-center messenger-layout mt-4 mb-4">
-                <div className="d-flex flex-column w-50 messenger-wrapper">
+            <div className="d-flex w-100 justify-content-center messenger-layout">
+                <div className="d-flex flex-column w-100 messenger-wrapper">
                     <Header chatId = { this.props.chatId } />
                     <div className="d-flex">
-                        <ChatList />                    
+                        <ChatList active = { this.props.chatId } />                    
                         <MessageField />                                     
                     </div>
                 </div>

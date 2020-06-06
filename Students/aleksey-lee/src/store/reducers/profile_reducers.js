@@ -1,20 +1,17 @@
-// import { GET_USERINFO } from '../actions/profile_actions.js';
-
+import { SUCCESS_PROFILE_LOADING } from '../actions/profile_actions.js';
+import update from 'react-addons-update';
 
 const initialStore = {
-    userInfo: {
-        name: 'John Cena',
-        age: 38,
-        photo: 'https://kinoactive.ru/uploads/actors/2018-10/c7beae991ce620e9da-dzhon-sina-4.jpg'
-    }
+    userInfo: {}
 }
 
 export default function profileReducer(store = initialStore, action) {
     switch(action.type) {
-        //здесь это не нужно
-        // case GET_USERINFO: {
-        //     return store;
-        // }
+        case SUCCESS_PROFILE_LOADING: {
+            return update(store, {
+                userInfo: { $set: action.payload }
+            })
+        }
         default:
             return store;
     }

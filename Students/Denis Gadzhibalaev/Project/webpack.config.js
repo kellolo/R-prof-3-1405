@@ -6,9 +6,7 @@ module.exports = {
     devtool: 'cheap-inline-module-source-map',
     devServer: {
         port: 8080,
-        historyApiFallback: {
-            index: 'public/index.html'
-        }
+        historyApiFallback: true
      },  
     entry: {
         main: path.resolve(__dirname, 'src', 'index.jsx')

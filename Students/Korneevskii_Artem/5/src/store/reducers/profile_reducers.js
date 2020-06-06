@@ -1,15 +1,9 @@
 import update from 'react-addons-update';
 
-import { VIEW_PROFILE } from '../actions/profile_actions.js';
+import { VIEW_PROFILE, SUCCESS_PROFILE_LOADING } from '../actions/profile_actions.js';
 
 const initialStore = {
-    profiles: {
-        1: {
-            userName: 'Vader',
-            status: 'Хм...',
-            phone: '+7 910 000-11-22'
-        }
-    }
+    profiles: {}
 }
 
 export default function profileReducer(store = initialStore, action) {
@@ -19,6 +13,11 @@ export default function profileReducer(store = initialStore, action) {
                 profiles: { $merge: { [action.userId]: { userName: action.userName, status: action.status, phone: action.phone } } }
             })
         }
+        case SUCCESS_PROFILE_LOADING: {
+            return update(store, {
+                profiles: { $set: action.payload }
+            })
+        }        
         default:
             return store;
     }

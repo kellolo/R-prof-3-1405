@@ -7,18 +7,18 @@ import IconButton from "@material-ui/core/IconButton";
 import TextField from "@material-ui/core/TextField";
 import SendIcon from "@material-ui/icons/Send";
 
-import { sendMessage } from "../../store/actions/messages_actions.js";
+import { sendMessage, loadMessages } from "../../store/actions/messages_actions.js";
 import { bindActionCreators } from "redux";
 import connect from "react-redux/es/connect/connect";
 
 class MessagesField extends Component {
   constructor(props) {
-    super(props);
-    this.textInput = React.createRef();
+    super(props);    
     this.state = {
       isUserAnswer: false,
       text: "",
     };
+    this.textInput = React.createRef();
   }
 
   handleSend = (text, sender) => {
@@ -32,7 +32,7 @@ class MessagesField extends Component {
   sendMessage = (text, sender) => {
     let { messages } = this.props;
     let messageId = Object.keys(messages).length + 1;
-    this.props.sendMessage(messageId, sender, text);
+    this.props.sendMessage(messageId, sender, text);    
   };
 
   handleChange = (evt) => {
@@ -42,8 +42,13 @@ class MessagesField extends Component {
   };
 
   componentDidMount() {
+    this.props.loadMessages();
     this.textInput.current.focus();
   }
+
+  componentDidUpdate() {
+    document.getElementById('message_field').scrollTo({ top: 999999 })
+}
  
   render() {
     let { messages } = this.props;
@@ -87,9 +92,9 @@ class MessagesField extends Component {
 }
 const mapStateToProps = ({ msgReducer }) => ({
   messages: msgReducer.messages,
+  respondent: msgReducer.respondent
 });
 
-const mapDispatchToProps = (dispatch) =>
-  bindActionCreators({ sendMessage }, dispatch);
+const mapDispatchToProps = (dispatch) => bindActionCreators({ sendMessage, loadMessages }, dispatch);
 
 export default connect(mapStateToProps, mapDispatchToProps)(MessagesField);

@@ -1,16 +1,22 @@
 .chatList {
   border-right: 1px solid darkgoldenrod;
   width: 20%;
-  padding: 20px;
+  justify-content: space-between;
+  padding: 5px 20px 20px 20px;
+  display: flex;
+  flex-direction: column;
 }
 
 .chatListInner {
-  height: 90%;
   overflow-y: auto;
+  flex: 1 0 auto;
+  max-height: calc(100vh - 250px);
 }
 
 .chatAdder {
-  height: 10%;
+  /* height: 10%; */
+  flex: 0 0 auto;
+  padding-top: 20px;
 }
 
 .chatListItem {

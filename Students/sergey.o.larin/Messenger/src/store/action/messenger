@@ -1,0 +1,45 @@
+import { getJSON, RSAA } from "redux-api-middleware";
+
+export let START_MESSENGER_LOADING = '@@messenger/START_MESSENGER_LOADING';
+export let SUCCESS_MESSENGER_LOADING = '@@messenger/SUCCESS_MESSENGER_LOADING';
+export let ERROR_MESSENGER_LOADING = '@@messenger/ERROR_MESSENGER_LOADING';
+
+export let ADD_RESPONDENT = 'ADD_RESPONDENT';
+export let CLOSE_RESPONDENT = 'CLOSE_RESPONDENT';
+export let SELECT_RESPONDENT = 'SELECT_RESPONDENT';
+export let UNSELECT_RESPONDENT = 'UNSELECT_RESPONDENT';
+
+export const loadMessenger = () => ({
+    [RSAA]: {
+        endpoint: './server/db/contacts.json',
+        method: 'GET',
+        types: [
+            START_MESSENGER_LOADING,
+            {
+                type: SUCCESS_MESSENGER_LOADING,
+                payload: (action, state, res) => getJSON(res)
+                    .then(json => json)
+            },
+            ERROR_MESSENGER_LOADING
+        ]
+    }
+});
+
+export let addRespondent = (id) => ({
+    type: ADD_RESPONDENT,
+    id,
+});
+
+export let selectRespondent = (id) => ({
+    type: SELECT_RESPONDENT,
+    id,
+});
+
+export let closeRespondent = (id) => ({
+    type: CLOSE_RESPONDENT,
+    id,
+})
+
+export let unSelectRespondent = () => ({
+    type: UNSELECT_RESPONDENT,
+})

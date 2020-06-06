@@ -3,11 +3,11 @@ import {bindActionCreators} from 'redux';
 import connect from 'react-redux/es/connect/connect';
 import { addChat } from '../../store/actions/chats_actions.js';
 
-import { Link } from 'react-router-dom';
 
-import { List, ListItem, ListItemText, Grid } from '@material-ui/core';
+import { push } from 'connected-react-router';
+
+import { List, ListItem, ListItemText, Grid, Avatar } from '@material-ui/core';
 import { TextField } from 'material-ui';
-import { Mail } from '@material-ui/icons';
 import AddIcon from '@material-ui/icons/Add';
 
 const inputStyle = {
@@ -24,6 +24,15 @@ const listStyles = {
     textDecoration: 'none'
 }
 
+const chatListStyles = {
+    padding: '0em 1em',
+    color: '#3F3FBF'
+}
+
+const avatarStyles = {
+    backgroundColor: '#9999ff',
+}
+
 class ChatList extends React.Component {
 
     state = {
@@ -38,7 +47,7 @@ class ChatList extends React.Component {
             }
      }
 
-     handleChange = (evt) => { 
+    handleChange = (evt) => { 
         if (evt.keyCode !== 13) this.setState({ [evt.target.name]: evt.target.value })
     }
 
@@ -46,17 +55,25 @@ class ChatList extends React.Component {
         if (evt.keyCode == 13) this.handleAdd()
     }
 
+    handleNavigate = (link) => {
+        this.props.push(link)
+    }
+
     render() {
 
         let { chats } = this.props;
 
         let chatsArray = Object.keys(chats).map(key => (
-            <Link to={`/chat/${ key }/`} key={ key } >
+        
                         <ListItem button>
-                            <ListItemText style={{padding: '0em 1em'}} primary={ chats[key].title } /> 
-                                    <Mail />
+                            <ListItemText 
+                            style={chatListStyles} 
+                            primary={ chats[key].title } 
+                            onClick={() => this.handleNavigate(`/chat/${key}`)}
+                            /> 
+                                    <Avatar alt={chats[key].title} src='/broken-image.jpg' 
+                                        style={avatarStyles} />
                         </ListItem>
-                    </Link> 
                     
         ))
 
@@ -109,6 +126,6 @@ const mapStateToProps = ({ chatsReducer }) => ({
     chats: chatsReducer.chats
 })
 
-const mapDispatchToProps = dispatch => bindActionCreators({ addChat }, dispatch);
+const mapDispatchToProps = dispatch => bindActionCreators({ addChat, push }, dispatch);
 
 export default connect(mapStateToProps, mapDispatchToProps)(ChatList)

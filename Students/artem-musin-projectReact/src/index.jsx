@@ -8,22 +8,26 @@ import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider';
 // redux
 
 import { Provider } from 'react-redux'
-import initStore from './store/store.js'
+import { initStore, history } from './store/store.js';
+import { PersistGate } from 'redux-persist/integration/react';
+import { ConnectedRouter } from 'connected-react-router';
 
 
 // components
 import Router from './router.jsx'
-import { BrowserRouter } from 'react-router-dom';
 
 let container = document.getElementById('app')
 
+const { store, persistor } = initStore();
 
 ReactDom.render(
-<BrowserRouter>
-        <Provider store={initStore()}>
-                <MuiThemeProvider>
-                        <Router />
-                </MuiThemeProvider>
+        <Provider store={ store }>
+                <PersistGate loading={ null } persistor={ persistor }>
+                        <ConnectedRouter history={ history }>
+                                <MuiThemeProvider>
+                                        <Router />
+                                </MuiThemeProvider>     
+                        </ConnectedRouter>
+                </PersistGate>
         </Provider>
-</BrowserRouter>
         ,container)

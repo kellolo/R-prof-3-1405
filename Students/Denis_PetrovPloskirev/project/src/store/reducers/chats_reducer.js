@@ -1,7 +1,6 @@
 import update from "react-addons-update";
 
-import {ADD_CHAT} from '../actions/chats_actions.js';
-import {DEL_CHAT} from '../actions//chats_actions.js';
+import {ADD_CHAT, DEL_CHAT, SUCCESS_CHATS_LOADING} from '../actions/chats_actions.js';
 
 let initialStore = {
   chats: {
@@ -23,8 +22,8 @@ let initialStore = {
 export default function chatsReducer(store = initialStore, action) {
   switch (action.type) {
     case ADD_CHAT: {
-      // let chatId = Object.keys(store.chats).length + 1;
-      let chatId = Date.now();
+      let chatId = Object.keys(store.chats).length + 1;
+      // let chatId = Date.now();
 
       return update(store, {
         chats: {
@@ -55,6 +54,13 @@ export default function chatsReducer(store = initialStore, action) {
         }
       }
       return newStore;
+    }
+    case SUCCESS_CHATS_LOADING: {
+      return update(store, {
+        chats: {
+          $set: action.payload
+        }
+      });
     }
     default:
       return store;

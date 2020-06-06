@@ -1,26 +1,9 @@
 import update from 'react-addons-update';
 
-import { SEND_MSG } from '../actions/messages_actions.js';
+import { SEND_MSG, SUCCESS_MESSAGES_LOADING } from '../actions/messages_actions.js';
 
 const initialStore = {
-    messages: {
-        1: {
-            user: 'Vader',
-            text: 'Привет'
-        },
-        2: {
-            user: null,
-            text: 'Привет!'
-        },
-        3: {
-            user: 'Vader',
-            text: 'Как дела?'
-        },
-        4: {
-            user: null,
-            text: 'Нормально!'
-        }
-    }
+    messages: {}
 }
 
 export default function messageReducer(store = initialStore, action) {
@@ -30,6 +13,11 @@ export default function messageReducer(store = initialStore, action) {
                 messages: { $merge: { [action.messageId]: { user: action.sender, text: action.text } } }
             })
         }
+        case SUCCESS_MESSAGES_LOADING: {
+            return update(store, {
+                messages: { $set: action.payload }
+            })
+        }        
         default:
             return store;
     }

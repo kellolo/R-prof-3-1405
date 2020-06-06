@@ -4,10 +4,10 @@ import './style.css';
 
 export default class Header extends Component {
     static propTypes = {
-        chatId: PropTypes.number
+        chatId: PropTypes.string
     }
     static defaultProps = {
-        chatId: 2
+        chatId: '2'
     }
 
     render() {

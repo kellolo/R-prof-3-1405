@@ -6,6 +6,7 @@ import ArrowBackSharpIcon from '@material-ui/icons/ArrowBackSharp';
 import AppBar from '@material-ui/core/AppBar';
 
 import './style.css';
+import { ActionAccessibility } from 'material-ui/svg-icons';
 
 export default class Header extends React.Component {
     static propTypes = {
@@ -25,6 +26,7 @@ export default class Header extends React.Component {
                         <button className = "btn header-profile-btn">
                         <ArrowBackSharpIcon /> 
                         </button>
+                        {  }
                     </Link>
                   <h1> Chat Room { this.props.chatId }</h1>
               </AppBar>

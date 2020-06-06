@@ -1,5 +1,5 @@
 import React from 'react';
-import { Grid, Typography, Paper, Divider, Box } from '@material-ui/core';
+import { Grid, Typography, Paper, Divider, Box, Button } from '@material-ui/core';
 
 import { Link } from 'react-router-dom';
 
@@ -48,10 +48,10 @@ class Profile extends React.Component {
     }
 
     static defaultProps = {
-        user: 'Artem',
-        date: '21/01/1998',
-        bio: 'lorem ipsum lorem ipsum lorem ipsum lorem ipsum lorem ipsum lorem ipsum',
-        city: 'Saratov'
+        user: 'Anonymous',
+        date: 'Undefined',
+        bio: 'No information given',
+        city: 'Undefined'
     }
 
     handleInfo = () => {
@@ -84,19 +84,14 @@ class Profile extends React.Component {
                             <Grid
                                 item
                                 component='a'>
-                                    
-                                    <Link to='/main/'
+                                    <Link to='/'
                                         style={linkButton}>
-        
                                             Go to the chats
-                                            
                                         </Link>
-                                    
-                                
                                 </Grid>
 
                             <Grid item>
-                                <img src="https://sun7-9.userapi.com/1xjiM1HHTgBf8dfR7oBNpU1puXu3irG0LvgelA/NgMNbLU65iw.jpg" alt="Profile Photo"/>
+                                <img src="https://steamuserimages-a.akamaihd.net/ugc/885384897182110030/F095539864AC9E94AE5236E04C8CA7C2725BCEFF/" alt="Profile Photo"/>
                             </Grid>
                             <Grid 
                                 container
@@ -154,7 +149,6 @@ class Profile extends React.Component {
                                     </Typography>
                                         <Box component="ul"
                                         style={ulStyle}>
-                                        
                                         </Box>
                                 </Grid>
                         </Grid>

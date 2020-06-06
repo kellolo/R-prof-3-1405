@@ -21,6 +21,10 @@
   align-items: flex-start;
 }
 
+.loader {
+  margin: auto;
+}
+
 .inputBlock {
   flex: 0 0 auto;
   padding-top: 20px;

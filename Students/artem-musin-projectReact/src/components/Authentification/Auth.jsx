@@ -2,6 +2,8 @@ import React from 'react';
 
 import PropTypes from 'prop-types'
 
+import { push } from 'connected-react-router';
+
 import { setName, setBio, setDate, setCity } from '../../store/actions/profile_actions.js'
 import { bindActionCreators } from 'redux';
 import connect from 'react-redux/es/connect/connect';
@@ -38,14 +40,8 @@ class Auth extends React.Component {
         user: PropTypes.string,
         bio: PropTypes.string,
         date: PropTypes.string,
-        
-    }
-
-    static defaultProps = {
-        user: '',
-        bio: '',
-        date: '',
-        city: ''
+        city: PropTypes.string,
+        push: PropTypes.func.isRequired,
     }
 
     handleChange = (evt) => {
@@ -54,13 +50,16 @@ class Auth extends React.Component {
         }
       }
 
-    handleInfo = (user, date, bio) => {
-        user && this.props.setName(user);
-        date && this.props.setDate(text);
-        bio && this.props.setBio(text);
-        console.log('Name: ' + this.props.user);
+    handleInfo = (user, date, bio, city) => {
+        // user && this.props.setName(user);
+        // date && this.props.setDate(text);
+        // bio && this.props.setBio(text);
+        // city && this.props.setCity(text);
+        console.log('Name: ' + user + this.props.user);
         console.log('Date: ' + this.props.date);
         console.log('Bio: ' + this.props.bio);
+        console.log('city: ' + this.props.city);
+
     }
 
     handleName = (user) => {
@@ -79,8 +78,21 @@ class Auth extends React.Component {
         return this.props.setCity(text);
     }
 
+    handleCheck = (link) => {
+        if ( (this.props.user && this.props.date && this.props.city) === '') {
+                alert('All fields must be filled')
+        
+            } else {
+                this.props.push(link);
+            }
+    }
+
     handleKeyUp = (evt) => {
-        if (evt.keyCode == 13) this.handleInfo()
+        if (evt.keyCode == 13) this.handleCheck()
+    }
+
+    handleChange = (evt) => { 
+        if (evt.keyCode !== 13) this.setState({ [evt.target.name]: evt.target.value })
     }
 
     render() {
@@ -115,6 +127,7 @@ class Auth extends React.Component {
                                         fullWidth
                                         aria-describedby="component-helper-text"
                                         onChange={ (e) => { this.handleName(e.target.value) } }
+                                        onKeyUp={this.handleKeyUp}
                                     />  
                                 </Grid>
 
@@ -124,6 +137,7 @@ class Auth extends React.Component {
                                         fullWidth
                                         aria-describedby="component-helper-text"
                                         onChange={ (e) => { this.handleCity(e.target.value) } }
+                                        onKeyUp={this.handleKeyUp}
                                     />
                                 </Grid>
 
@@ -133,6 +147,7 @@ class Auth extends React.Component {
                                             fullWidth
                                             aria-describedby="component-helper-text"
                                             onChange={ (e) => { this.handleDate(e.target.value) } }
+                                            onKeyUp={this.handleKeyUp}
                                         />
                                     </Grid>
                             
@@ -144,6 +159,7 @@ class Auth extends React.Component {
                                         variant="outlined"
                                         rows={4}
                                         onChange={ (e) => { this.handleBio(e.target.value) } }
+                                        onKeyUp={this.handleKeyUp}
                                     />
                                 </Grid>    
 
@@ -156,15 +172,16 @@ class Auth extends React.Component {
                                 alignItems="center"
                                 style={buttonsBlock}>
                                             <Grid item>
-                                                    <Link to='/profile/'>
+                                                    
                                                         <RaisedButton
                                                             variant="contained"
                                                             color="primary"
-                                                            onClick={ () => this.handleInfo() }
-                                                            onKeyUp={ (evt) => { this.handleBio(evt.target.value) } } >
+                                                            onClick={ () => this.handleCheck(`/profile/`) }
+                                                            onChange={this.handleKeyUp}
+                                                            onKeyUp={this.handleKeyUp}>
                                                                 SUBMIT
                                                             </RaisedButton>
-                                                        </Link>
+
                                                 </Grid>
 
                                                     <Grid item>
@@ -186,6 +203,6 @@ const mapStateToProps = ({ prflReducer }) => ({
     city: prflReducer.city
   });  
 
-  const mapDispatchToProps = dispatch => bindActionCreators({ setName, setBio, setDate, setCity }, dispatch);
+  const mapDispatchToProps = dispatch => bindActionCreators({ setName, setBio, setDate, setCity, push }, dispatch);
   
   export default connect(mapStateToProps, mapDispatchToProps)(Auth); 

@@ -1,13 +1,27 @@
 .profile {
     margin: 10px 10px 10px 14px;
-    padding: 0;
     background-color: #ffffff;   
     border: 1px solid lightskyblue;  
-    border-radius: 7px;  
-    list-style: none;   
+    border-radius: 7px;    
     width: 100%;
+    min-height: 388px;
+    height: calc(100vh - 111px);
+    position: relative;    
 }
 
-.profile li {
-    margin: 10px;
+.profile-close {
+    position: absolute;
+    right: 20px;
+    top: 20px;
+    cursor: pointer;
+}
+
+.profile-list {
+    list-style: none;
+    padding: 0;
+    margin: 0;       
+}
+
+.profile-list li {
+    margin: 20px;
 }

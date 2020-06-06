@@ -1,9 +1,9 @@
 import React from 'react';
 
-import {Link} from 'react-router-dom';
+import { Link } from 'react-router-dom';
 import TelegramIcon from '@material-ui/icons/Telegram';
 import Done from 'material-ui/svg-icons/action/done';
-import {TextField, Avatar, RaisedButton} from 'material-ui'
+import { TextField, Avatar, RaisedButton } from 'material-ui'
 import './style.css';
 
 import { setName } from '../../store/actions/profile_actions.js';
