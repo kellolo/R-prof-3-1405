@@ -42,6 +42,7 @@ class MessagesField extends Component {
         super(props)
         this.state = {
             text: '',
+            // sender:
         }
     }
 
@@ -82,7 +83,6 @@ class MessagesField extends Component {
          
         let { messages } = this.props;
 
-
         let msgArr = [];
 
         Object.keys(messages).forEach(key => {
@@ -93,8 +93,6 @@ class MessagesField extends Component {
                 console.log(msgArr)
         })
             
-        
-
         return (
             <div className="d-flex container flex-column w-100">
                 <div className="d-flex flex-column overflow-auto messagesField w-100">

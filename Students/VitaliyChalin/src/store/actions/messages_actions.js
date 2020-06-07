@@ -1,22 +1,24 @@
 import { RSAA, getJSON } from 'redux-api-middleware';
 
-export let SEND_MSG = '@@messages/SEND';
-
 export let START_MESSAGES_LOADING = '@@messages/START_MESSAGES_LOADING';
 export let SUCCESS_MESSAGES_LOADING = '@@messages/SUCCESS_MESSAGES_LOADING';
 export let ERROR_MESSAGES_LOADING = '@@messages/ERROR_MESSAGES_LOADING';
 
-export let sendMessage = (messageId, sender, text, chatId) => ({
+export let START_MESSAGE_SEND = '@@messages/START_MESSAGE_SEND';
+export let SUCCESS_MESSAGE_SEND = '@@messages/SUCCESS_MESSAGE_SEND';
+export let ERROR_MESSAGE_SEND = '@@messages/ERROR_MESSAGE_SEND';
+
+/* export let sendMessage = (messageId, sender, text, chatId) => ({
     type: SEND_MSG,
     messageId,
     sender,
     text,
     chatId
-});
+}); */
 
 export const loadMessages = () => ({
     [RSAA]: {
-        endpoint: './server/db/messages.json',
+        endpoint: '/api/messages',
         method: 'GET',
         types: [
             START_MESSAGES_LOADING,
@@ -26,6 +28,24 @@ export const loadMessages = () => ({
                             .then(json => json)
             },
             ERROR_MESSAGES_LOADING
+        ]
+    }
+});
+
+export let sendMessage = (messageId, sender, text, chatId) => ({
+    [RSAA]: {
+        endpoint: '/api/messages',
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({messageId, sender, text, chatId}),
+        types: [
+            START_MESSAGE_SEND,
+            {
+                type: SUCCESS_MESSAGE_SEND,
+                payload: (action, state, res) => getJSON(res)
+                            .then(json => ({ response: json, msg: { messageId, sender, text, chatId } }))
+            },
+            ERROR_MESSAGE_SEND
         ]
     }
 });

@@ -31,7 +31,8 @@ class MessagesField extends Component {
 
   sendMessage = (text, sender) => {
     let { messages } = this.props;
-    let messageId = `id${Date.now()}`
+    // let messageId = `id${Date.now()}`
+    let messageId = Object.keys(this.props.messages).length + 1;
     //вызов Action
     this.props.sendMessage(messageId, sender, text);
   }
@@ -45,6 +46,7 @@ class MessagesField extends Component {
   }
 
   componentDidMount() {
+    console.log('chats mounted');
     this.props.loadMessages();
   }
 
@@ -57,8 +59,8 @@ class MessagesField extends Component {
       msgArr.push(<Message
         botName = { botName }
         text = { messages[key].text }
-        sender = { messages[key].user }
-        key = { key } />);
+        sender = { messages[key].sender }
+        key = { messages[key].messageId || key } />);
       });
 
     return (

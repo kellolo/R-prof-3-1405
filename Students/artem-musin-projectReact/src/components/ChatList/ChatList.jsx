@@ -6,31 +6,44 @@ import { addChat } from '../../store/actions/chats_actions.js';
 
 import { push } from 'connected-react-router';
 
-import { List, ListItem, ListItemText, Grid, Avatar } from '@material-ui/core';
+import { List, ListItem, ListItemText, Avatar, ListItemIcon } from '@material-ui/core';
 import { TextField } from 'material-ui';
 import AddIcon from '@material-ui/icons/Add';
 
-const inputStyle = {
-    maxWidth: '12em',
-    
+
+const addChatStyles = {
+    maxWidth: 'auto',
+    width: 'auto',
+    minWidth: '5em'
+
 }
 
-const inputBlock = {
-    alignSelf: 'center',
-    color: 'whitesmoke'
+const addIconStyles = {
+    margin: '0',
+    minWidth: '35px',
+    alignSelf: 'center'
 }
 
 const listStyles = {
-    textDecoration: 'none'
+    textDecoration: 'none',
+    maxWidth: 'auto',
+    width: '25em',
+    minWidth: '5em'
+}
+
+const listItemTextStyles = {
+    padding: '0.5em 1em'
 }
 
 const chatListStyles = {
     padding: '0em 1em',
-    color: '#3F3FBF'
+    color: '#3F3FBF',
 }
 
 const avatarStyles = {
     backgroundColor: '#9999ff',
+    width: '30px',
+    height: '30px',
 }
 
 class ChatList extends React.Component {
@@ -65,57 +78,50 @@ class ChatList extends React.Component {
 
         let chatsArray = Object.keys(chats).map(key => (
         
-                        <ListItem button>
-                            <ListItemText 
+                        <ListItem button
                             style={chatListStyles} 
-                            primary={ chats[key].title } 
                             onClick={() => this.handleNavigate(`/chat/${key}`)}
+                            key={ key }>
+                            <ListItemText
+                            style={listItemTextStyles}
+                            primary={ chats[key].title }
                             /> 
                                     <Avatar alt={chats[key].title} src='/broken-image.jpg' 
-                                        style={avatarStyles} />
+                                        style={avatarStyles}
+                                     />
                         </ListItem>
                     
         ))
 
         return (
-                <List component="nav" 
+                <List component="ul" 
                     style={listStyles}>
                             { chatsArray }
                                 <ListItem
                                     key='Add new chat'
-                                    onClick={ this.handleAdd }>
-                                        <Grid 
-                                            container
-                                            item
-                                            spacing={1}
-                                            direction="row"
-                                            >
-
-                                                <Grid item
-                                                    style={inputBlock}>
-                                                        <AddIcon />
-                                                    </Grid>
-
-                                                <Grid item
-                                                    >
-                                                    <TextField
-                                                        key='textField'
-                                                        name='input'
-                                                        hintText='Add new chat...'
-                                                        id="input-with-icon-textfield"
-                                                        onChange={ this.handleChange }
-                                                        value={ this.state.input }
-                                                        onKeyUp={ this.handleKeyUp }
-                                                        style={inputStyle}
-                                                    />
-                                                    </Grid>
-                                            
-                                        </Grid>
-                                    </ListItem>
-                                        
-                                       
-                                        
-                                    
+                                    alignItems="flex-start"
+                                    style={addChatStyles}
+                                    onClick={ this.handleAdd }
+                                    >
+                                        <ListItemIcon style={addIconStyles}>
+                                                <AddIcon />
+                                            </ListItemIcon>
+                                                    <ListItemText>
+                                                        <TextField
+                                                            style={addChatStyles}
+                                                            key='textField'
+                                                            name='input'
+                                                            hintText='Add new chat...'
+                                                            id="input-with-icon-textfield"
+                                                            wrap="nowrap"
+                                                            onChange={ this.handleChange }
+                                                            value={ this.state.input }
+                                                            onKeyUp={ this.handleKeyUp }
+                                                        />
+                                                    </ListItemText>
+                                                
+                                </ListItem>
+          
                 </List>
             
         )
