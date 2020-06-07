@@ -1,11 +1,10 @@
 import React from 'react';
 import {bindActionCreators} from 'redux';
 import connect from 'react-redux/es/connect/connect';
-import { addChat } from '../../store/actions/chats_actions.js';
-
 
 import { push } from 'connected-react-router';
 
+import { addChat } from '../../store/actions/chats_actions.js';
 import { List, ListItem, ListItemText, Avatar, ListItemIcon } from '@material-ui/core';
 import { TextField } from 'material-ui';
 import AddIcon from '@material-ui/icons/Add';
@@ -55,7 +54,8 @@ class ChatList extends React.Component {
 
     handleAdd = () => { // Добавление чата в лист
             if (this.state.input) {
-                this.props.addChat(this.state.input);
+                let chatId = Object.keys(this.props.chats).length + 1;
+                this.props.addChat(chatId, this.state.input);
                     this.setState({ input: '' })
             }
      }

@@ -4,5 +4,13 @@
   "chatId": "1",
   "user": "Bot",
   "text": "Hi there"
+ },
+ "2": {
+  "user": "Me",
+  "text": "sd"
+ },
+ "3": {
+  "user": "Bot",
+  "text": "Bot cyber answers"
  }
 }

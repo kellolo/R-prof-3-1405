@@ -42,7 +42,6 @@ class MessagesField extends Component {
         super(props)
         this.state = {
             text: '',
-            // sender:
         }
     }
 
