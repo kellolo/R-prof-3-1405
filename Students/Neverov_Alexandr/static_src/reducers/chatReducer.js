@@ -4,8 +4,8 @@ import { ADD_CHAT } from "../actions/chatActions";
 
 const initialStore = {
    chats: {
-       1: {title: 'Чат 1', messageList: [1]},
-       2: {title: 'Чат 2', messageList: [2]},
+       1: {title: 'Чат 1', messageList: []},
+       2: {title: 'Чат 2', messageList: []},
        3: {title: 'Чат 3', messageList: []},
    },
 };
