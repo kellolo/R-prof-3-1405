@@ -1,0 +1,13 @@
+{
+  "name": "neverov_alexandr",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "start": "webpack --mode development",
+    "build": "webpack",
+    "server": "webpack-dev-server"
+  },
+  "author": "Neverov",
+  "license": "ISC"
+}
