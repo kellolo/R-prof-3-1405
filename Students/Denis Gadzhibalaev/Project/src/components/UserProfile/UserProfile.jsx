@@ -3,7 +3,7 @@ import './style.sass';
 
 import { bindActionCreators } from 'redux';
 import connect from 'react-redux/es/connect/connect'
-import { Link } from 'react-router-dom';
+import { goBack } from 'connected-react-router';
 
 import { TextField, FloatingActionButton } from 'material-ui';
 import SaveIcon from '@material-ui/icons/Save';
@@ -104,11 +104,9 @@ class UserProfile extends Component {
                                                         <SaveIcon />
                                                 </FloatingActionButton>
                                             </div> }
-               <Link className = "user-profile_back-link" to = '/'>
-                    <FloatingActionButton>
+                    <FloatingActionButton  className = "user-profile_back-link" onClick = { () => this.props.goBack() }>
                         <KeyboardBackspaceIcon />
                     </FloatingActionButton>
-                </Link>
             </div>
         )
     }
@@ -119,6 +117,6 @@ const mapStateToProps = ({ prfReducer }) => ({
     userEmail: prfReducer.userEmail
 });
 
-const mapDispathToProps = dispatch => bindActionCreators({ setUserName, setUserEmail}, dispatch);
+const mapDispathToProps = dispatch => bindActionCreators({ setUserName, setUserEmail, goBack}, dispatch);
 
 export default connect(mapStateToProps, mapDispathToProps)(UserProfile);

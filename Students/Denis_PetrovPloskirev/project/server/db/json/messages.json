@@ -1,0 +1,18 @@
+{
+ "1": {
+  "sender": "Denis",
+  "text": "Hello"
+ },
+ "2": {
+  "sender": null,
+  "text": "Hello"
+ },
+ "3": {
+  "sender": "Denis",
+  "text": "How are you?"
+ },
+ "4": {
+  "sender": null,
+  "text": "Fine"
+ }
+}

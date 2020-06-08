@@ -66,22 +66,23 @@ class MessagesField extends Component {
         );
 
         if (isLoading) {
-            return <><CircularProgress
+            return <CircularProgress
                         style= { loaderWrapperStyle }
                         color="#41506d"
                         size={ 80 }
-                    /></>
+                    />
         }
 
         let msgArr = [];
 
         Object.keys(messages).forEach(key => {
-            if(messages[key].chatId === chatId)
+            //if(messages[key].chatId === chatId)
+
                 msgArr.push(
                     <Message 
                         key={ key }
                         text={ messages[key].text }
-                        sender={ messages[key].user }
+                        sender={ messages[key].sender }
                     />
                 );
         });
@@ -115,8 +116,9 @@ class MessagesField extends Component {
     }
 }
 
-const mapStateToProps = ({ msgReducer }) => ({
+const mapStateToProps = ({ msgReducer, chatsReducer }) => ({
     messages: msgReducer.messages,
+    chats: chatsReducer.chats,
     isLoading: msgReducer.isLoading
 });
 
