@@ -5,16 +5,21 @@ import connect from 'react-redux/es/connect/connect';
 import { push } from 'connected-react-router';
 
 import { addChat } from '../../store/actions/chats_actions.js';
-import { List, ListItem, ListItemText, Avatar, ListItemIcon } from '@material-ui/core';
+import { List, ListItem, ListItemText, Avatar, ListItemIcon, Box } from '@material-ui/core';
 import { TextField } from 'material-ui';
 import AddIcon from '@material-ui/icons/Add';
 
+
+const boxStyles = {
+    maxWidth: 'auto',
+    width: '25em',
+    minWidth: '5em'
+}
 
 const addChatStyles = {
     maxWidth: 'auto',
     width: 'auto',
     minWidth: '5em'
-
 }
 
 const addIconStyles = {
@@ -25,17 +30,18 @@ const addIconStyles = {
 
 const listStyles = {
     textDecoration: 'none',
-    maxWidth: 'auto',
-    width: '25em',
-    minWidth: '5em'
+    overflow: 'auto',
+    maxHeight: '425px',
 }
 
 const listItemTextStyles = {
-    padding: '0.5em 1em'
+    padding: '0.3em 0em',
+    overflowWrap: 'anywhere',
+
 }
 
 const chatListStyles = {
-    padding: '0em 1em',
+    padding: '0',
     color: '#3F3FBF',
 }
 
@@ -94,9 +100,15 @@ class ChatList extends React.Component {
         ))
 
         return (
-                <List component="ul" 
-                    style={listStyles}>
+                <Box component="div"
+                    style={boxStyles}>
+                    <List component="ul" 
+                        style={listStyles}>
                             { chatsArray }
+          
+                    </List>
+
+                            <List>
                                 <ListItem
                                     key='Add new chat'
                                     alignItems="flex-start"
@@ -121,8 +133,8 @@ class ChatList extends React.Component {
                                                     </ListItemText>
                                                 
                                 </ListItem>
-          
-                </List>
+                            </List>
+                </Box>
             
         )
     }
