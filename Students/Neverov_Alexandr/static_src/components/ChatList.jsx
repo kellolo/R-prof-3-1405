@@ -1,7 +1,7 @@
 import React from 'react';
 import { bindActionCreators } from "redux";
 import connect from "react-redux/es/connect/connect";
-import { Link } from 'connected-react-router';
+import { push } from 'connected-react-router';
 import { List, ListItem } from 'material-ui/List';
 import { TextField } from 'material-ui';
 import AddIcon from 'material-ui/svg-icons/content/add';
@@ -47,6 +47,7 @@ class ChatList extends React.Component {
        const { chats, chatsWithNewMessages } = this.props;
        const chatElements = Object.keys(chats).map(chatId => (
            <ListItem
+		       key={ chatId }
                // className={ chatsWithNewMessages.indexOf(Number(chatId)) >= 0 ? 'highlighted' : '' }
                style={ chatsWithNewMessages.indexOf(Number(chatId)) >= 0 ? { backgroundColor: 'red' } : {}}
                primaryText={ chats[chatId].title }

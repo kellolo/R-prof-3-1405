@@ -4,6 +4,7 @@ import { Link } from 'react-router-dom';
 import Avatar from 'material-ui/svg-icons/action/account-circle';
 import { bindActionCreators } from "redux";
 import connect from "react-redux/es/connect/connect";
+import PushToggle from '../components/PushToggle';
 
 
 class Header extends React.Component {
@@ -26,7 +27,7 @@ class Header extends React.Component {
 
        return (
            <div className="header">
-                <div>{ chats[chatId].title }</div>
+               <PushToggle/>
                 <Link to='/profile/' style={ {
                     marginRight: '10px',
                     color: 'white',

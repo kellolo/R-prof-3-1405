@@ -4,11 +4,12 @@
     margin: 40px auto;
     display: flex;
     align-items: center;
+	justify-content: center;
     flex-direction: column;
 }
 
 .layout-canvas {
-    height: 60%;
+    height: calc(100% - 40px);
     width: 100%;
     display: flex;
 }
@@ -23,12 +24,41 @@
 }
 
 .layout-left-side {
-    height: 100%;
-    width: 30%;
-    background-color: darkgray;
+     display: None;
 }
 
 .layout-right-side {
     height: 100%;
-    width: 70%;
+    width: 100%;
+}
+
+@media screen and (min-width: 650px){
+   .layout {
+       width: 50%;
+   }
+
+   .layout-canvas {
+       height: 50%;
+       width: 100%;
+       display: flex;
+   }
+
+   .layout-right-side {
+       width: 70%;
+   }
+
+   .layout-left-side {
+       display: block;
+       height: 100%;
+       width: 30%;
+       background-color: darkgray;
+   }
+
+   .layout {
+       width: 50%;
+   }
+
+   .layout-canvas {
+       height: 50%;
+   }
 }
