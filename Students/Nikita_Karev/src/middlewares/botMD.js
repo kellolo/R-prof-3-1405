@@ -1,13 +1,13 @@
-import { SEND_MSG, sendMessage } from '../store/actions/messages_actions.js';
+import { SUCCESS_MESSAGE_SEND, sendMessage } from '../store/actions/messages_actions.js';
 
 export default store => next => action => {
     switch (action.type) {
-        case SEND_MSG: {
-            if (action.sender) {
+        case SUCCESS_MESSAGE_SEND: {
+            if (action.payload.msg.sender == "John Carmack") {
                 setTimeout(() => {
                     let id = Object.keys(store.getState().msgReducer.messages).length + 1;
                     return store.dispatch(
-                        sendMessage(id, null, 'Again you? Do not disturb me!')
+                        sendMessage(id, 'Bot', 'Again you? Do not disturb me!')
                     )
                 }, 1000)
             }

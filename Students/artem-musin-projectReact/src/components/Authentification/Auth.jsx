@@ -80,7 +80,10 @@ class Auth extends React.Component {
 
     handleCheck = (link) => {
         if ( (this.props.user && this.props.date && this.props.city) === '') {
-                alert('All fields must be filled')
+                this.props.setName('Undefined');
+                this.props.setBio('No information given')
+                this.props.setCity('Undefined');
+                this.props.setDate('Undefined');
         
             } else {
                 this.props.push(link);

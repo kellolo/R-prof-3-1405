@@ -52,14 +52,14 @@ class MessagesField extends Component {
     render() {
         let { messages } = this.props;
 
-        let msgArr = []
+        let msgArr = [];
         
         Object.keys(messages).forEach(key => {
             msgArr.push (<div ref={(el) => { this.messagesEnd = el; }} 
             key={key}>
             <Message 
                 text={ messages[key].text } 
-                sender={ messages[key].user }
+                sender={ messages[key].sender }
             /></div>);
         });
 

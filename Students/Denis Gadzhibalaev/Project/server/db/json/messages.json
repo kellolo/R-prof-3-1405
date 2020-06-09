@@ -1,0 +1,14 @@
+{
+ "1": {
+  "user": null,
+  "text": "Welcome Friend!",
+  "deleted": false,
+  "chatId": "1"
+ },
+ "2": {
+  "user": null,
+  "text": "Hi Friend!",
+  "deleted": false,
+  "chatId": "2"
+ }
+}

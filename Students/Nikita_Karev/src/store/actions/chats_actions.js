@@ -13,7 +13,7 @@ export let addChat = title => ({
 
 export const loadChats = () => ({
     [RSAA]: {
-        endpoint: './server/db/chatlist.json',
+        endpoint: './server/db/json/chatlist.json',
         method: 'GET',
         types: [
             START_CHATS_LOADING,

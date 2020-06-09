@@ -22,7 +22,7 @@ let initialStore = {
 export default function chatsReducer(store = initialStore, action) {
     switch (action.type) {
         case ADD_CHAT: {
-            let chatId = Date.now();
+            let chatId = Object.keys(store.chats).length + 1;
 
             return update(store, {
                 chats: {

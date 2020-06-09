@@ -16,7 +16,7 @@ import CircularProgress from 'material-ui/CircularProgress';
 
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
-import { addChat, deleteChat, loadChats } from '../../store/actions/chats_actions.js';
+import { addChat, deleteChat, loadchats } from '../../store/actions/chats_actions.js';
 
 class ChatList extends React.Component {  
 
@@ -52,18 +52,19 @@ class ChatList extends React.Component {
         }        
     }
 
+    deleteChat = (chatId, link) => {
+        this.props.deleteChat(chatId);
+        this.props.push(link)
+    }
+
     handleNavigate = (link) => {
         this.props.push(link);
     };
  
     componentDidMount() {
-        this.props.loadChats();
+            this.props.loadchats(this.props.chatId);
     }
-
     render() {
-        if (this.props.isLoading) {
-            return <CircularProgress style = { {margin: 'auto'} }/>
-        } 
         let { chats } = this.props;
         let chatId = Object.keys(chats).length + 1;
         let chatsArr = [];
@@ -78,7 +79,7 @@ class ChatList extends React.Component {
                                                         leftAvatar={<Avatar src="https://placeimg.com/640/480/nature" />}
                                                         onClick = { () => this.handleNavigate(`/chat/${key}`)}
                                                         rightIconButton = {<HighlightOffIcon className = "delete-btn" style={ { top: '14px', right: '10px' } }
-                                                                                            onClick = {  () => {this.props.deleteChat(key)}} 
+                                                                                            onClick = {  () => {this.deleteChat(key, '/')}} 
                                                                                             /> }
                                                     />     
             )
@@ -115,9 +116,8 @@ class ChatList extends React.Component {
 
 const mapStateToProps = ({ chtReducer }) => ({ 
     chats: chtReducer.chats,
-    isLoading: chtReducer.isLoading
 });
 
- const mapDispatchToProps = dispatch => bindActionCreators({ addChat, deleteChat, push, loadChats }, dispatch);
+ const mapDispatchToProps = dispatch => bindActionCreators({ addChat, deleteChat, push, loadchats }, dispatch);
  
  export default connect(mapStateToProps, mapDispatchToProps)(ChatList);
