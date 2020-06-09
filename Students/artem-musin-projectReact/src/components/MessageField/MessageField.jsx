@@ -22,14 +22,11 @@ import { bindActionCreators } from 'redux';
 import connect from 'react-redux/es/connect/connect';
 
 
-const attachButtonStyles = {
+const micAttButtonStyles = {
     display: 'flex',
-    alignSelf: 'center'
-}
-
-const micButtonStyes = {
-    display: 'flex',
-    alignSelf: 'center'
+    alignSelf: 'center',
+    minHeight: '35px',
+    minWidth: '35px',
 }
 
 const textFieldStyles = {
@@ -42,7 +39,6 @@ class MessagesField extends Component {
         super(props)
         this.state = {
             text: '',
-            // sender:
         }
     }
 
@@ -99,14 +95,12 @@ class MessagesField extends Component {
                     { msgArr }    
                 </div>
                 <hr/>
-                <div className="d-flex w-75">
-                    <Button>
-                        <AttachFile style={attachButtonStyles} 
-                        />
+                <div className="d-flex w-100 align-items-center">
+                    <Button style={micAttButtonStyles}>
+                        <AttachFile />
                     </Button>
-                    <Button>
-                        <MicIcon style={micButtonStyes}
-                        />
+                    <Button style={micAttButtonStyles}>
+                        <MicIcon />
                     </Button>
                         <TextField
                             id="input-message"
@@ -114,7 +108,7 @@ class MessagesField extends Component {
                             variant="outlined"
                             style={textFieldStyles}
                             fullWidth
-                            label="Type your message"
+                            label="Type something..."
                             onChange={this.handleChange }
                             onKeyUp={this.handleChange } 
                             value={ this.state.text }

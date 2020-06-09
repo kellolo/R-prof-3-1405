@@ -10,28 +10,27 @@ let initialStore = {
 export default function chatsReducer(store = initialStore, action) {
     switch (action.type) {
         case SUCCESS_CHAT_ADD: {
-            if(action.payload.response.status) {
-                let chatId = Object.keys(store.chats).length + 1;
-
+            let chatId = action.payload._id;
+            let title = action.payload.title;
                 return update(store, {
                     chats: {
                         $merge: {
-                            [chatId]: {
-                                title: action.payload.chat.title,
-                                messagesList: []
-                            }
+                            [chatId]: { title }
                         }
                     }
                 });
-            } else {
-                console.log('Error add chat', action.payload);
-                return null
-            }
         };
         case SUCCESS_CHATS_LOADING: {
+            let dto = action.payload;
+            let chats = {};
+
+            dto.forEach(d => {
+                chats[d._id] = { title: d.title }
+            });
+
             return update(store, {
-                chats: { $set: action.payload }
-            })
+                chats: { $set: chats }
+            });
         }
         default:
             return store;

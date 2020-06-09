@@ -8,6 +8,7 @@ const useStyles = makeStyles({
         display: 'block',
         width: 'auto',
         maxWidth: '60%',
+        padding: '0.5em',
         overflowWrap: 'anywhere',  
         alignSelf: 'start',
         flexDirection: 'column',
@@ -17,6 +18,7 @@ const useStyles = makeStyles({
         display: 'block',
         width: 'auto',
         maxWidth: '60%',
+        padding: '0.5em',
         overflowWrap: 'anywhere',  
         alignSelf: 'flex-end',
         textAlign: 'right',
@@ -29,10 +31,10 @@ const useStyles = makeStyles({
         color: 'whitesmoke',
     },
     pClass: {
-        marginRight: '2em'
+        marginRight: '1.2em'
     },
     pClassBot: {
-        marginLeft: '2em'
+        marginLeft: '1.2em'
     },
     pFix: {
         marginBottom: '0',
@@ -54,7 +56,7 @@ export default (props) => {
             { sender && <strong className={p}>{ sender }</strong> }
             { !sender && <strong className={p}> Bot </strong>}
            <div className={messageBody}>
-            <p className={pFix}>{ props.sender || (!props.sender && text) ? text : 'Bot tells you that he cant response more than this'}</p>
+            <p className={pFix}>{ props.sender || (!props.sender && text) ? text : 'Oops..'}</p>
            </div>
         </div>
     )
