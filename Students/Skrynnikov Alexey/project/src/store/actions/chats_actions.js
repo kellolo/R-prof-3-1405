@@ -19,7 +19,7 @@ export let addChat = title => ({
             {
                 type: SUCCESS_CHAT_ADD,
                 payload: (action, state, res) => getJSON(res)
-                            .then(json => ({ response: json, chat: { title }}))
+                            .then(json => ({ response: json, title}))
             },
             ERROR_CHAT_ADD
         ]
@@ -30,6 +30,7 @@ export const loadChats = () => ({
     [RSAA]: {
         endpoint: '/api/chats',
         method: 'GET',
+        headers: { 'Content-Type': 'application/json' },
         types: [
             START_CHATS_LOADING,
             {

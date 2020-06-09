@@ -1,0 +1,11 @@
+.push {
+    margin: 0;
+   }
+
+.ng {
+    color : "rgb(99, 146, 148)"; 
+}
+
+.ng:hover {
+    color:  "rgb(6, 121, 159)"
+}
