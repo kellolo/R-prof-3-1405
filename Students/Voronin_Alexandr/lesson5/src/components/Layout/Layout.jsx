@@ -20,7 +20,7 @@ export default class Layout extends React.Component {
                     <Header chatId = { this.props.chatId }/>
                     <div className="d-flex content">
                         <ChatList />
-                        <MessageField />
+                        <MessageField chatId = { this.props.chatId }/>
                     </div>
                 </div>
         )
