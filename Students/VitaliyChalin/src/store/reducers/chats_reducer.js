@@ -1,6 +1,6 @@
 import update from  'react-addons-update';
 
-import { SUCCESS_CHAT_ADD, SUCCESS_CHAT_LOADING } from '../actions/chats_actions.js';
+import { SUCCESS_CHAT_ADD, SUCCESS_CHAT_DEL, SUCCESS_CHAT_LOADING } from '../actions/chats_actions.js';
 import { SUCCESS_MESSAGE_SEND, SUCCESS_MESSAGES_LOADING } from '../actions/messages_actions.js';
 
 let initialStore = {
@@ -22,6 +22,10 @@ export default function chatsReducer(store = initialStore, action) {
                 console.log('Error add chat', action.payload);
                 return null;                
             }
+        }
+        case SUCCESS_CHAT_DEL: {
+            return console.log(action);
+            
         }
         case SUCCESS_CHAT_LOADING: {
             return update(store, {

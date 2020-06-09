@@ -1,6 +1,6 @@
 import React from 'react';
 
-import { addChat, loadChats } from '../../store/actions/chats_actions.js';
+import { addChat, delChat, loadChats } from '../../store/actions/chats_actions.js';
 import { addProfile, loadProfiles } from '../../store/actions/profiles_actions.js';
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
@@ -63,6 +63,12 @@ class ChatList extends React.Component {
             this.props.addChat(chatId, this.state.input);
             this.setState({ input: '' });
         }
+    }
+
+    handleDel = chatId => {
+        
+        this.props.delChat(chatId.key);
+        console.log(chatId.key);
     }
 
     handleChange = (evt) => {
@@ -141,6 +147,7 @@ class ChatList extends React.Component {
                                 color="#41506d"
                                 hoverColor="#252932"
                                 className="menu-icon menu-icon__delete"
+                                onClick={ () => this.handleDel({ key }) }
                             />
                         </MenuItem>
                     </IconMenu>
@@ -190,6 +197,7 @@ const mapStateToProps = ({ chatsReducer, profileReducer }) => ({
 const mapDispatchToProps = dispatch => bindActionCreators(
     {
         addChat,
+        delChat,
         loadChats,
         addProfile,
         loadProfiles,
