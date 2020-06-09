@@ -28,3 +28,34 @@ body {
   padding: 15px;
   border-radius: 5px;
 }
+
+@media screen and (min-width: 650px){
+  .layout {
+      width: 50%;
+  }
+
+  .layout-canvas {
+      height: 50%;
+      width: 100%;
+      display: flex;
+  }
+
+  .layout-right-side {
+      width: 70%;
+  }
+
+  .layout-left-side {
+      display: block;
+      height: 100%;
+      width: 30%;
+      background-color: darkgray;
+  }
+
+  .layout {
+      width: 50%;
+  }
+
+  .layout-canvas {
+      height: 50%;
+  }
+}
