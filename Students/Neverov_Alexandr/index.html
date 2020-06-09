@@ -1,12 +1,44 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="ru" style="height: 100%">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+	 <!-- Для адаптивной верстки -->
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+	 <!-- Манифест. Сообщает браузеру, что наш сайт является PWA -->
+    <link rel="manifest" href="manifest/manifest.json">
     <title>React</title>
 </head>
 <body>
     <div id="root"></div>
     <script src="/static/build/app.js"></script>
+	
+	<script>
+   if ('serviceWorker' in navigator) {
+       window.addEventListener('load', function() {
+           navigator.serviceWorker.register('/service-worker.js').then(function(registration) {
+               // Registration was successful
+               console.log('ServiceWorker успешно зарегистрирован со сферой действия: ', registration.scope);
+               }, function(err) {
+               // registration failed :(
+               console.log('ServiceWorker не удалось зарегистрировать: ', err);
+           }).catch(function(err) {
+               console.log(err)
+           });
+       });
+   } else {
+       console.log('ServiceWorker не поддерживается');
+   }
+</script>
+<script>
+  window.addEventListener('appinstalled', (evt) => {
+      fetch('/analytics/install', {
+          method: 'GET',
+          credentials: 'include',
+      });
+  });
+</script>
+
+<script src="/notifictations.js"></script>
+
 </body>
 </html>
