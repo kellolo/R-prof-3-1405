@@ -6,10 +6,9 @@ export default store => next => action => {
       if (action.payload.msg.sender == store.getState().prflReducer.user) {
         console.log('entered');
         setTimeout(() => {
-          let id = `id${Date.now()}`;
-          let text = 'Some text';
+          let text = 'Bot answer...';
           return store.dispatch(
-            sendMessage(id, null, text)
+            sendMessage(action.payload.msg.chatId, null, text)
           )
         }, 1000);
       }

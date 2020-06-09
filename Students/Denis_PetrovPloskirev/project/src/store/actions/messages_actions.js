@@ -18,10 +18,11 @@ export let ERROR_MESSAGE_SEND = '@@messages/ERROR_MESSAGE_SEND';
 //   text
 // });
 
-export const loadMessages = () => ({
+export const loadMessages = (chatId) => ({
   [RSAA]: {
-    endpoint: './api/messages',
+    endpoint: `./api/messages/${chatId}`,
     method: 'GET',
+    headers: { 'Content-Type': 'application/json' },
     types: [
       START_MESSAGES_LOADING,
       {
@@ -33,17 +34,17 @@ export const loadMessages = () => ({
   }
 })
 
-export let sendMessage = (messageId, sender, text) => ({
+export let sendMessage = (chatId, sender, text) => ({
   [RSAA]: {
     endpoint: './api/messages',
     method: 'POST',
     headers: { 'Content-type': 'application/json'},
-    body: JSON.stringify({ messageId, sender, text}),
+    body: JSON.stringify({ chatId, sender, text}),
     types: [
       START_MESSAGE_SEND,
       {
         type: SUCCESS_MESSAGE_SEND,
-        payload: (action, state, res) => getJSON(res).then(json => ({ response: json, msg: { messageId, sender, text}}))
+        payload: (action, state, res) => getJSON(res).then(json => ({ response: json, msg: { chatId, sender, text}}))
       },
       ERROR_MESSAGE_SEND
     ]
