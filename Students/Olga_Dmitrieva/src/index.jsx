@@ -20,7 +20,7 @@ const { store, persistor } = initStore();
 
 ReactDom.render(
     
-        <Provider store = { store }>>
+        <Provider store = { store }>
             <PersistGate loading={ null } persistor={ persistor }>
                 <ConnectedRouter history = { history }>
                     <div className = "w-100 justify-content-center">

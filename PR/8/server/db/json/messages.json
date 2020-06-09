@@ -1,0 +1,34 @@
+{
+ "1": {
+  "user": "Me",
+  "text": "Hi"
+ },
+ "2": {
+  "user": null,
+  "text": "Hello"
+ },
+ "3": {
+  "user": "Me",
+  "text": "How are you?"
+ },
+ "4": {
+  "user": null,
+  "text": "Fine"
+ },
+ "5": {
+  "user": null,
+  "text": "And you?"
+ },
+ "6": {
+  "user": "Me",
+  "text": "QWERTY"
+ },
+ "7": {
+  "user": "Me",
+  "text": "Lorem lorem ipsumovich"
+ },
+ "8": {
+  "user": "Me",
+  "text": "Ipsum Darth Vaderovich"
+ }
+}

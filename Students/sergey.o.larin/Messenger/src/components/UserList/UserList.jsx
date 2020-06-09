@@ -24,7 +24,7 @@ import {
     selectRespondent,
     unSelectRespondent,
 } from "../../store/action/messenger";
-
+import { newStoryLine, newStoryLineState } from "../../store/action/messages";
 import Profile from '../Profile/Profile.jsx'
 
 
@@ -128,6 +128,10 @@ class CompanionList extends React.Component {
     }
 
     addRespondent(id) {
+        if (!this.props.messages[id]) {
+            this.props.newStoryLineState(id, 1, 'Bot', `Это начало истории ваших личных сообщений с ${ this.props.contacts[id].name } ${ this.props.contacts[id].surname } !`)
+            this.props.newStoryLine(id, 1, 'Bot', `Это начало истории ваших личных сообщений с ${ this.props.contacts[id].name } ${ this.props.contacts[id].surname } !`)
+        }
         this.props.addRespondent(id);
         this.setState({
             cursor: 0,
@@ -335,17 +339,20 @@ class CompanionList extends React.Component {
     }
 }
 
-const mapStateToProps = ({ messengerReducer }) => ({
+const mapStateToProps = ({ messengerReducer, messagesReducer }) => ({
     contacts: messengerReducer.contacts,
-    user: messengerReducer.user,
+    messages: messagesReducer.messages,
     respondent: messengerReducer.respondent,
     respondents: messengerReducer.respondents,
+    user: messengerReducer.user,
 });
 
 const mapDispatchToProps = dispatch => {
     return bindActionCreators({
         addRespondent,
         closeRespondent,
+        newStoryLine,
+        newStoryLineState,
         selectRespondent,
         unSelectRespondent,
     }, dispatch);

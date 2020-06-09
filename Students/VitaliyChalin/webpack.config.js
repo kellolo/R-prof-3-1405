@@ -55,5 +55,19 @@ module.exports = {
             template: path.resolve(__dirname, 'src', 'public', 'index.html')
         })
     ],
-    devServer: { historyApiFallback: true }
+    devServer: {
+        historyApiFallback: true,
+        port: 3000,
+        hot: true,
+        open: false,
+        proxy: {
+            '/api': {
+                // contentBase: './dist',
+                target: 'http://localhost:3300',
+                pathRewrite: { '^/api' : '' },
+                secure: false,
+                changeOrigin: true
+            }
+        }
+    }
 }

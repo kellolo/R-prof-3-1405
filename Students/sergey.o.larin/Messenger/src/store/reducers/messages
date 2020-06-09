@@ -1,6 +1,11 @@
 import update from 'react-addons-update';
 
-import { NEW_STORY_LINE, SEND_MESSAGE, SUCCESS_MESSAGES_LOADING } from '../action/messages';
+import {
+    NEW_STORY_LINE,
+    SUCCESS_MESSAGE_SEND,
+    SUCCESS_MESSAGES_LOADING,
+    SUCCESS_NEW_STORY_LINE,
+} from '../action/messages';
 
 
 const initialStore = {
@@ -13,30 +18,54 @@ export default function msgReducer(store = initialStore, action) {
             let messages = store.messages;
             messages[action.id] = {
                 [action.messageId]: {
-                    user: action.text,
-                    text: action.sender
+                    user: action.sender,
+                    text: action.text
                 }
             };
             return {
                 ...store,
                 messages: messages
-
             }
         }
-        case SEND_MESSAGE: {
-            return update(store, {
-                messages: {
-                    [action.id]: {
-                        $merge:
-                            {
-                                [action.messageId]: {
-                                    user: action.sender,
-                                    text: action.text
-                                }
-                            }
+
+        case SUCCESS_NEW_STORY_LINE: {
+            if (action.payload.response.status) {
+                let messages = store.messages;
+                messages[action.payload.msg.id] = {
+                    [action.payload.msg.messageId]: {
+                        user: action.payload.msg.sender,
+                        text: action.payload.msg.text
                     }
+                };
+                return {
+                    ...store,
+                    messages: messages
                 }
-            })
+            } else {
+                console.log('Error send message', action.payload)
+                return null
+            }
+        }
+
+        case SUCCESS_MESSAGE_SEND: {
+            if (action.payload.response.status) {
+                return update(store, {
+                    messages: {
+                        [action.payload.msg.id]: {
+                            $merge:
+                                {
+                                    [action.payload.msg.messageId]: {
+                                        user: action.payload.msg.sender,
+                                        text: action.payload.msg.text
+                                    }
+                                }
+                        }
+                    }
+                });
+            } else {
+                console.log('Error send message', action.payload)
+                return null
+            }
         }
 
         case SUCCESS_MESSAGES_LOADING: {
@@ -44,6 +73,31 @@ export default function msgReducer(store = initialStore, action) {
                 messages: { $set: action.payload }
             })
         }
+
+        /**
+         * Для считывания из БД TODO
+         */
+        /*case SUCCESS_MESSAGES_LOADING: {
+            let messages = {};
+            for (let key in action.payload) {
+                messages[action.payload[+key].id] = {};
+            }
+            for (let key in messages) {
+                let contactMessages = messages[+key];
+                for (let id in action.payload) {
+                    if (+key === action.payload[+id].id) {
+                        contactMessages[action.payload[+id].messageId] = {
+                            user: action.payload[+id].sender,
+                            text: action.payload[+id].text
+                        }
+                    }
+                }
+            }
+
+            return update(store, {
+                messages: { $set: messages }
+            })
+    }*/
 
         default:
             return store;

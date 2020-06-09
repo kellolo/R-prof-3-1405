@@ -32,7 +32,7 @@ class MessagesField extends Component {
 
     sendMessage(text, sender) {
         let { messages } = this.props;
-        let messageId = Object.keys(messages).length + 1;
+        let messageId = Object.keys(this.props.messages).length + 1;
     
         this.props.sendMessage(messageId, sender, text);
     }
@@ -52,13 +52,13 @@ class MessagesField extends Component {
     render() {
         let { messages } = this.props;
 
-        let msgArr = []
+        let msgArr = [];
         
         Object.keys(messages).forEach(key => {
             msgArr.push (<Message
                 text={ messages[key].text }
-                sender={ messages[key].user }
-                key={ key } />);
+                sender={ messages[key].sender }
+                key={ key } />)
         });
 
         return (

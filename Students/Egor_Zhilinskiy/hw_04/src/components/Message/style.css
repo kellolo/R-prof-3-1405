@@ -1,0 +1,26 @@
+/* .msg {
+    background-color: lightblue;
+    padding: 5px 15px;
+    border-radius: 20px;
+    font-size: 18px;
+    margin: 5px;
+} */
+
+.message {
+    background-color: lightseagreen;
+    padding: 10px;
+    font-size: 18px;
+    list-style: none;    
+    border-radius: 20px;
+    width: 47%;
+    align-self: flex-end;
+}
+
+/* .message-bot {
+    background-color: orange;
+    align-self: flex-start;
+} */
+
+.Message:not(:last-child) {
+    margin-bottom: 20px;
+}

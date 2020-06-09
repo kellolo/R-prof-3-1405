@@ -7,7 +7,7 @@ import Avatar from '@material-ui/core/Avatar';
 import ChatIcon from '@material-ui/icons/Chat';
 import { List, ListItem } from 'material-ui/List';
 import { TextField } from '@material-ui/core';
-import AddIcon from 'material-ui/svg-icons/content/add';
+import AddCircleIcon from '@material-ui/icons/AddCircle';
 // import ContentSend from 'material-ui/svg-icons/content/send';
 
 import { addChat, loadChats } from '../../store/actions/chats_actions.js';
@@ -63,12 +63,14 @@ class ChatList extends React.Component {
 
                     <ListItem
                         key = "Add new chat..."
-                        leftIcon = { <AddIcon /> }
+                        leftIcon = { <AddCircleIcon style = {{ marginTop: '27px', color: '#000' }}/> }
+                        style = {{ width: '70%', borderRadius: '20px', backgroundColor: '#00bcd4', marginLeft: '17%' }}
                         onClick = { this.handleAdd }
                         children = {
                             <TextField
                                 key = "textField"
                                 name = "input"
+                                style = {{ padding: '0', marginTop: '15px', width: '100%' }}
                                 hintText = "Add new chat"
                                 onChange = { this.handleChange }
                                 onKeyUp = { this.handleKeyUp }
