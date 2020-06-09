@@ -36,6 +36,34 @@ app.post('/messages', (req, res) => {
     })
 });
 
+app.get('/chats', (req, res) => {
+    fs.readFile('./server/db/chats.json', 'utf-8', (err, data) => {
+        if(!err) {
+            let d = JSON.parse(data);
+            res.json(d);
+        }
+    })
+});
+
+app.post('/chats', (req, res) => {
+    fs.readFile('./server/db/chats.json', 'utf-8', (err, data) => {
+        if(!err) {
+            let chats = JSON.parse(data);
+
+            chats[req.body.chatId] = {
+                title: req.body.title,
+                messagesList: []
+            };
+            
+            fs.writeFile('./server/db/chats.json', JSON.stringify(chats, null, ' '), err => {
+                if (!err) {
+                    res.json({ status: 1 })
+                }
+            })
+        }
+    })
+});
+
 app.listen(3300, () => {
     console.log('listening @ port 3300');
 })
