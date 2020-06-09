@@ -35,6 +35,7 @@ const useStyles = makeStyles({
     }
 });
 
+
 const Layout = (props) => {
     const classes = useStyles();
     const { id, messages, user } = props;
@@ -56,7 +57,7 @@ const Layout = (props) => {
                 </Box>
             </Box>
         </div>
-    );
+    )
 }
 
 export default Layout

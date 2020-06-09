@@ -45,5 +45,20 @@ module.exports = {
             filename: 'index.html',
             template: path.resolve(__dirname, 'src', 'public', 'index.html')
         })
-    ]
+    ],
+    devServer: {
+        // contentBase: './dist',
+        port: 3000,
+        hot: true,
+        open: false,
+        // historyApiFallback: true,
+        proxy: {
+            '/api': {
+                target: 'http://localhost:3300',
+                pathRewrite: { '^/api' : '' },
+                secure: false,
+                changeOrigin: true 
+            }
+        }
+    }
 }

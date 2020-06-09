@@ -1,25 +1,37 @@
-import { SEND_MSG, 
-         DELETE_MESSAGE,
+import { SUCCESS_MESSAGE_SEND, 
+         SUCCESS_MESSAGE_DELETE,
          START_MESSAGES_LOADING,
-         SUCCES_MESSAGES_LOADING,
+         SUCCESS_MESSAGES_LOADING,
          ERROR_MESSAGES_LOADING
 } from '../actions/messages_actions.js';
 
 const initialStore = {
     messages: {},
-    isLoading: false
+    isLoading: false,
 }
 
 export default function msgReducer(store = initialStore, action) {     
+    console.log(store);
     switch (action.type) {
-        case SEND_MSG: 
-            return {...store, messages: {...store.messages,  [action.messageId]: { user: action.sender, text: action.text, deleted: false } } }
-        case DELETE_MESSAGE:
-            return {...store, messages: {...store.messages,  [action.messageId]: { user: store.messages[action.messageId].user, text: store.messages[action.messageId].text, deleted: true } } }
+        case SUCCESS_MESSAGE_SEND: 
+        if (action.payload.response.status) {
+            return {...store, messages: {...store.messages,  [action.payload.msg.messageId]: { user: action.payload.msg.sender, text: action.payload.msg.text, deleted: false, chatId: action.payload.msg.chatId } } }
+        } else {
+            console.log('Error send msg', action.payload);
+            return null
+        }
+        case SUCCESS_MESSAGE_DELETE:
+        if (action.payload.response.status) {
+            return {...store, messages: {...store.messages,  [action.payload.msg.messageId]: {...store.messages[action.payload.msg.messageId], deleted: true } } }
+        } else {
+            console.log('Error delete msg', action.payload);
+            return null
+        }
         case START_MESSAGES_LOADING: {
             return {...store, isLoading: true } }
-        case SUCCES_MESSAGES_LOADING: {
-            return {...store, messages: action.payload, isLoading: false } }
+        case SUCCESS_MESSAGES_LOADING: {
+                return {...store, messages: action.payload, isLoading: false }; 
+        } 
         case ERROR_MESSAGES_LOADING: { 
             return {...store, isLoading: true } }
         default:

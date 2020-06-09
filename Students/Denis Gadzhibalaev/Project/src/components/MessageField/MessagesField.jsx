@@ -24,29 +24,29 @@ class MessagesField extends React.Component {
         }
     }
 
-    changeInputText = (text, sender) => {
+    changeInputText = (text, sender, chatId) => {
         if (event.keyCode !== 13) {
             this.setState({ inputText: event.target.value }) 
             } else {
                 this.setState ({inputText: ''});
-                this.sendMessage(text, sender)
+                this.sendMessage(text, sender, chatId)
             }
         
     }
 
-    sendMessage = (text, sender) => {
+    sendMessage = (text, sender, chatId) => {  
         let { messages } = this.props;
         let messageId = Object.keys(messages).length + 1;
         if (text) {
-            this.props.sendMessage(messageId, sender, text);
+            this.props.sendMessage(messageId, sender, text, chatId);
         }    
     }
 
-    handleSend = (text, sender) => {
+    handleSend = (text, sender, chatId) => {
         if (this.state.inputText) {
              this.setState ({inputText: ''});
             if (sender == this.props.user) {
-                this.sendMessage(text, sender)
+                this.sendMessage(text, sender, chatId)
             }
         }
     }
@@ -64,7 +64,7 @@ class MessagesField extends React.Component {
     }
 
     componentDidMount() {
-        this.props.loadMessages();
+        this.props.loadMessages(this.props.chatId);
         this.setState({
             msgLoaded: true
         })
@@ -81,14 +81,17 @@ class MessagesField extends React.Component {
         if (this.props.isLoading) {
             return <CircularProgress style = { {margin: 'auto'} }/>
         } 
+        let { chats } = this.props;
         let { messages } = this.props;
         let messagesArr = [];
-        Object.keys(messages).map(key => {
-            messagesArr.push(!this.props.messages[key].deleted && <Message   deleteMessage = { this.props.deleteMessage } 
-                                                                            messageId = { key } 
-                                                                            key={ shortid.generate() } 
-                                                                            sender={ messages[key].user } 
-                                                                            text={ messages[key].text } />)
+        chats[this.props.chatId].messagesList.map((key, i) => {
+            messagesArr.push(<Message   deleteMessage = { this.props.deleteMessage } 
+                                        messageId = { key.messageId } 
+                                        msgIndexInMessageList = { i }
+                                        chatId = { this.props.chatId }
+                                        key={ shortid.generate() } 
+                                        sender={ key.user } 
+                                        text={ key.text } />)
         });
         return (
         <div  className= "message-field_container d-flex flex-column w-75 h-100">
@@ -107,9 +110,9 @@ class MessagesField extends React.Component {
                    style={ { fontSize: '22px' } }
                    onChange= {this.changeInputText}
                    value={ this.state.inputText }
-                   onKeyUp={ () => this.changeInputText(this.state.inputText, this.props.user) }
+                   onKeyUp={ () => this.changeInputText(this.state.inputText, this.props.user, this.props.chatId) }
                />
-               <FloatingActionButton onClick={ () => this.handleSend(this.state.inputText, this.props.userName) }>
+               <FloatingActionButton onClick={ () => this.handleSend(this.state.inputText, this.props.user, this.props.chatId) }>
                    <SendIcon />
                </FloatingActionButton>
             </div> 
@@ -118,9 +121,10 @@ class MessagesField extends React.Component {
     }
 }
 
-const mapStateToProps = ({ msgReducer, prfReducer }) => ({
+const mapStateToProps = ({ msgReducer, prfReducer, chtReducer }) => ({
     messages: msgReducer.messages,
     user: prfReducer.userName,
+    chats: chtReducer.chats,
     isLoading: msgReducer.isLoading,
 
 });

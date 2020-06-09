@@ -11,7 +11,7 @@ export let UNSELECT_RESPONDENT = 'UNSELECT_RESPONDENT';
 
 export const loadMessenger = () => ({
     [RSAA]: {
-        endpoint: './server/db/contacts.json',
+        endpoint: './server/local/contacts.json',
         method: 'GET',
         types: [
             START_MESSENGER_LOADING,
