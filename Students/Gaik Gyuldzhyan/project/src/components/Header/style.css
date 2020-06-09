@@ -17,6 +17,10 @@ button {
     color: white;
 }
 
+.profile-btn:hover {
+    transform: scaleX(1.5) scaleY(1.5);
+}
+
 .header-name {
     margin: 0;
     line-height: 70px;

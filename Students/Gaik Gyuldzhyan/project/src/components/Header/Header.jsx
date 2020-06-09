@@ -15,7 +15,7 @@ export default class Header extends React.Component {
     render() {
         return (            
             <div className="text-center w-100 header">
-                <Link to="../Profile/Profile.jsx">
+                <Link to="/profile/">
                     <button className="button profile-btn">
                         <MenuIcon />
                     </button>
