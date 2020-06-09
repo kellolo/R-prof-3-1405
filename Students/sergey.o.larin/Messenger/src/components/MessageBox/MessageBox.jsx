@@ -22,7 +22,7 @@ const MessageBox = (props) => {
     const classes = useStyles();
     const { id, messages, user } = props;
     let messagesList = [];
-    Object.keys(props.messages).forEach(key => {
+    Object.keys(messages).forEach(key => {
         messagesList.push(<Message
             key={ key }
             user={ user }

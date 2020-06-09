@@ -22,10 +22,6 @@ class Router extends React.Component {
         this.props.loadMessages();
     }
 
-    newStoryLine(id) {
-        this.props.newStoryLine(id, 1, null, `Это начало истории ваших личных сообщений с ${ this.props.contacts[id].name } ${ this.props.contacts[id].surname } !`)
-    }
-
     addRoute(user, id, messages) {
         return (
             <Route
@@ -42,12 +38,7 @@ class Router extends React.Component {
         let routerList = [];
         for (let key in respondents) {
             let id = respondents[+key];
-            if (this.props.messages[id]) {
-                routerList.push(this.addRoute(user, id, messages[id]));
-            } else {
-                this.newStoryLine(id)
-                routerList.push(this.addRoute(user, id, messages[id]));
-            }
+            routerList.push(this.addRoute(user, id, messages[id]));
         }
 
         return (
@@ -74,7 +65,12 @@ const mapStateToProps = ({ messengerReducer, messagesReducer }) => ({
 });
 
 const mapDispatchToProps = dispatch => {
-    return bindActionCreators({ newStoryLine, sendMessage, loadMessenger, loadMessages }, dispatch);
+    return bindActionCreators({
+        newStoryLine,
+        sendMessage,
+        loadMessenger,
+        loadMessages
+    }, dispatch);
 };
 
 export default connect(mapStateToProps, mapDispatchToProps)(Router)

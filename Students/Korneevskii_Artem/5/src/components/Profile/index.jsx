@@ -7,7 +7,7 @@ import Header from '../Header/index.jsx';
 import MessageField from '../MessageField/index.jsx';
 import ChatList from '../ChatList/index.jsx';
 
-import { viewProfile, loadProfile } from '../../store/actions/profile_actions.js';
+import { loadProfile } from '../../store/actions/profile_actions.js';
 import { bindActionCreators } from 'redux';
 import connect from 'react-redux/es/connect/connect';
 import { goBack } from 'connected-react-router';
@@ -34,7 +34,8 @@ class Profile extends Component {
                 <div className="d-flex flex-column w-100 messenger-wrapper">
                     <Header chatId = { this.props.chatId } />
                     <div className="d-flex">
-                        <div className="d-flex w-100 messenger-profile">
+                        <ChatList active = { this.props.chatId } />                      
+                        <div className="d-flex w-75 messenger-profile">
                             <div className="profile">                        
                                 <ul className="profile-list">
                                     <li><strong>Имя: </strong>{ profiles[1].userName }</li>
@@ -57,6 +58,6 @@ const mapStateToProps = ({ profileReducer }) => ({
     profiles: profileReducer.profiles
 });
 
-const mapDispatchToProps = dispatch => bindActionCreators({ viewProfile, loadProfile, goBack }, dispatch);
+const mapDispatchToProps = dispatch => bindActionCreators({ loadProfile, goBack }, dispatch);
 
 export default connect(mapStateToProps, mapDispatchToProps)(Profile);

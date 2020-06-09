@@ -1,0 +1,35 @@
+.speech-bubble-container {
+ position: fixed;
+ width: 100%;
+ bottom: 20px;
+ z-index: 1000;
+}
+
+.speech-bubble {
+ padding: 0 10px;
+ min-height: 58px;
+ position: relative;
+ width: 100%;
+ background: #cfccc4;
+}
+
+.speech-bubble:after {
+ content: '';
+ position: absolute;
+ bottom: 0;
+ left: 50%;
+ width: 0;
+ height: 0;
+ border: 20px solid transparent;
+ border-top-color: #cfccc4;
+ border-bottom: 0;
+ margin-left: -20px;
+ margin-bottom: -20px;
+}
+
+.close-install-message-icon {
+ position: absolute;
+ right: 1px;
+ top: 1px;
+ color: #31b0d5 !important;
+}

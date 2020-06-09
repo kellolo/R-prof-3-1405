@@ -1,0 +1,16 @@
+.messenger-header {
+    background-color: #03A9F4;
+    padding: 20px 11px;
+}
+
+.messenger-header p {
+    font-size: 26px;
+    font-weight: 600;
+    /* margin: 0; */
+    color: #ffffff;
+}
+
+#msg-wrapper {
+    width: 69%;
+}
+
