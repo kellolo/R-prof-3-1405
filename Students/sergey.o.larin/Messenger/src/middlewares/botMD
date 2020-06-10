@@ -4,15 +4,14 @@ export default store => next => action => {
     switch (action.type) {
         case SUCCESS_MESSAGE_SEND: {
             if (action.payload.response.status) {
-                if (action.payload.msg.sender === store.getState().messengerReducer.user) {
+                let user = store.getState().messengerReducer.user;
+                if (action.payload.msg.sender === user.name) {
                     const id = store.getState().messengerReducer.respondent;
                     setTimeout(() => {
-                        let messageId = Object.keys(store.getState().messagesReducer.messages[id]).length + 1;
-
                         return store.dispatch(
                             sendMessage(
+                                0,
                                 id,
-                                messageId,
                                 'Bot',
                                 'У нас технические неполадки, перезвоните позже...'
                             )
