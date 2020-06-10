@@ -12,8 +12,6 @@ export let START_MESSAGE_SEND = '@@messages/START_MESSAGE_SEND';
 export let SUCCESS_MESSAGE_SEND = '@@messages/SUCCESS_MESSAGE_SEND';
 export let ERROR_MESSAGE_SEND = '@@messages/ERROR_MESSAGE_SEND';
 
-export let NEW_STORY_LINE = '@@messages/NEW_STORY_LINE'
-
 export const loadMessages = () => ({
     [RSAA]: {
         endpoint: '/api/messages',
@@ -30,44 +28,36 @@ export const loadMessages = () => ({
     }
 });
 
-export let newStoryLineState = (id, messageId, sender, text) => ({
-    type: NEW_STORY_LINE,
-    id,
-    messageId,
-    sender,
-    text,
-})
-
-export let newStoryLine = (id, messageId, sender, text) => ({
+export let newStoryLine = (userId, respondentId, sender, text) => ({
     [RSAA]: {
         endpoint: '/api/messages',
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ id, messageId, sender, text }),
+        body: JSON.stringify({ userId, respondentId, sender, text }),
         types: [
             START_NEW_STORY_LINE,
             {
                 type: SUCCESS_NEW_STORY_LINE,
                 payload: (action, state, res) => getJSON(res)
-                    .then(json => ({ response: json, msg: { id, messageId, sender, text } }))
+                    .then(json => ({ response: json, msg: { userId, respondentId, sender, text } }))
             },
             ERROR_NEW_STORY_LINE
         ]
     }
 });
 
-export const sendMessage = (id, messageId, sender, text) => ({
+export const sendMessage = (userId, respondentId, sender, text) => ({
     [RSAA]: {
         endpoint: '/api/messages',
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ id, messageId, sender, text }),
+        body: JSON.stringify({ userId, respondentId, sender, text }),
         types: [
             START_MESSAGE_SEND,
             {
                 type: SUCCESS_MESSAGE_SEND,
                 payload: (action, state, res) => getJSON(res)
-                    .then(json => ({ response: json, msg: { id, messageId, sender, text }}))
+                    .then(json => ({ response: json, msg: { userId, respondentId, sender, text } }))
             },
             ERROR_MESSAGE_SEND
         ]
