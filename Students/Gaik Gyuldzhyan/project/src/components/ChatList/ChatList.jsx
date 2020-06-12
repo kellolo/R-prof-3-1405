@@ -21,8 +21,7 @@ const style = {
     border: 0,
     outline: 0,
     color: 'white',
-    padding: '5px',
-    boxShadow: '0 3px 5px 2px rgba(40, 113, 182)'
+    padding: '5px'
   };
 
 
