@@ -14,8 +14,14 @@ export default function msgReducer(store = initialStore, action) {
   switch (action.type) {
     case SUCCESS_MESSAGE_SEND: {
       if (action.payload.response.status) {
+        // return update(store, {
+        //   messages: { $merge: { [action.payload.msg.messageId]: { sender: action.payload.msg.sender, text: action.payload.msg.text }}}
+        // })
+        // return update(store, {
+        //   messages: { $merge: { [action.payload.response._id]: { sender: action.payload.msg.sender, text: action.payload.msg.text }}}
+        // })
         return update(store, {
-          messages: { $merge: { [action.payload.msg.messageId]: { sender: action.payload.msg.sender, text: action.payload.msg.text }}}
+          messages: { $merge: { [store.messages.length]: {chatId: action.payload.msg.chatId, _id: action.payload.response._id, sender: action.payload.msg.sender, text: action.payload.msg.text} }}
         })
       } else {
         return null;

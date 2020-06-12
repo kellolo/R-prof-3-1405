@@ -22,45 +22,41 @@ class MessagesField extends Component {
     };
   }
 
-  handleSend = (text, sender) => {
+  handleSend = (chatId, text, sender) => {
     this.setState({ text: '' });
     if (sender == this.props.user && this.state.text) {
-      this.sendMessage(text, sender)
+      this.sendMessage(chatId, text, sender);
     }
   }
 
-  sendMessage = (text, sender) => {
-    let { messages } = this.props;
-    // let messageId = `id${Date.now()}`
-    let messageId = Object.keys(this.props.messages).length + 1;
+  sendMessage = (chatId, text, sender) => {
     //вызов Action
-    this.props.sendMessage(messageId, sender, text);
+    this.props.sendMessage(chatId, sender, text);
   }
 
   handleChange = (evt) => {
     if (evt.keyCode !== 13) {
       this.setState({ text: evt.target.value })
     } else {
-      this.handleSend(evt.target.value, this.props.user)
+      this.handleSend(this.props.id, evt.target.value, this.props.user)
     }
   }
 
   componentDidMount() {
-    console.log('chats mounted');
-    this.props.loadMessages();
+    this.props.loadMessages(this.props.id);
   }
 
   render() {
     let msgArr = [];
     let msgLoader = <CircularProgress color = "darkgoldenrod" thickness = { 2 } className = 'loader'/>;
     let msgBlock = this.props.isLoading ? msgLoader : msgArr;
-    let { messages, botName } = this.props;
+    let { messages, botName, id } = this.props;
       Object.keys(messages).forEach(key => {
       msgArr.push(<Message
         botName = { botName }
         text = { messages[key].text }
         sender = { messages[key].sender }
-        key = { messages[key].messageId || key } />);
+        key = { messages[key]._id } />);
       });
 
     return (
@@ -80,7 +76,7 @@ class MessagesField extends Component {
           />
             <SendIcon 
               
-              onClick = { () => this.handleSend(this.state.text, this.props.user) }
+              onClick = { () => this.handleSend(id, this.state.text, this.props.user) }
               color = { !this.state.text ? "rgb(243, 243, 243)" : "grey" }
               hoverColor = { !this.state.text ? "rgb(243, 243, 243)" : "darkgoldenrod" }
               style = { {cursor: "pointer", width: "20px", height: "20px", marginTop: "10px"} }
