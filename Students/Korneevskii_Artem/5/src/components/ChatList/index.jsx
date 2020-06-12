@@ -17,11 +17,8 @@ class ChatList extends Component {
     }
 
     handleAdd = () => {
-        if (this.state.input) {
-            let { chats } = this.props;            
-            let messagesList = [];
-            let chatId = Object.keys(chats).length + 1;
-            this.props.addChat(chatId, this.state.input, messagesList);
+        if (this.state.input) {       
+            this.props.addChat(this.state.input);
             this.setState({input: ''});
         }
     }

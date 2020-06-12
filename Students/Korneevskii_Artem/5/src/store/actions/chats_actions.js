@@ -12,6 +12,7 @@ export const loadChats = () => ({
     [RSAA]: {
         endpoint: '/api/chats',
         method: 'GET',
+        headers: { 'Content-Type': 'application/json' },        
         types: [
             START_CHATS_LOADING,
             {
@@ -24,19 +25,19 @@ export const loadChats = () => ({
     }
 });
 
-export let addChat = (chatId, title, messagesList) => ({
+export let addChat = title => ({
 
     [RSAA]: {
         endpoint: '/api/chats',
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ chatId, title, messagesList }),
+        body: JSON.stringify({ title }),
         types: [
             START_CHAT_ADD,
             {
                 type: SUCCESS_CHAT_ADD,
                 payload: (action, state, res) => getJSON(res)
-                            .then(json => ({ response: json, chat: { chatId, title, messagesList }}))
+                            .then(json => ({ response: json, title }))
             },
             ERROR_CHAT_ADD
         ]

@@ -1,34 +1,34 @@
 {
  "1": {
-  "user": "Vader",
+  "sender": "Vader",
   "text": "Привет"
  },
  "2": {
-  "user": null,
+  "sender": null,
   "text": "Привет!"
  },
  "3": {
-  "user": "Vader",
+  "sender": "Vader",
   "text": "Как дела?"
  },
  "4": {
-  "user": null,
+  "sender": null,
   "text": "Нормально!"
  },
  "5": {
-  "user": "Vader",
+  "sender": "Vader",
   "text": "222"
  },
  "6": {
-  "user": null,
+  "sender": null,
   "text": "Ага..."
  },
  "7": {
-  "user": "Vader",
+  "sender": "Vader",
   "text": "Супееер!"
  },
  "8": {
-  "user": null,
+  "sender": null,
   "text": "Ага..."
  }
 }

@@ -2,12 +2,11 @@ import { SUCCESS_MESSAGE_SEND, sendMessage } from '../store/actions/messages_act
 
 export default store => next => action => {
     switch (action.type) {
-        case SUCCESS_MESSAGE_SEND: {
+        case SUCCESS_MESSAGE_SEND: {      
             if (action.payload.msg.sender == 'Vader') {
                 setTimeout(() => {
-                    let id = Object.keys(store.getState().messageReducer.messages).length + 1;
                     return store.dispatch(
-                        sendMessage(id, null, 'Ага...')
+                        sendMessage(chatId, null, 'Ага...')
                     )
                 }, 1000)
             }

@@ -8,16 +8,18 @@ import PersonOutlineIcon from '@material-ui/icons/PersonOutline';
 
 export default class Header extends Component {
     static propTypes = {
-        chatId: PropTypes.string
+        chatId: PropTypes.string,
+        chatTitle: PropTypes.string        
     }
     static defaultProps = {
-        chatId: 'Main Page'
+        chatId: 'Main Page',    
+        chatTitle: 'Main Page',        
     }    
 
     render() {
         return (
             <div className="messenger-header w-100 d-flex justify-content-between align-items-center">
-                <p>Chat Room { this.props.chatId }</p>
+                <p>Chat Room { this.props.chatTitle }</p>
                 <Link to = "/profile/"><PersonOutlineIcon style={ { color: '#ffffff' } } /></Link>                
             </div>
         );
