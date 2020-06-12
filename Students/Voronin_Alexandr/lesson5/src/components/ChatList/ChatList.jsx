@@ -5,7 +5,7 @@ import SendIcon from '@material-ui/icons/Send';
 import AddIcon from '@material-ui/icons/Add';
 import { push } from 'connected-react-router';
 import { connect } from 'react-redux';
-import { addChat } from '../../store/actions/chats_actions.js';
+import { addChat, loadChats } from '../../store/actions/chats_actions.js';
 import { bindActionCreators } from 'redux';
 
 class ChatList extends React.Component {
@@ -30,6 +30,10 @@ class ChatList extends React.Component {
 
     handleNavigate = (link) => {
         this.props.push(link)
+    }
+
+    componentDidMount() {
+        this.props.loadChats()
     }
 
     render() {
@@ -71,6 +75,6 @@ class ChatList extends React.Component {
 
 const mapStateToProps = ({ chatsReducer }) => ({ chats: chatsReducer.chats })
 
-const mapDispatchToProps = dispatch => bindActionCreators({ addChat, push }, dispatch);
+const mapDispatchToProps = dispatch => bindActionCreators({ addChat, push, loadChats }, dispatch);
 
 export default connect(mapStateToProps, mapDispatchToProps)(ChatList)
