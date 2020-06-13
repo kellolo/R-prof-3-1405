@@ -12,7 +12,7 @@ export default (props) => {
             <div className = "d-flex justify-content-between align-items-center">
                 {sender && <strong>{ sender }</strong>}
                 {!sender && <strong>Bot</strong>}
-                {sender  && <button onClick = { () => props.deleteMessage(props.messageId) } className = "msg_btn"><HighlightOffIcon /></button>}
+                {sender  && <button onClick = { () => props.deleteMessage(props.messageId, props.chatId, props.msgIndexInMessageList) } className = "msg_btn"><HighlightOffIcon /></button>}
             </div>
             <p>{ sender || (!sender && text) ? text : 'cyber answer...' }</p>
         </div>

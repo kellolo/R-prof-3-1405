@@ -1,21 +1,28 @@
 import update from "react-addons-update";
-import { SUCCESS_MESSENGER_LOADING } from "../action/messenger";
-import { ADD_RESPONDENT, CLOSE_RESPONDENT, SELECT_RESPONDENT, UNSELECT_RESPONDENT } from "../action/messenger";
+import {
+    ADD_RESPONDENT,
+    CLOSE_RESPONDENT,
+    SELECT_RESPONDENT,
+    UNSELECT_RESPONDENT,
+    SUCCESS_MESSENGER_LOADING,
+    SELECT_USER,
+} from "../action/messenger";
 
 
 let initialStore = {
-    user: 'Ext',
+    user: '',
     respondent: '',
     respondents: [],
-    contacts: {
-    }
+    contacts: '',
 }
 
 export default function chatsReducer(store = initialStore, action) {
     switch (action.type) {
         case SUCCESS_MESSENGER_LOADING: {
             return update(store, {
-                contacts: { $set: action.payload }
+                contacts: { $set: action.payload },
+                respondent: { $set: '' },
+                respondents: { $set: [] },
             })
         }
 
@@ -48,6 +55,16 @@ export default function chatsReducer(store = initialStore, action) {
             return {
                 ...store,
                 respondents: thisRespondents
+            }
+        }
+
+        case SELECT_USER: {
+            return {
+                ...store,
+                user: {
+                    id: action.id,
+                    name: action.name,
+                },
             }
         }
 

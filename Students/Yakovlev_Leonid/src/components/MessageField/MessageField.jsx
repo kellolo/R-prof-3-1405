@@ -7,7 +7,7 @@ import './style.css';
 
 import Message from '../Message/Message.jsx';
 
-import { sendMessage } from '../../store/actions/messages_actions.js';
+import { sendMessage, loadMessages } from '../../store/actions/messages_actions.js';
 import { bindActionCreators } from 'redux';
 import connect from 'react-redux/es/connect/connect';
 import ContentSend from 'material-ui/svg-icons/content/send';
@@ -39,17 +39,11 @@ class MessagesField extends Component {
 
     handleChange = (evt) => {
         if (evt.keyCode !== 13) this.setState({ text: evt.target.value })
-            // evt.keyCode !== 13 ? 
-            // this.setState({ text: evt.target.value }) :
-            // this.handleSend(evt)
     }
 
-    // componentDidUpdate() {
-    //     setTimeout(() => {
-    //         console.log(`Bot answers`)
-    //     }, 1000);
-    //     // console.log(``)
-    // }
+    componentDidMount() {
+        this.props.loadMessages()
+    }
 
     render() {
         // let { user } = this.props;
@@ -103,7 +97,7 @@ const mapStateToProps = ({ msgReducer }) => ({
     messages: msgReducer.messages
 });
 
-const mapDispatchToProps = dispatch => bindActionCreators({ sendMessage }, dispatch);
+const mapDispatchToProps = dispatch => bindActionCreators({ sendMessage, loadMessages }, dispatch);
 
 
 export default connect(mapStateToProps, mapDispatchToProps)(MessagesField);

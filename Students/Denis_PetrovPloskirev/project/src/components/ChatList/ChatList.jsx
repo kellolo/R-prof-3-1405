@@ -11,6 +11,11 @@ import { connect } from 'react-redux';
 import { addChat, deleteChat, loadChats } from '../../store/actions/chats_actions.js';
 import { bindActionCreators } from 'redux';
 
+import { Switch, Route } from 'react-router-dom';
+import Layout from '../Layout/Layout.jsx';
+
+import { push } from 'connected-react-router';
+
 class ChatList extends React.Component {
   state = {
     input: ''
@@ -31,10 +36,17 @@ class ChatList extends React.Component {
     if (evt.keyCode == 13) this.handleAdd();
   }
 
+  redir() {
+    this.props.push('/chats/')
+  }
+
   deleteChat = (id, e) => {
     e.stopPropagation();
     e.preventDefault();
     this.props.deleteChat(id);
+    if (this.props.chatId == id) {
+      this.redir();
+    }
   }
 
   componentDidMount() {
@@ -86,6 +98,6 @@ class ChatList extends React.Component {
 
 const mapStateToProps = ({ chatsReducer }) => ({ chats: chatsReducer.chats });
 
-const mapDispatchToProps = dispatch => bindActionCreators({ addChat, deleteChat, loadChats }, dispatch);
+const mapDispatchToProps = dispatch => bindActionCreators({ addChat, deleteChat, loadChats, push }, dispatch);
 
 export default connect(mapStateToProps, mapDispatchToProps)(ChatList);

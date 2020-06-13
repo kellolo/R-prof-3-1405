@@ -19,7 +19,7 @@ class Router extends Component {
         })
         return (
             <Switch>
-                <Route path = '/' component = { App } exact/>
+                <Route path = '/' component = { App } exact />
                 {RouteArr}
                 <Route path = '/profile' component = { UserProfile } exact />
             </Switch>

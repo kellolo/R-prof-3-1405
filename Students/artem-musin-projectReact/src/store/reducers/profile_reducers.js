@@ -7,10 +7,10 @@ import {SET_CITY} from '../actions/profile_actions.js'
 
 
 const initialStore = {
-  user: '',
-  bio: '',
-  date: '',
-  city: ''
+  user: 'undefined',
+  bio: 'no information given',
+  date: 'undefined',
+  city: 'undefined'
 }
 
 export default function prflReducer(store = initialStore, action) {

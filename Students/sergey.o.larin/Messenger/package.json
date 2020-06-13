@@ -4,8 +4,9 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "build": "./node_modules/.bin/webpack --mode development",
-    "dev": "./node_modules/.bin/webpack-dev-server --open"
+    "build": "webpack --mode development",
+    "dev": "webpack-dev-server",
+    "api": "nodemon server"
   },
   "keywords": [],
   "author": "",
@@ -13,8 +14,11 @@
   "dependencies": {
     "@material-ui/icons": "^4.9.1",
     "@material-ui/styles": "^4.9.14",
+    "express": "^4.17.1",
     "jquery": "^3.5.1",
     "material-ui": "^0.20.2",
+    "moment": "^2.26.0",
+    "mongoose": "^5.9.18",
     "popper.js": "^1.16.1",
     "prop-types": "^15.7.2",
     "react": "^16.13.1",
@@ -38,6 +42,7 @@
     "history": "^4.10.1",
     "html-webpack-plugin": "^4.3.0",
     "minimist": "^1.2.5",
+    "nodemon": "^2.0.4",
     "react-addons-update": "^15.6.2",
     "redux-devtools": "^3.5.0",
     "redux-devtools-extension": "^2.13.8",

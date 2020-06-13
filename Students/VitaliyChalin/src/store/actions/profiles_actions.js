@@ -16,7 +16,7 @@ export let addProfile = (chatId, userName, avatar = 'https://via.placeholder.com
 
 export const loadProfiles = () => ({
     [RSAA]: {
-        endpoint: './server/db/profiles.json',
+        endpoint: './server/db/json/profiles.json',
         method: 'GET',
         types: [
             START_PROFILE_LOADING,

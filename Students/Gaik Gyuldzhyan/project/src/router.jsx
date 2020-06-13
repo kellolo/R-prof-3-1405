@@ -1,6 +1,7 @@
 import React from 'react';
 import { Switch, Route} from 'react-router-dom';
 
+import Profile from './components/Profile/Profile.jsx';
 import Layout from './components/Layout/Layout.jsx'
 
 import { connect } from 'react-redux';
@@ -16,7 +17,7 @@ class Router extends React.Component {
         return(
             <Switch>
                 <Route path = '/' component = { Layout } exact/>
-                
+                <Route path='/profile/' render={() => <Profile />} exact />
                 { routesArray }
             </Switch>
         )

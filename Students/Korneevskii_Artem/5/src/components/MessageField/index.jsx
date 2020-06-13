@@ -18,39 +18,37 @@ class MessageField extends Component {
         };
     }
 
-    handleSend = (text, sender) => {
+    handleSend = (chatId, text, sender) => {
         this.setState({text: ''});
         if (sender == 'Vader') {
-            this.sendMessage(text, sender)
+            this.sendMessage(chatId, text, sender)
         }
     }
 
-    sendMessage = (text, sender) => {
-        let { messages } = this.props;
-        let messageId = Object.keys(messages).length + 1;
-        this.props.sendMessage(messageId, sender, text);
+    sendMessage = (chatId, text, sender) => {
+        this.props.sendMessage(chatId, sender, text);
     }
 
     handleChange = (evt) => {
+        let { chatId } = this.props;           
         evt.keyCode !== 13 ? 
             this.setState({ text: evt.target.value }) :
-            this.handleSend( evt.target.value ,'Vader')
+            this.handleSend(chatId, evt.target.value ,'Vader')
     }
 
     componentDidMount() {
-        this.props.loadMessages();
+        this.props.loadMessages(this.props.chatId);
     }
 
     render() {
-        let { messages } = this.props;
-
+        let { messages, chatId } = this.props;      
         let messageArray = [];
 
-        Object.keys(messages).forEach(key => {
+        Object.keys(messages).forEach(key => {            
             messageArray.push (<Message 
-                text={ messages[key].text } 
-                sender={ messages[key].user } 
-                key = { key }/>);
+                text={ messages[key].text }              
+                sender={ messages[key].sender }   
+                key = { key }/>);                
         });        
 
         return (<div className="d-flex flex-column w-75 messenger-chat">
@@ -68,7 +66,7 @@ class MessageField extends Component {
                             hintText="Введите сообщение"
                             style={ { fontSize: '1rem', margin: '10px' } }
                         />                  
-                        <FloatingActionButton style={ { margin: '10px' } } onClick={ () => this.handleSend(this.state.text, 'Vader') }>
+                        <FloatingActionButton style={ { margin: '10px' } } onClick={ () => this.handleSend(chatId, this.state.text, 'Vader') }>
                             <SendIcon />
                         </FloatingActionButton>
                     </div>

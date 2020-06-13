@@ -70,7 +70,7 @@ export default (props) => {
         marginBottom: "15px"
     };
 
-    sender ? sender = sender : sender = 'Bot';
+    //sender ? sender = sender : sender = 'Bot';
 
     if(sender !== 'Bot') {
         customClasses = 'message__wrapper message__wrapper--'+sender;

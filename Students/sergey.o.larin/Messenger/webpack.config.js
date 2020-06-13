@@ -8,7 +8,7 @@ module.exports = {
     },
     output: {
         path: path.join(__dirname, 'dist'),
-        publicPath: '',
+        publicPath: '/',
         filename: path.join('js', 'bundle.js')
     },
     target: 'web',      // 'node' для backend
@@ -35,5 +35,19 @@ module.exports = {
             filename: 'index.html',
             template: path.resolve(__dirname, 'src', 'public', 'index.html')
         })
-    ]
+    ],
+    devServer: {
+        port: 3000,
+        hot: true,
+        open: false,
+        historyApiFallback: true,
+        proxy: {
+            '/api': {
+                target: 'http://localhost:3300',
+                pathRewrite: { '^/api': '' },
+                secure: false,
+                changeOrigin: true
+            }
+        }
+    }
 }

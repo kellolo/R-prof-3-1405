@@ -1,20 +1,18 @@
 import { getJSON, RSAA } from "redux-api-middleware";
 
-export let ADD_CHAT = '@@chat/ADD_CHAT';
-
 export let START_CHATS_LOADING = '@@messages/START_CHATS_LOADING';
 export let SUCCESS_CHATS_LOADING = '@@messages/SUCCESS_CHATS_LOADING';
 export let ERROR_CHATS_LOADING = '@@messages/ERROR_CHATS_LOADING';
 
-export let addChat = title => ({
-    type: ADD_CHAT,
-    title
-});
+export let START_CHAT_ADD = '@@messages/START_CHAT_ADD';
+export let SUCCESS_CHAT_ADD = '@@messages/SUCCESS_CHAT_ADD';
+export let ERROR_CHAT_ADD = '@@messages/ERROR_CHAT_ADD';
 
 export const loadChats = () => ({
     [RSAA]: {
-        endpoint: './server/db/chats.json',
+        endpoint: '/api/chats',
         method: 'GET',
+        headers: { 'Content-Type': 'application/json' },        
         types: [
             START_CHATS_LOADING,
             {
@@ -23,6 +21,25 @@ export const loadChats = () => ({
                             .then(json => json)
             },
             ERROR_CHATS_LOADING
+        ]
+    }
+});
+
+export let addChat = title => ({
+
+    [RSAA]: {
+        endpoint: '/api/chats',
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ title }),
+        types: [
+            START_CHAT_ADD,
+            {
+                type: SUCCESS_CHAT_ADD,
+                payload: (action, state, res) => getJSON(res)
+                            .then(json => ({ response: json, title }))
+            },
+            ERROR_CHAT_ADD
         ]
     }
 });

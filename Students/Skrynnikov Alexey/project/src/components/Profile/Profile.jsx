@@ -45,7 +45,7 @@ class Profile extends React.Component {
               className = 'nameInput'
               onChange = { (evt) => this.handleChange(evt) }
             />
-            <Link to = '/chat/1/'>
+            <Link to = '/'>
               <RaisedButton 
                 disabled = { !(this.state.user || this.props.user) }
                 backgroundColor = 'rgb(6, 121, 159)'

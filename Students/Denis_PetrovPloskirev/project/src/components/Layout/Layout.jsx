@@ -15,12 +15,11 @@ export default class Layout extends React.Component {
   // }
 
   render() {
-
     return (
       <div className = 'globalWrapper'>
         <Header chatId = { this.props.chatName } />
         <div className = "d-flex w-100 wrapper">
-          <ChatList active = { this.props.chatName } />
+          <ChatList active = { this.props.chatName } chatId = { this.props.chatId } />
           <MessageField noMessages = { this.props.noMessages } botName = {  this.props.chatName } id = { this.props.chatId } />
         </div>
       </div>

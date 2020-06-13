@@ -1,47 +1,70 @@
 import update from 'react-addons-update';
 
-import { NEW_STORY_LINE, SEND_MESSAGE, SUCCESS_MESSAGES_LOADING } from '../action/messages';
+import {
+    NEW_STORY_LINE,
+    SUCCESS_MESSAGE_SEND,
+    SUCCESS_MESSAGES_LOADING,
+    SUCCESS_NEW_STORY_LINE,
+} from '../action/messages';
 
 
 const initialStore = {
-    messages: {}
+    messages: [],
 }
 
 export default function msgReducer(store = initialStore, action) {
     switch (action.type) {
-        case NEW_STORY_LINE: {
-            let messages = store.messages;
-            messages[action.id] = {
-                [action.messageId]: {
-                    user: action.text,
-                    text: action.sender
+        case SUCCESS_NEW_STORY_LINE: {
+            if (action.payload.response.status) {
+                let messages = store.messages;
+                messages[action.payload.msg.respondentId] = {
+                    [action.payload.msg.messageId]: {
+                        user: action.payload.msg.sender,
+                        text: action.payload.msg.text
+                    }
+                };
+                return {
+                    ...store,
+                    messages: messages
                 }
-            };
-            return {
-                ...store,
-                messages: messages
-
+            } else {
+                console.log('Error send message', action.payload)
+                return null
             }
         }
-        case SEND_MESSAGE: {
-            return update(store, {
-                messages: {
-                    [action.id]: {
-                        $merge:
-                            {
-                                [action.messageId]: {
-                                    user: action.sender,
-                                    text: action.text
-                                }
-                            }
-                    }
+
+        case SUCCESS_MESSAGE_SEND: {
+            if (action.payload.response.status) {
+                let messages = store.messages;
+                messages[action.payload.response._id] = {
+                    userId: action.payload.msg.userId,
+                    user: action.payload.msg.sender,
+                    respondentId: action.payload.msg.respondentId,
+                    text: action.payload.msg.text
                 }
-            })
+
+                return {
+                    ...store,
+                    messages: messages,
+                }
+            } else {
+                console.log('Error send message', action.payload)
+                return null
+            }
         }
 
         case SUCCESS_MESSAGES_LOADING: {
+            let messages = [];
+            for (let key in action.payload) {
+                messages[action.payload[+key]._id] = {
+                    userId: action.payload[+key].userId,
+                    user: action.payload[+key].sender,
+                    respondentId: action.payload[+key].respondentId,
+                    text: action.payload[+key].text
+                };
+            }
             return update(store, {
-                messages: { $set: action.payload }
+                messages: { $set: messages }
             })
         }
 

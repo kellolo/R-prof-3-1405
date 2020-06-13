@@ -20,18 +20,15 @@ class MessagesField extends Component {
         };
     };
 
-    handleSend = (text, sender) => {
+    handleSend = (chatId, text, sender) => {
         this.setState({text: ''});
         if(sender == this.props.user && text !== "") {
-            this.sendMessage(text, sender);
+            this.sendMessage(chatId, text, sender);
         }
     };
 
-    sendMessage = (text, sender) => {
-        let { messages } = this.props;
-        let messageId = Object.keys(messages).length + 1;
-
-        this.props.sendMessage(messageId, sender, text);
+    sendMessage = (chatId, text, sender) => {
+        this.props.sendMessage(chatId, sender, text);
     }
 
     handleChange = (evt) => {
@@ -43,19 +40,19 @@ class MessagesField extends Component {
     };
     
     componentDidMount() {
-        this.props.loadMessages();
+        this.props.loadMessages(this.props.chatId);
     };
 
     render() {
-        let { messages } = this.props;
+        let { messages, chatId } = this.props;
 
         let msgArr = [];
 
         Object.keys(messages).forEach(key => {
             msgArr.push(<Message 
                 text={ messages[key].text } 
-                sender={ messages[key].user }
-                key = { key }/>)
+                sender={ messages[key].sender }
+                key = { key }/>);
         });
 
         return (<div className = "d-flex flex-column msgfield">
@@ -74,7 +71,7 @@ class MessagesField extends Component {
                         value = { this.state.text }
                         />
                         <FloatingActionButton 
-                        onClick = { () => this.handleSend(this.state.text, this.props.user) }
+                        onClick = { () => this.handleSend(chatId, this.state.text, this.props.user) }
                         disabled = { !this.state.text }
                         disabledColor = 'rgb(243, 243, 243)'
                         className = "ml-3"
@@ -89,7 +86,7 @@ class MessagesField extends Component {
 
 const mapStateToprops = ({ msgReducer, profReducer }) => ({
     messages: msgReducer.messages,
-    user: profReducer.user
+    user: profReducer.user,
 });
 
 const mapDispatchToProps = dispatch => bindActionCreators({ sendMessage, loadMessages }, dispatch);

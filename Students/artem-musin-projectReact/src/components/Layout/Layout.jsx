@@ -31,7 +31,8 @@ const backStyles = {
 const containerStyles = {
     backgroundColor: '#e4ccff', 
     borderRadius: '1.5em',
-    height: '700px'
+    height: 'auto',
+    padding: '1.5em 1.5em'
 }
 
 export default class Layout extends React.Component {

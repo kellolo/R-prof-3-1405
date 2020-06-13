@@ -1,0 +1,34 @@
+{
+ "1": {
+  "sender": "Vader",
+  "text": "Привет"
+ },
+ "2": {
+  "sender": null,
+  "text": "Привет!"
+ },
+ "3": {
+  "sender": "Vader",
+  "text": "Как дела?"
+ },
+ "4": {
+  "sender": null,
+  "text": "Нормально!"
+ },
+ "5": {
+  "sender": "Vader",
+  "text": "222"
+ },
+ "6": {
+  "sender": null,
+  "text": "Ага..."
+ },
+ "7": {
+  "sender": "Vader",
+  "text": "Супееер!"
+ },
+ "8": {
+  "sender": null,
+  "text": "Ага..."
+ }
+}
