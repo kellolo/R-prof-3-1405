@@ -1,0 +1,18 @@
+.header {
+    width: 100%;
+    height: 80px;
+    color: #ffc107;
+    padding: 8px 20px;
+    background-color: #495057;
+}
+
+h1 {
+    font-size: 1.5rem;
+    margin: 0 auto;
+}
+
+#header-txt {
+    margin: 16px;
+    font-size: 18px;
+    font-weight: bold;
+}

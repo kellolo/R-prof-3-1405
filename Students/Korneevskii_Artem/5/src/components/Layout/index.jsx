@@ -9,20 +9,22 @@ import ChatList from '../ChatList/index.jsx';
 
 export default class Layout extends Component {
     static propTypes = {
-        chatId: PropTypes.string
+        chatId: PropTypes.string,
+        chatTitle: PropTypes.string        
     }
     static defaultProps = {
-        chatId: 'Main Page'
+        chatId: 'Main Page',
+        chatTitle: 'Main Page'        
     }
 
     render() {
         return (
             <div className="d-flex w-100 justify-content-center messenger-layout">
                 <div className="d-flex flex-column w-100 messenger-wrapper">
-                    <Header chatId = { this.props.chatId } />
+                    <Header chatTitle = { this.props.chatTitle } />
                     <div className="d-flex">
                         <ChatList active = { this.props.chatId } />                    
-                        <MessageField />                                     
+                        <MessageField chatId = { this.props.chatId } />                                     
                     </div>
                 </div>
             </div>

@@ -16,10 +16,12 @@ import CloseIcon from '@material-ui/icons/Close';
 
 class Profile extends Component {    
     static propTypes = {
-        chatId: PropTypes.string
+        chatId: PropTypes.string,
+        chatTitle: PropTypes.string              
     }
     static defaultProps = {
-        chatId: 'Profile'
+        chatId: 'Profile',       
+        chatTitle: 'Profile',        
     }
 
     componentDidMount() {
@@ -32,7 +34,7 @@ class Profile extends Component {
         return (
             <div className="d-flex w-100 justify-content-center messenger-layout">
                 <div className="d-flex flex-column w-100 messenger-wrapper">
-                    <Header chatId = { this.props.chatId } />
+                    <Header chatTitle = { this.props.chatTitle } />
                     <div className="d-flex">
                         <ChatList active = { this.props.chatId } />                      
                         <div className="d-flex w-75 messenger-profile">

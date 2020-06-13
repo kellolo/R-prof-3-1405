@@ -1,42 +1,56 @@
 import update from 'react-addons-update';
 
-import { ADD_CHAT } from '../actions/chats_actions.js'
+import { SUCCESS_CHAT_CREATE,SUCCESS_CHAT_LOADING,START_CHAT_CREATE,ERROR_CHAT_CREATE } from '../actions/chats_actions.js'
 
 let initialStore = {
-    chats: {
-        1: {
-            title: 'chat_1',
-            messagesList: []
-        },
-        2: {
-            title: 'chat_2',
-            messagesList: []
-        },
-        3: {
-            title: 'chat_3',
-            messagesList: []
-        },
-    }
+    chats: {}
 }
 
 
 export default function chatsReducer(store = initialStore, action) {
     switch (action.type) {
-        case ADD_CHAT: {
-            let chatId = Object.keys(store.chats).length + 1;
+        case SUCCESS_CHAT_LOADING: {
+            let dto = action.payload;
+            let chats = {};
 
-            return update (store, {
-                chats: {
+            dto.forEach(d => {
+                chats[d._id] = { title: d.title }
+            });
+
+            return update(store, {
+                chats: { $set: chats }
+            });
+        }
+
+        case SUCCESS_CHAT_CREATE: {
+            let chatId = action.payload._id;
+            let title = action.payload.title;
+
+            return update(store, {
+                chats: { 
                     $merge: {
-                        [chatId]:{
-                            title: action.title,
-                            messagesList: []
-                        }
+                        [chatId]: { title }
                     }
                 }
             })
         }
-        default: return store
+
+        default:
+            return store;
+        //case ADD_CHAT: {
+        //    let chatId = Object.keys(store.chats).length + 1;
+//
+        //    return update (store, {
+        //        chats: {
+        //            $merge: {
+        //                [chatId]:{
+        //                    title: action.title,
+        //                    messagesList: []
+        //                }
+        //            }
+        //        }
+        //    })
+        //}
     }
 }
 

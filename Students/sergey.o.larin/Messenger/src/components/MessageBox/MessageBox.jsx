@@ -25,7 +25,7 @@ const MessageBox = (props) => {
     Object.keys(messages).forEach(key => {
         messagesList.push(<Message
             key={ key }
-            user={ user }
+            user={ user.name }
             id={ id }
             sender={ messages[key].user }
             text={ messages[key].text }/>);

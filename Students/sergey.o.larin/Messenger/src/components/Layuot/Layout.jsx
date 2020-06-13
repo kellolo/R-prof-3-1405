@@ -38,7 +38,9 @@ const useStyles = makeStyles({
 
 const Layout = (props) => {
     const classes = useStyles();
-    const { id, messages, user } = props;
+    const { respondentId, messages, user } = props;
+
+
 
     return (
         <div className={ classes.root }>
@@ -46,7 +48,7 @@ const Layout = (props) => {
                 <Box className={ classes.row }>
                     <MessageBox
                         user={ user }
-                        id={ id }
+                        id={ respondentId }
                         messages={ messages }
                     />
                     <div
