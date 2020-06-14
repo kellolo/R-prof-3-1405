@@ -13,7 +13,7 @@ const persistConfig = {
     key: 'geekmessanger',
     storage,
     stateReconciler: autoMergeLevel2,
-    whitelist: ['msgReducer', 'chtReducer', "prfReducer"],
+    whitelist: [ "chtReducer", "prfReducer" ],
  };
  
 

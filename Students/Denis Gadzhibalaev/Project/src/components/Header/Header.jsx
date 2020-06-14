@@ -9,6 +9,7 @@ import { TransitionGroup, CSSTransition } from 'react-transition-group'
 import PersonIcon from '@material-ui/icons/Person';
 import { push } from 'connected-react-router';
 
+import { loadUserProfile } from '../../store/actions/profile_actions.js';
 import { bindActionCreators } from 'redux';
 import connect from 'react-redux/es/connect/connect'
 
@@ -62,6 +63,7 @@ class Header extends React.Component {
     };
 
     componentDidMount() {
+        this.props.loadUserProfile()
         this.setState({
             chtLoaded: true
         })
@@ -106,6 +108,6 @@ const mapStateToProps = ({ prfReducer, chtReducer }) => ({
     isLoading: chtReducer.isLoading
 });
 
-const mapDispathToProps = dispatch => bindActionCreators({ push }, dispatch);
+const mapDispathToProps = dispatch => bindActionCreators({ push, loadUserProfile }, dispatch);
 
 export default connect(mapStateToProps, mapDispathToProps)(Header);

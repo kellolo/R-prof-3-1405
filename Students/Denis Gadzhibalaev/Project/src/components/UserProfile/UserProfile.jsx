@@ -11,7 +11,7 @@ import EditIcon from '@material-ui/icons/Edit';
 import KeyboardBackspaceIcon from '@material-ui/icons/KeyboardBackspace';
 
 
-import { setUserName } from '../../store/actions/profile_actions.js';
+import { setUserName, changeUserNameInProfile, changeUserEmailnProfile } from '../../store/actions/profile_actions.js';
 import { setUserEmail } from '../../store/actions/profile_actions.js';
 
 class UserProfile extends Component {
@@ -28,7 +28,7 @@ class UserProfile extends Component {
         })
     }
 
-    changeInput = (event, key, name, email) => {   
+    changeInput = (event, key, name, email, lastName) => {   
         if (event.keyCode !== 13) {
             this.setState ({
             [key]: event.target.value
@@ -40,18 +40,19 @@ class UserProfile extends Component {
                 showEditName: false,
                 showEditEmail: false
             })
-            name && this.props.setUserName(name)   
-            email &&  this.props.setUserEmail(email)
+            name && this.props.setUserName(name, lastName) && this.props.changeUserNameInProfile(name);    
+            email &&  this.props.setUserEmail(email) && this.props.changeUserEmailnProfile(email);
         }
     }
        
 
-    changeUserName = (text) => {
+    changeUserName = (text, lasName) => {
         this.setState ({
             inputName: '',
             showEditName: false
         })
-        this.props.setUserName(text)    
+        this.props.setUserName(text, lasName);  
+        this.props.changeUserNameInProfile(text); 
     }
 
     changeUserEmail = (text) => {
@@ -59,7 +60,8 @@ class UserProfile extends Component {
             inputEmail: '',
             showEditEmail: false
         })
-        this.props.setUserEmail(text)
+        this.props.setUserEmail(text);
+        this.props.changeUserEmailnProfile(text)
         
     }
 
@@ -79,10 +81,10 @@ class UserProfile extends Component {
                                                         fullWidth={ true }
                                                         hintText="Enter user name"
                                                         style={ { fontSize: '22px' } }
-                                                        onKeyUp = { () => this.changeInput(event, 'inputName', this.state.inputName, this.state.inputEmail) }
+                                                        onKeyUp = { () => this.changeInput(event, 'inputName', this.state.inputName, this.state.inputEmail, this.props.userName) }
                                                         onChange= { () => this.changeInput(event, 'inputName') }
                                                 />  
-                                                <FloatingActionButton onClick={ () => this.changeUserName(this.state.inputName) }>
+                                                <FloatingActionButton onClick={ () => this.changeUserName(this.state.inputName, this.props.userName) }>
                                                     <SaveIcon />
                                                 </FloatingActionButton>
                                             </div> }
@@ -117,6 +119,6 @@ const mapStateToProps = ({ prfReducer }) => ({
     userEmail: prfReducer.userEmail
 });
 
-const mapDispathToProps = dispatch => bindActionCreators({ setUserName, setUserEmail, goBack}, dispatch);
+const mapDispathToProps = dispatch => bindActionCreators({ setUserName, changeUserNameInProfile, changeUserEmailnProfile, setUserEmail, goBack}, dispatch);
 
 export default connect(mapStateToProps, mapDispathToProps)(UserProfile);

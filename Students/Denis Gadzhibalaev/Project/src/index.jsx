@@ -14,7 +14,6 @@ import { initStore, history } from './store/store.js';
 
 const { store, persistor } = initStore();
 
-
 ReactDom.render(
     <Provider store = { store }>
         <PersistGate loading={ null } persistor={ persistor }>
@@ -25,5 +24,4 @@ ReactDom.render(
             </ConnectedRouter>
         </PersistGate>
     </Provider>
-    
     , document.getElementById('root') );

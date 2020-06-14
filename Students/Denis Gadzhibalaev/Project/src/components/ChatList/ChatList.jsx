@@ -31,24 +31,24 @@ class ChatList extends React.Component {
         })
     }
 
-    changeInput = (event, chatId, title) => {   
+    changeInput = (event, title) => {   
         if (event.keyCode !== 13) {
             this.setState ({
             inputText: event.target.value
             })
         } else {
-            this.addChatToClick(chatId, title)   
+            this.addChatToClick(title)   
             
         }
     }
 
-    addChatToClick = (chatId, title) => {
+    addChatToClick = (title) => {
         if (this.state.inputText) {
             this.setState ({
             inputText: '',
             showEdit: false
             })
-        this.props.addChat(chatId, title)    
+        this.props.addChat(title)    
         }        
     }
 
@@ -66,24 +66,19 @@ class ChatList extends React.Component {
     }
     render() {
         let { chats } = this.props;
-        let chatId = Object.keys(chats).length + 1;
-        let chatsArr = [];
-
-        Object.keys(chats).map(key => {
-            chatsArr.push(
+        let chatsArr = Object.keys(chats).map(key => 
                 !this.props.chats[key].deleted && <ListItem
                                                         key = {shortid.generate()}
                                                         style={ { wordBreak: 'break-all' } }
                                                         className = "chat-list_list-item"
                                                         primaryText= {chats[key].title}
                                                         leftAvatar={<Avatar src="https://placeimg.com/640/480/nature" />}
-                                                        onClick = { () => this.handleNavigate(`/chat/${key}`)}
+                                                        onClick = { () => this.handleNavigate(`/chats/${key}`)}
                                                         rightIconButton = {<HighlightOffIcon className = "delete-btn" style={ { top: '14px', right: '10px' } }
                                                                                             onClick = {  () => {this.deleteChat(key, '/')}} 
                                                                                             /> }
                                                     />     
-            )
-        })
+        );
 
         return(
             <div className="chat-list w-25 h-100">
@@ -102,10 +97,10 @@ class ChatList extends React.Component {
                                                         fullWidth ={ true }
                                                         hintText = {!this.state.inputText ? "Enter chat title": ""}
                                                         style={ { fontSize: '16px' } }
-                                                        onKeyUp = { () => this.changeInput(event, chatId, this.state.inputText) }
+                                                        onKeyUp = { () => this.changeInput(event, this.state.inputText) }
                                                         onChange= { this.changeInput }
                                                 />  
-                                                <FloatingActionButton onClick={ () => this.addChatToClick(chatId, this.state.inputText) }>
+                                                <FloatingActionButton onClick={ () => this.addChatToClick(this.state.inputText) }>
                                                     <AddIcon />
                                                 </FloatingActionButton>
                                             </div> }

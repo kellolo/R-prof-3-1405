@@ -10,17 +10,17 @@ const initialStore = {
     isLoading: false,
 }
 
-export default function msgReducer(store = initialStore, action) {     
-    console.log(store);
+export default function msgReducer(store = initialStore, action) {
     switch (action.type) {
         case SUCCESS_MESSAGE_SEND: 
         if (action.payload.response.status) {
-            return {...store, messages: {...store.messages,  [action.payload.msg.messageId]: { user: action.payload.msg.sender, text: action.payload.msg.text, deleted: false, chatId: action.payload.msg.chatId } } }
+            return {...store, messages: {...store.messages,  [action.payload.response._id]: { _id: action.payload.response._id, sender: action.payload.msg.sender, text: action.payload.msg.text, deleted: false, chatId: action.payload.msg.chatId } } }
         } else {
             console.log('Error send msg', action.payload);
             return null
         }
         case SUCCESS_MESSAGE_DELETE:
+
         if (action.payload.response.status) {
             return {...store, messages: {...store.messages,  [action.payload.msg.messageId]: {...store.messages[action.payload.msg.messageId], deleted: true } } }
         } else {

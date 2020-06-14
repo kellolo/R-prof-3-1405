@@ -12,36 +12,36 @@ export const START_MESSAGE_DELETE = '@@messages/START_MESSAGE_DELETE';
 export const SUCCESS_MESSAGE_DELETE = '@@messages/SUCCESS_MESSAGE_DELETE';
 export const ERROR_MESSAGE_DELETE = '@@messages/ERROR_MESSAGE_DELETE';
 
-export let sendMessage = (messageId, sender, text, chatId, deleted = false) => ({
+export let sendMessage = (sender = 'Bot', text, chatId ) => ({
     [RSAA]: {
         endpoint: '/api/messages',
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ messageId, sender, text, chatId, deleted }),
+        body: JSON.stringify({ sender, text, chatId }),
         types: [
             START_MESSAGE_SEND,
             {
                 type: SUCCESS_MESSAGE_SEND,
                 payload: (action, state, res) => getJSON(res)
-                            .then(json => ({ response: json, msg: { messageId, sender, text, chatId, deleted } } ) )
+                            .then(json => ({ response: json, msg: { sender, text, chatId } } ) )
             },
             ERROR_MESSAGE_SEND
         ]
     }
 });
 
-export let deleteMessage = (messageId, chatId, msgIndexInMessageList) => ({
+export let deleteMessage = (messageId) => ({
     [RSAA]: {
         endpoint: '/api/messages',
         method: 'DELETE',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ messageId, chatId, msgIndexInMessageList }),
+        body: JSON.stringify({ messageId }),
         types: [
             START_MESSAGE_DELETE,
             {
                 type: SUCCESS_MESSAGE_DELETE,
                 payload: (action, state, res) => getJSON(res)
-                            .then(json => ({ response: json, msg: { messageId, chatId, msgIndexInMessageList } } ) )
+                            .then(json => ({ response: json, msg: { messageId } } ) )
             },
             ERROR_MESSAGE_DELETE
         ]
@@ -49,10 +49,10 @@ export let deleteMessage = (messageId, chatId, msgIndexInMessageList) => ({
 });
 
 export const loadMessages = (chatId) => ({
-    chatId,
     [RSAA]: {
-        endpoint: '/api/messages',
+        endpoint: `/api/messages/${chatId}`,
         method: 'GET',
+        headers: { 'Content-Type': 'application/json' },
         types: [
             START_MESSAGES_LOADING,
             {

@@ -35,10 +35,8 @@ class MessagesField extends React.Component {
     }
 
     sendMessage = (text, sender, chatId) => {  
-        let { messages } = this.props;
-        let messageId = Object.keys(messages).length + 1;
         if (text) {
-            this.props.sendMessage(messageId, sender, text, chatId);
+            this.props.sendMessage(sender, text, chatId);
         }    
     }
 
@@ -81,18 +79,16 @@ class MessagesField extends React.Component {
         if (this.props.isLoading) {
             return <CircularProgress style = { {margin: 'auto'} }/>
         } 
-        let { chats } = this.props;
         let { messages } = this.props;
-        let messagesArr = [];
-        chats[this.props.chatId].messagesList.map((key, i) => {
-            messagesArr.push(<Message   deleteMessage = { this.props.deleteMessage } 
-                                        messageId = { key.messageId } 
-                                        msgIndexInMessageList = { i }
-                                        chatId = { this.props.chatId }
-                                        key={ shortid.generate() } 
-                                        sender={ key.user } 
-                                        text={ key.text } />)
-        });
+        let messagesArr  = Object.keys(messages).map((key, i) => 
+            !messages[key].deleted  && <Message    deleteMessage = { this.props.deleteMessage } 
+                        messageId = { key } 
+                        userName = { this.props.user }
+                        chatId = { this.props.chatId }
+                        key={ key } 
+                        sender={ messages[key].sender } 
+                        text={ messages[key].text } />
+        );
         return (
         <div  className= "message-field_container d-flex flex-column w-75 h-100">
             <div ref={this.messagesFieldContainer} className = "message-field d-flex flex-column">
@@ -104,7 +100,7 @@ class MessagesField extends React.Component {
                    name="input"
                    autoFocus
                    ref={ this.focusTextInput }
-                   disabled = { (this.state.msgLoaded && messages[Object.keys(messages).length].user ) ? true : false}
+                //    disabled = { (Object.keys(messages).length % 2 ) ? true : false}
                    fullWidth={ true }
                    hintText="Enter Message"
                    style={ { fontSize: '22px' } }

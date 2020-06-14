@@ -16,18 +16,18 @@ export let ADD_CHAT = '@@chat/ADD_CHAT';
 export let DELETE_CHAT = '@@chat/DELETE_CHAT';
 
 
-export let addChat = (chatId, title) => ({
+export let addChat = (title) => ({
     [RSAA]: {
         endpoint: '/api/chats',
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ chatId, title }),
+        body: JSON.stringify({ title }),
         types: [
             START_CHAT_ADD,
             {
                 type: SUCCESS_CHAT_ADD,
                 payload: (action, state, res) => getJSON(res)
-                            .then(json => ({ response: json, cht: { chatId, title } } ) )
+                            .then(json => ({ response: json, cht: { title } } ) )
             },
             ERROR_CHAT_ADD
         ]
@@ -52,15 +52,10 @@ export let deleteChat = (chatId) => ({
     }
 });
 
-// export let deleteChat = (chatId) => ({
-//     type: DELETE_CHAT,
-//     chatId
-// });
 
-export const loadchats = (chatId) => ({
-    chatId,
+export const loadchats = () => ({
     [RSAA]: {
-        endpoint: '/api/chats',
+        endpoint: `/api/chats`,
         method: 'GET',
         types: [
             START_CHATS_LOADING,
