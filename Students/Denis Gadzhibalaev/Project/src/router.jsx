@@ -1,4 +1,4 @@
-import React, { Component } from 'react';
+import React  from 'react';
 import { Switch, Route } from 'react-router-dom';
 
 import App from './components/App.jsx';
@@ -8,21 +8,22 @@ import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 import shortid from 'shortid';
 
-class Router extends Component {
+class Router extends React.Component {
     render() {
-        let RouteArr = [];
         let { chats } = this.props;
-        Object.keys(chats).map(key => {
-            RouteArr.push(
-                <Route key = {shortid.generate()} path = { `/chat/${ key }` } render = { () => <App chatId = { key } /> } exact />
-            )
-        })
+        let RouteArr = Object.keys(chats).map(key => 
+                <Route  key = { key } 
+                        exact 
+                        path = { `/chats/${ key }` } 
+                        render = { () => <App chatId = { key }  /> } /> 
+        );
         return (
             <Switch>
                 <Route path = '/' component = { App } exact />
-                {RouteArr}
+                { RouteArr }
                 <Route path = '/profile' component = { UserProfile } exact />
             </Switch>
+            
         )
         
     }
