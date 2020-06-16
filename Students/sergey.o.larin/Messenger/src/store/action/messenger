@@ -9,9 +9,11 @@ export let CLOSE_RESPONDENT = 'CLOSE_RESPONDENT';
 export let SELECT_RESPONDENT = 'SELECT_RESPONDENT';
 export let UNSELECT_RESPONDENT = 'UNSELECT_RESPONDENT';
 
+export let SELECT_USER = 'SELECT_USER';
+
 export const loadMessenger = () => ({
     [RSAA]: {
-        endpoint: './server/db/contacts.json',
+        endpoint: './server/local/contacts.json',
         method: 'GET',
         types: [
             START_MESSENGER_LOADING,
@@ -42,4 +44,10 @@ export let closeRespondent = (id) => ({
 
 export let unSelectRespondent = () => ({
     type: UNSELECT_RESPONDENT,
+})
+
+export let selectUser = (id, name) => ({
+    type: SELECT_USER,
+    id,
+    name,
 })

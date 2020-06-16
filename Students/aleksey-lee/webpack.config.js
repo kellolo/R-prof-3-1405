@@ -47,6 +47,18 @@ module.exports = {
     ],
     devtool: 'cheap-inline-module-source-map',
     devServer: {
-        historyApiFallback: true
+        // historyApiFallback: true,
+        // contentBase: './dist',
+        port: 3000,
+        hot: true,
+        open: false,
+        proxy: {
+            '/api': {
+                target: 'http://localhost:3300',
+                pathRewrite: { '^/api' : '' },
+                secure: false,
+                changeOrigin: true
+            }
+        }
     }
 }

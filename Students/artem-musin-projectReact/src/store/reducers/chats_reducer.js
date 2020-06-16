@@ -1,38 +1,35 @@
 import update from 'react-addons-update';
 
-import { ADD_CHAT } from '../actions/chats_actions.js';
+import {SUCCESS_CHATS_LOADING, SUCCESS_CHAT_ADDING} from '../actions/chats_actions.js';
 
 let initialStore = {
-    chats: {
-        1: {
-            title: 'George Washington',
-            messagesList:[]
-        },
-        2: {
-            title: 'Pamela Anderson',
-            messagesList:[]
-        },
-        3: {
-            title: 'Tom Cruise',
-            messagesList:[]
-        },
-    }
+    chats: {}
 }
 
 export default function chatsReducer(store = initialStore, action) {
     switch (action.type) {
-        case ADD_CHAT: {
-            let chatId = Date.now();
-
-            return update(store, {
-                chats: {
-                    $merge: {
-                        [chatId]: {
-                            title: action.title,
-                            messagesList: []
+        case SUCCESS_CHAT_ADDING: {
+            if (action.payload.response.status) {
+                return update(store, {
+                    chats: {
+                        $merge: {
+                            [action.payload.chat.chatId]: {
+                                title: action.payload.chat.title,
+                                messagesList: []
+                            }
                         }
                     }
-                }
+                })
+            } else {
+                console.log('Error with adding chat', action.payload)
+                return null
+            }
+
+            
+        }
+        case SUCCESS_CHATS_LOADING: {
+            return update(store, {
+                chats: { $set: action.payload }
             })
         }
         default: 

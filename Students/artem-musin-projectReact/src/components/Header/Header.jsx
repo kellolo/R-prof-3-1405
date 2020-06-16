@@ -35,12 +35,6 @@ export default class Header extends React.Component {
       chatId: PropTypes.string
     } 
 
-    static defaultProps = {
-      chatId: '1'
-    }
-
-  
-
     render() {
 
         return (

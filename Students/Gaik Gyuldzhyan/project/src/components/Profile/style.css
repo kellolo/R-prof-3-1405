@@ -1,0 +1,166 @@
+body {
+    background-color: #051e2c;
+}
+
+.headingContainer {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    height: 100%;
+    width: 100%;
+    font-size: 50px;
+    font-family: sans-serif;
+    text-transform: uppercase;
+    color: teal;
+    font-weight: bold;
+    margin-top: 5%
+}
+
+@keyframes slideDown {
+    0% {
+        opacity: 0;
+        transform: translateY(-40px);
+    }
+    100% {
+        opacity: 1;
+        transform: translate(0);
+    }
+}
+
+@keyframes slideUp {
+    0% {
+        opacity: 0;
+        transform: translateY(40px);
+    }
+    100% {
+        opacity: 1;
+        transform: translate(0);
+    }
+}
+
+.userHeading {
+    animation-name: slideDown;
+    animation-duration: 2s;
+    margin: 5px;
+}
+
+.profileHeading {
+    animation-name: slideUp;
+    animation-duration: 2s;
+    margin: 5px;
+}
+
+
+/*copy*/
+
+.profileForm {
+    margin: 0 auto;
+    padding: 10px 0;
+    width: 50%;
+    height: calc(100% - 30px);
+    text-align: center;
+    color: rgb(227, 236, 243)!important
+}
+
+.profileForm .bioInput {
+    text-align: left;
+    margin-bottom: 50px;
+    border-bottom: 1px solid aliceblue;
+}
+
+.profileForm .nameInput {
+    text-align: left;
+    margin-top: 10px;
+    border-bottom: 1px solid aliceblue;
+}
+
+.nameInput input {
+    color: rgb(227, 236, 243)!important
+}
+
+.bioInput textarea {
+    color: rgb(227, 236, 243)!important
+}
+
+div.backBtn {
+    width: 100px;
+    left: 100px;
+    top: 100px;
+    background-color: #f4f4f4;
+    transition: all 0.4s ease;
+    position: fixed;
+    cursor: pointer;
+    color: aliceblue;
+}
+
+span.line {
+    bottom: auto;
+    right: auto;
+    top: auto;
+    left: auto;
+    background-color: #333;
+    border-radius: 10px;
+    width: 100%;
+    left: 0px;
+    height: 2px;
+    display: block;
+    position: absolute;
+    transition: width 0.2s ease 0.1s, left 0.2s ease, transform 0.2s ease 0.3s, background-color 0.2s ease;
+}
+
+span.tLine {
+    top: 0px;
+}
+
+span.mLine {
+    top: 13px;
+    opacity: 0;
+}
+
+span.bLine {
+    top: 26px;
+}
+
+.label {
+    position: absolute;
+    left: 0px;
+    top: 5px;
+    width: 100%;
+    text-align: center;
+    transition: all 0.4s ease;
+    font-size: 1em;
+}
+
+div.backBtn:hover span.label {
+    left: 25px
+}
+
+div.backBtn:hover span.line {
+    left: -10px;
+    height: 5px;
+    background-color: #F76060;
+}
+
+div.backBtn:hover span.tLine {
+    width: 25px;
+    transform: rotate(-45deg);
+    left: -15px;
+    top: 6px;
+}
+
+div.backBtn:hover span.mLine {
+    opacity: 1;
+    width: 30px;
+}
+
+div.backBtn:hover span.bLine {
+    width: 25px;
+    transform: rotate(45deg);
+    left: -15px;
+    top: 20px;
+}
+
+button {
+    border-radius: 0!important;
+}

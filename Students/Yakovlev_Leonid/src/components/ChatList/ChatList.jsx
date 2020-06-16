@@ -1,7 +1,8 @@
 
 import React, { Component } from 'react';
 
-import { Link } from 'react-router-dom';
+//import { Link } from 'react-router-dom';
+import { push } from 'connected-react-router';
 
 import { List, ListItem } from 'material-ui/List';
 import ContentSend from 'material-ui/svg-icons/content/send';
@@ -37,14 +38,23 @@ import AddIcon from 'material-ui/svg-icons/content/add';
         if (evt.keyCode == 13) this.handleAdd();
     }
 
+    handleNavigate = (link) => {
+        this.props.push(link);
+    }; 
+
     render() {
         let { chats } = this.props;        
 
-        let chatsArray = Object.keys(chats).map(key =>(            
-            <Link to = { `/chat/${ key }/` } key = { key }>
-                <ListItem primaryText = { chats[key].title } rightIcon = { <Icon color="primary" fontSize="small">add_circle</Icon> } /> 
-            </Link>
-        ));       
+        let chatsArray = Object.keys(chats).map(key => (            
+                <ListItem 
+                    primaryText = { chats[key].title } 
+                    rightIcon = { <Icon color="primary" 
+                                        fontSize="small">add_circle
+                                        </Icon> } 
+                    onClick={ () => this.handleNavigate(`/chat/${ key }`) }
+                /> 
+                
+        ));           
 
         return (
             <List className = "chatlist">
@@ -73,6 +83,6 @@ import AddIcon from 'material-ui/svg-icons/content/add';
 
 const mapStateToProps = ({ chatsReducer }) => ({ chats: chatsReducer.chats });
 
-const mapDispatchToProps = dispatch => bindActionCreators({ addChat }, dispatch);
+const mapDispatchToProps = dispatch => bindActionCreators({ addChat, push }, dispatch);
 
 export default connect(mapStateToProps, mapDispatchToProps)(ChatList);

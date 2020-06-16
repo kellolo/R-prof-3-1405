@@ -24,7 +24,7 @@ import {
     selectRespondent,
     unSelectRespondent,
 } from "../../store/action/messenger";
-
+import { newStoryLine, newStoryLineState } from "../../store/action/messages";
 import Profile from '../Profile/Profile.jsx'
 
 
@@ -128,6 +128,10 @@ class CompanionList extends React.Component {
     }
 
     addRespondent(id) {
+        let { user } = this.props;
+        if (!this.props.messages[id]) {
+            this.props.newStoryLine(0, id, 'Bot', `Это начало истории ваших личных сообщений с ${ this.props.contacts[id].name } ${ this.props.contacts[id].surname } !`)
+        }
         this.props.addRespondent(id);
         this.setState({
             cursor: 0,
@@ -271,13 +275,15 @@ class CompanionList extends React.Component {
     }
 
     render() {
-        const { classes, contacts, respondents } = this.props;
+        const { classes, contacts, respondents, user } = this.props;
         let contactsList = [];
         let respondentsList = [];
         for (let key in contacts) {
-            !respondents.includes(+key)
-                ? contactsList.push(this.addContact(+key, contacts[+key].name)) : null
+            !respondents.includes(+key) && user.id !== +key
+                ? contactsList.push(this.addContact(+key, contacts[+key].name))
+                : null
         }
+
         for (let key in respondents) {
             respondentsList.push(this.addListItem(classes, respondents[+key]))
         }
@@ -304,12 +310,6 @@ class CompanionList extends React.Component {
                                 <Settings/>
                             </IconButton>
                         </Tooltip>
-                        { this.state.settingPage.isOpen
-                            ? <Profile index={ 0 }
-                                       user={ this.props.user }
-                                       closeProfile={ this.closeSettings }
-                            />
-                            : null }
                         <Tooltip title="Добавить собеседника" label="addRespondent">
                             <IconButton
                                 className={ classes.button }
@@ -329,23 +329,32 @@ class CompanionList extends React.Component {
                             { contactsList }
                         </Menu>
                     </Box>
+                    { this.state.settingPage.isOpen
+                        ? <Profile index={ 0 }
+                                   user={ this.props.user }
+                                   closeProfile={ this.closeSettings }
+                        />
+                        : null }
                 </Box>
             </Box>
         )
     }
 }
 
-const mapStateToProps = ({ messengerReducer }) => ({
+const mapStateToProps = ({ messengerReducer, messagesReducer }) => ({
     contacts: messengerReducer.contacts,
-    user: messengerReducer.user,
+    messages: messagesReducer.messages,
     respondent: messengerReducer.respondent,
     respondents: messengerReducer.respondents,
+    user: messengerReducer.user,
 });
 
 const mapDispatchToProps = dispatch => {
     return bindActionCreators({
         addRespondent,
         closeRespondent,
+        newStoryLine,
+        newStoryLineState,
         selectRespondent,
         unSelectRespondent,
     }, dispatch);

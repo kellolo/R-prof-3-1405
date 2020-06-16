@@ -1,24 +1,28 @@
-import { SEND_MESSAGE, sendMessage } from '../store/action/messages';
+import { sendMessage, SUCCESS_MESSAGE_SEND } from '../store/action/messages';
 
 export default store => next => action => {
     switch (action.type) {
-        case SEND_MESSAGE: {
-            if (action.sender === store.getState().messengerReducer.user) {
-                const id = store.getState().messengerReducer.respondent;
-                setTimeout(() => {
-                    let messageId = Object.keys(store.getState().messagesReducer.messages[id]).length + 1;
-
-                    return store.dispatch(
-                        sendMessage(
-                            id,
-                            messageId,
-                            null,
-                            'У нас технические неполадки, перезвоните позже...'
+        case SUCCESS_MESSAGE_SEND: {
+            if (action.payload.response.status) {
+                let user = store.getState().messengerReducer.user;
+                if (action.payload.msg.sender === user.name) {
+                    const id = store.getState().messengerReducer.respondent;
+                    setTimeout(() => {
+                        return store.dispatch(
+                            sendMessage(
+                                0,
+                                id,
+                                'Bot',
+                                'У нас технические неполадки, перезвоните позже...'
+                            )
                         )
-                    )
-                }, 1000)
+                    }, 1000)
+
+
+                }
             }
         }
     }
+
     return next(action);
 };

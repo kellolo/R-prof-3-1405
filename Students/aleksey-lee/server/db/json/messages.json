@@ -1,0 +1,26 @@
+{
+ "1": {
+  "user": "Me",
+  "text": "Hi"
+ },
+ "2": {
+  "user": null,
+  "text": "Hello"
+ },
+ "3": {
+  "user": "Me",
+  "text": "How are you?"
+ },
+ "4": {
+  "user": null,
+  "text": "Fine"
+ },
+ "5": {
+  "user": null,
+  "text": "And you?"
+ },
+ "6": {
+  "user": "Me",
+  "text": "Me too"
+ }
+}

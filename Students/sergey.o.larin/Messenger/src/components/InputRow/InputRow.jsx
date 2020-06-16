@@ -49,7 +49,9 @@ class InputRow extends React.Component {
     }
 
     componentDidUpdate(prevProps, prevState, snapshot) {
-            document.getElementById('message-box').scrollTo({ top: 999999 })
+        document.getElementById('message-box').scrollTo({ top: 999999 })
+        this.props.loadMessages();
+
     }
 
     focusTextInput() {
@@ -61,14 +63,13 @@ class InputRow extends React.Component {
     }
 
     sndMessage(user, inputValue) {
-        let { messages, respondent } = this.props;
-        let messageId = Object.keys(messages[respondent]).length + 1;
-        if (user === this.props.user) {
-            this.props.sendMessage(respondent, messageId, user, inputValue);
+        let { respondent } = this.props;
+        if (user.id === this.props.user.id) {
+            this.props.sendMessage(user.id, respondent, user.name, inputValue);
             this.setState({ inputValue: '' });
             document.getElementById('input-message').value = '';
         } else {
-            this.props.sendMessage(respondent, messageId, user, inputValue);
+            this.props.sendMessage(user.id, respondent, user, inputValue);
         }
     }
 
