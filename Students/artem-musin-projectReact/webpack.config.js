@@ -12,7 +12,7 @@ module.exports = {
     },
     output: {
             path: path.join(__dirname, 'dist'),
-            publicPath: '',
+            publicPath: '/',
             filename: path.join('js', 'bundle.js')
     },
     target: 'web',    // настройка типа сборки 
@@ -62,8 +62,6 @@ module.exports = {
                 changeOrigin: true 
             }
         },
-        historyApiFallback: {
-            index: 'index.html'
-        },
+        historyApiFallback: true
     },
 };

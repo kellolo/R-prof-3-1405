@@ -4,7 +4,7 @@ import connect from 'react-redux/es/connect/connect';
 
 import { push } from 'connected-react-router';
 
-import { addChat } from '../../store/actions/chats_actions.js';
+import { addChat, loadChats } from '../../store/actions/chats_actions.js';
 import { List, ListItem, ListItemText, Avatar, ListItemIcon, Box } from '@material-ui/core';
 import { TextField } from 'material-ui';
 import AddIcon from '@material-ui/icons/Add';
@@ -60,8 +60,7 @@ class ChatList extends React.Component {
 
     handleAdd = () => { // Добавление чата в лист
             if (this.state.input) {
-                let chatId = Object.keys(this.props.chats).length + 1;
-                this.props.addChat(chatId, this.state.input);
+                this.props.addChat(this.state.input);
                     this.setState({ input: '' })
             }
      }
@@ -76,6 +75,10 @@ class ChatList extends React.Component {
 
     handleNavigate = (link) => {
         this.props.push(link)
+    }
+
+    componentDidMount() {
+        this.props.loadChats()
     }
 
     render() {
@@ -144,6 +147,6 @@ const mapStateToProps = ({ chatsReducer }) => ({
     chats: chatsReducer.chats
 })
 
-const mapDispatchToProps = dispatch => bindActionCreators({ addChat, push }, dispatch);
+const mapDispatchToProps = dispatch => bindActionCreators({ addChat, push, loadChats }, dispatch);
 
 export default connect(mapStateToProps, mapDispatchToProps)(ChatList)

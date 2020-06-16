@@ -5,7 +5,7 @@
   "main": "index.js",
   "scripts": {
     "build": "webpack --mode development",
-    "dev": "webpack-dev-server --https",
+    "dev": "webpack-dev-server --https --open --hot --history-api-fallback",
     "api": "nodemon server"
   },
   "keywords": [],
