@@ -1,7 +1,9 @@
 const express = require('express');
 const mongo = require('mongoose');
 
-const Message = require('./db/models/message');
+const MsgController = require('./db/controllers/message_controller.js');
+const ChatsController = require('./db/controllers/chats_controller.js');
+// const Message = require('./db/models/message');
 
 const app = express();
 app.use(express.json());
@@ -13,15 +15,15 @@ mongo.connect('mongodb://localhost/geekapp-v1', {
 .then(() => { console.log('DB connected!') })
 .catch(() => { console.log('DB offline!') })
 
-app.post('/messages', async (req, res) => {
-    let message = new Message(req.body);
-    message = await message.save();
-    res.json({ status: 1 })
-});
+// app.post('/messages', async (req, res) => {
+//     let message = new Message(req.body);
+//     message = await message.save();
+//     res.json({ status: 1 })
+// });
 
-app.get('/messages', async (req, res) => {
-    res.json(await Message.find());
-});
+// app.get('/messages', async (req, res) => {
+//     res.json(await Message.find());
+// });
 
 // const fs = require('fs');
 
@@ -52,4 +54,10 @@ app.get('/messages', async (req, res) => {
 app.listen(3300, () => {
     console.log('listening @ port 3300...');
 });
+
+app.get('/messages/:id', MsgController.load);
+app.post('/messages', MsgController.send);
+
+app.get('/chats', ChatsController.load);
+app.post('/chats', ChatsController.create);
 

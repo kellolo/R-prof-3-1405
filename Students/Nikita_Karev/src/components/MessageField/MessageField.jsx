@@ -23,18 +23,15 @@ class MessagesField extends Component {
         };
     }
 
-    handleSend = (text, sender) => {
+    handleSend = (chatId, text, sender) => {
         this.setState({ text: ''});
         if (sender == this.props.user && text !== '') {
-            this.sendMessage(text, sender);
+            this.sendMessage(chatId, text, sender);
         }
     }
 
-    sendMessage(text, sender) {
-        let { messages } = this.props;
-        let messageId = Object.keys(this.props.messages).length + 1;
-    
-        this.props.sendMessage(messageId, sender, text);
+    sendMessage(chatId, text, sender) {
+        this.props.sendMessage(chatId, sender, text);
     }
 
     handleChange = (evt) => {
@@ -46,11 +43,11 @@ class MessagesField extends Component {
     }
     
     componentDidMount() {
-        this.props.loadMessages();
+        this.props.loadMessages(this.props.chatId);
     }
 
     render() {
-        let { messages } = this.props;
+        let { messages, chatId } = this.props;
 
         let msgArr = [];
         
@@ -83,7 +80,7 @@ class MessagesField extends Component {
                     </Grid>
                     <IconButton
                         disabled={ !this.state.text }
-                        onClick={ () => this.handleSend(this.state.text, this.props.user) }>
+                        onClick={ () => this.handleSend(chatId, this.state.text, this.props.user) }>
                         <Send style= { { color: '#00bcd4', cursor: 'pointer' } }/>
                     </IconButton>
                 </div>
