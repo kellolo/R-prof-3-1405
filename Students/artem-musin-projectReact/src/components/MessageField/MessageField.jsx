@@ -42,23 +42,20 @@ class MessagesField extends Component {
         }
     }
 
-    handleSend = (text, sender) => { // Отслеживание события отправки сообщения
+    handleSend = (chatId, text, sender) => { // Отслеживание события отправки сообщения
        this.setState({
            text: '',
         })
            if(sender == 'Me') {
-                this.sendMessage(text, sender);
+                this.sendMessage(chatId, text, sender);
            } 
     }
 
-    sendMessage = (text, sender) => {
-        let { messages } = this.props;
-        let messageId = Object.keys(messages).length + 1;
-        // action call
+    sendMessage = (chatId, text, sender) => {
             if(text == '') { // проверка на пустую строку
                 return false 
             } else {
-                this.props.sendMessage(messageId, sender, text)
+                this.props.sendMessage(chatId, sender, text)
             }
 
     }
@@ -72,12 +69,12 @@ class MessagesField extends Component {
     }
     
     componentDidMount() {
-        this.props.loadMessages();
+        this.props.loadMessages(this.props.chatId);
     }
 
     render() {
          
-        let { messages } = this.props;
+        let { messages, chatId } = this.props;
 
         let msgArr = [];
 
@@ -86,7 +83,6 @@ class MessagesField extends Component {
                 text={ messages[key].text } 
                 sender={ messages[key].user } 
                 key={ key } />);
-                console.log(msgArr)
         })
             
         return (

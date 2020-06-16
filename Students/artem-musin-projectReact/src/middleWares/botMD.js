@@ -5,9 +5,9 @@ export default store => next => action => {
         case SUCCESS_MESSAGE_SEND: {
             if (action.payload.msg.sender == 'Me') {
                 setTimeout(() => {
-                    let id = Object.keys(store.getState().msgReducer.messages).length + 1;
+                    let id = Object.keys(store.getState().msgReducer.messages).length + 1
                     return store.dispatch(
-                        sendMessage(id, 'Bot', 'Bot cyber answers')
+                        sendMessage(id, 'Bot', 'Bot cyber answer')
                     )
                 }, 1000)
             } 
