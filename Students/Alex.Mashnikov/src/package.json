@@ -17,10 +17,10 @@
   },
   "homepage": "https://github.com/SiNNeR71/R-prof-3-1405#readme",
   "dependencies": {
-    "webpack": "^4.43.0",
+    "webpack": "^5.75.0",
     "webpack-dev-server": "^3.11.0"
   },
   "devDependencies": {
-    "webpack-cli": "^3.3.11"
+    "webpack-cli": "^5.0.1"
   }
 }
